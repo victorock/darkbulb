@@ -1,0 +1,11 @@
+---
+- name: config user {{ username }}
+  eos_config:
+    lines:
+      - username {{ username }} privilege 15 role network-admin secret {{ admin_password }}
+    save: yes
+    authorize: yes
+    provider: "{{ eos_conn }}"
+  tags:
+  - config
+  - common

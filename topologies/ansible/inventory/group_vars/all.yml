@@ -1,0 +1,3 @@
+ansible_user: "{{ ansible_ssh_user }}"
+admin_password: LearnAnsible{{ lookup('pipe', 'date +%m%y')}}
+admin_password_hash: "{{ admin_password | password_hash(salt='sRvXWmR5BBwqRlih') }}"

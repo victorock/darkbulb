@@ -1,0 +1,16 @@
+---
+- name: show lldp neighbors
+  eos_command:
+    commands:
+      - command: show lldp neighbors
+    provider: "{{ eos_conn }}"
+  register: show_lldp_neighbors
+  tags:
+  - show
+  - common
+
+- debug: var="{{ show_lldp_neighbors.stdout | to_nice_json }}"
+  when: show_lldp_neighbors is defined
+  tags:
+  - show
+  - common

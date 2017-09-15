@@ -1,0 +1,8 @@
+- name: Configure common options on nodes
+  hosts: all
+  become: yes
+  roles:
+    - user_accounts
+    - common
+  vars:
+    username: ansible

@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = 2
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.provider :libvirt do |domain|
+    # increase nic adapter count to be greater than 8 for all VMs.
+    domain.nic_adapter_count = 55
+    domain.management_network_name = "vagrant-darkbulb"
+    domain.management_network_address = "192.168.200.0/24"
+    domain.management_network_mode = "nat"
+  end
+end
+
+nodes = %w[ tower server01 server02 ]
+
+nodes.each do |node|
+  vagrantfile = "./Vagrantfile.#{node}"
+  load File.expand_path(vagrantfile) if File.exists?(vagrantfile)
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.inventory_path = "inventory"
+  end
+end

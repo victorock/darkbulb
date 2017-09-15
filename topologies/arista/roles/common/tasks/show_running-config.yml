@@ -1,0 +1,16 @@
+---
+- name: show running-config
+  eos_command:
+    commands:
+      - command: show running-config
+    provider: "{{ eos_conn }}"
+  register: show_runningconfig
+  tags:
+  - show
+  - common
+
+- debug: var="{{ show_runningconfig.stdout | to_nice_json }}"
+  when: show_runningconfig is defined
+  tags:
+  - show
+  - common

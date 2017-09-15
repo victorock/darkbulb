@@ -56,3 +56,10 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#Vagrant Stuff
+.vagrant
+.vagrant/*
+
+#Ansible Stuff
+*.retry

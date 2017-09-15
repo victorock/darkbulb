@@ -1,0 +1,5 @@
+---
+- include: config_hostname.yml
+- include: config_username.yml
+- include: show_lld_neighbors.yml
+- include: show_running-config.yml

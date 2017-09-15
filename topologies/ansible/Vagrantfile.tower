@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for tower #####
+Vagrant.configure('2') do |config|
+  config.vm.define "tower" do |node|
+    node.vm.box = "ansible/tower"
+
+    node.vm.provider :virtualbox do |v|
+      v.memory = 2048
+      v.cpus = 1
+    end
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    node.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end

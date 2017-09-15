@@ -1,0 +1,8 @@
+---
+# handlers file
+- name: save config for eos
+  eos_command:
+    commands: 'write memory'
+    authorize: yes
+    provider: "{{ provider | default(omit) }}"
+  when: save_config

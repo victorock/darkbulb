@@ -1,0 +1,11 @@
+---
+- name: config switch hostname
+  eos_config:
+    lines:
+      - "hostname {{ switchname }}"
+    save: yes
+    authorize: yes
+    provider: "{{ eos_conn }}"
+  tags:
+  - config
+  - common

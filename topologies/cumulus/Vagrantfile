@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = 2
+nodes = %w[ spine01 spine02
+            leaf01 leaf02
+            leaf03 leaf04 ]
+
+nodes.each do |node|
+  vagrantfile = "./Vagrantfile.#{node}"
+  load File.expand_path(vagrantfile) if File.exists?(vagrantfile)
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.inventory_path = "inventory"
+  end
+end

@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for spine01 #####
+Vagrant.configure('2') do |config|
+  config.vm.define "spine01" do |device|
+    device.vm.box = "vEOS-lab-4.18.1F"
+
+    device.vm.provider :virtualbox do |v|
+      v.memory = 2048
+
+      # SPINE01,E1 (10101) -> LEAF01,E1 (20101)
+      v.customize ["modifyvm", :id, "--nic2", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=10101"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=20101"]
+
+      # SPINE01,E2 (10102) -> LEAF02,E1 (20201)
+      v.customize ["modifyvm", :id, "--nic3", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=10102"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20201"]
+
+      # SPINE01,E3 (10103) -> LEAF03,E1 (20301)
+      v.customize ["modifyvm", :id, "--nic4", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "sport=10103"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20301"]
+
+      # SPINE01,E4 (10101) -> LEAF04,E1 (20401)
+      v.customize ["modifyvm", :id, "--nic5", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "sport=10104"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dport=20401"]
+    end
+
+    # EAPI Port mapping
+    device.vm.network "forwarded_port", guest: 80, host: 11080
+    device.vm.network "forwarded_port", guest: 443, host: 11443
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    device.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end

@@ -1,0 +1,39 @@
+---
+# Configure the vlans as per vlan items
+- name: config vlans
+  connection: local
+  eos_config:
+    src: "{{ device_os}}.j2"
+    authorize: yes
+    provider: "{{ provider | default(omit) }}"
+  notify: save config
+  with_items: "{{ vlans | default([]) }}"
+  loop_control:
+    loop_var: vlan
+  when: vlan.vlanid is defined
+  tags:
+  - config
+  - vlan
+  - eos
+
+# Run the command to show vlans
+- name: show vlan
+  connection: local
+  eos_command:
+    commands:
+      - command: show vlan
+    authorize: yes
+    provider: "{{ provider | default(omit) }}"
+  register: show_vlan
+  tags:
+  - show
+  - vlan
+  - eos
+
+# Print the output of "show vlan" task
+- debug: var="{{ show_vlan.stdout | to_nice_json }}"
+  when: show_vlan is defined
+  tags:
+  - show
+  - vlan
+  - eos

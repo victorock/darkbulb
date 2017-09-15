@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for tower #####
+Vagrant.configure('2') do |config|
+  config.vm.define "server01" do |node|
+    node.vm.box = "fedora/25-cloud-base"
+
+    node.vm.provider :virtualbox do |v|
+      v.memory = 512
+
+      # SRV01,E1 (30101) -> LEAF01,E3 (20103)
+      v.customize ["modifyvm", :id, "--nic2", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=30101"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=20103"]
+
+      # SRV01,E2 (30102) -> LEAF02,E3 (20203)
+      v.customize ["modifyvm", :id, "--nic3", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=30102"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20203"]
+
+    end
+
+    # Install python2
+    config.vm.provision "shell", inline: "dnf install -y python2 python-simplejson python2-rpm python-yumdaemon"
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    node.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end

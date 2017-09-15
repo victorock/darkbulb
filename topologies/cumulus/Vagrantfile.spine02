@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for spine02 #####
+Vagrant.configure('2') do |config|
+  config.vm.define "spine02" do |device|
+    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box_version = "3.3.0"
+
+    device.vm.provider :virtualbox do |v|
+      v.memory = 512
+
+      # SPINE02,E1 (10201) -> LEAF01,E2 (20102)
+      v.customize ["modifyvm", :id, "--nic2", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=10201"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=20102"]
+
+      # SPINE02,E2 (10202) -> LEAF02,E2 (20202)
+      v.customize ["modifyvm", :id, "--nic3", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=10202"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20202"]
+
+      # SPINE02,E3 (10203) -> LEAF03,E2 (20302)
+      v.customize ["modifyvm", :id, "--nic4", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "sport=10203"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20302"]
+
+      # SPINE02,E4 (10204) -> LEAF04,E2 (20402)
+      v.customize ["modifyvm", :id, "--nic5", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "sport=10204"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dport=20402"]
+    end
+
+    # EAPI Port mapping
+    device.vm.network "forwarded_port", guest: 80, host: 12080
+    device.vm.network "forwarded_port", guest: 443, host: 12443
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    device.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end
