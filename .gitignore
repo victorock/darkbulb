@@ -1,5 +1,6 @@
 # Ansible
 provisionner/keychain/*
+!provisionner/keychain/.gitkeep
 *.retry
 
 
