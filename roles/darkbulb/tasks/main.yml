@@ -1,0 +1,10 @@
+---
+- import_tasks: gce.yml
+  tags:
+    - gce_cloud
+    - gce_cloud_instance
+
+- import_tasks: setup.yml
+  tags:
+    - darkbulb
+    - darkbulb_setup

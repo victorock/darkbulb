@@ -1,0 +1,16 @@
+---
+- name: "Darkbulb Student Environment"
+  hosts: darkbulb
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: "Load Darkbulb Configuration"
+      include_vars:
+        file: darkbulb_config.yml
+
+  tasks:
+    - name: "Setup Darkbulb Student Environment"
+      include_role:
+        name: darkbulb
+        tasks_from: setup

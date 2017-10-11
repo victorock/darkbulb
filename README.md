@@ -14,7 +14,7 @@ The Ansible Darkbulb project has been designed to be used as a toolkit focused o
 
 * Examples
 * Topologies
-* Cloud Provisioner (Future)
+* Cloud Provisioner
 
 #### Examples
 
@@ -24,7 +24,7 @@ These examples are an excellent educational reference for communicating how Ansi
 
 This content is a great source for canned demos or something you can walk-thru to illustrate automating with Ansible to a group. Some of the examples  serve as the solutions to the workshops.
 
-#### Cloud Provisioner (Future)
+#### Cloud Provisioner
 
 Lab provisioner to create topologies for personal lab environment in public clouds.
 

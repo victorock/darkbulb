@@ -1,0 +1,105 @@
+---
+- name: "Virtualbox Repo is present"
+  yum_repository:
+    name: virtualbox
+    description: "Oracle Linux / RHEL / CentOS-$releasever / $basearch - VirtualBox"
+    baseurl: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: yes
+    gpgkey: "https://www.virtualbox.org/download/oracle_vbox.asc"
+  tags:
+    - configure
+
+- name: "Ansible Repo is present"
+  yum_repository:
+    name: ansible_release
+    description: "CentOS-$releasever / $basearch - Ansible"
+    baseurl: "http://releases.ansible.com/ansible/rpm/release/epel-$releasever-$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: no
+  tags:
+    - configure
+
+- name: "Darkbulb packages state is latest"
+  yum:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - "@Development Tools"
+    - kernel-devel
+    - git
+    - ruby
+    - rubygems
+    - wget
+    - net-tools
+    - htop
+    - ansible
+    - VirtualBox-5.1
+    - https://releases.hashicorp.com/vagrant/1.9.6/vagrant_1.9.6_x86_64.rpm
+  tags:
+    - install
+
+- name: "Git clone Darkbulb content to [ /home/{{ student }}/darkbulb ]"
+  git:
+    repo: 'https://github.com/victorock/darkbulb.git'
+    version: master
+    clone: yes
+    dest: "/home/{{ student }}/darkbulb"
+    force: yes
+  tags:
+    - install
+
+- name: "Ensure student account {{ student }} exists"
+  user:
+    name: "{{ student }}"
+    createhome: yes
+    home: "/home/{{ student }}"
+    skeleton: yes
+    groups: vboxusers
+    append: yes
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  tags:
+    - configure
+
+- name: "Copy student's id_rsa.pub to authorized_keys"
+  copy:
+    src: "/home/{{ student }}/.ssh/id_rsa.pub"
+    dest: "/home/{{ student }}/.ssh/authorized_keys"
+    owner: "{{ student }}"
+    group: "{{ student }}"
+    remote_src: yes
+  tags:
+    - configure
+
+- name: "Fetch {{ student }} id_rsa"
+  fetch:
+    src: "/home/{{ student }}/.ssh/id_rsa"
+    dest: "keychain/{{ student }}/id_rsa"
+    flat: yes
+  tags:
+    - configure
+
+- name: "Fetch {{ student }} id_rsa.pub"
+  fetch:
+    src: "/home/{{ student }}/.ssh/id_rsa.pub"
+    dest: "keychain/{{ student }}/id_rsa.pub"
+    flat: yes
+  tags:
+    - configure
+
+- name: "Recursive ownership of /home/{{ student }} to {{ student }}"
+  file:
+    path: "/home/{{ student }}"
+    state: directory
+    recurse: yes
+    owner: "{{ student }}"
+    group: "{{ student }}"
+    mode: 0755
+  tags:
+    - configure

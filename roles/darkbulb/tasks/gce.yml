@@ -1,0 +1,41 @@
+---
+- name: "Create student instance"
+  gce:
+    instance_names: "{{ student }}"
+    zone: "{{ gce_cloud_instance_zone }}"
+    machine_type: "{{ gce_cloud_instance_machine_type }}"
+    image: "{{ gce_cloud_instance_image }}"
+    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+    project_id: "{{ gce_cloud_instance_project_id }}"
+    tags: "{{ gce_cloud_instance_tags }}"
+    state: present
+  register: return_gce_cloud_instance
+  tags:
+    - create
+
+- debug: var=return_gce_cloud_instance
+  when: gce_cloud_instance_debug
+  tags:
+    - create
+
+- name: "Add instance to inventory groups [ darkbulb ]"
+  add_host:
+    name: "{{ student }}"
+    ansible_host: "{{ item.public_ip }}"
+    student: "{{ student }}"
+    groupname: "darkbulb"
+  with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  tags:
+    - create
+
+- name: "Wait for SSH for student instance"
+  wait_for:
+    delay: 1
+    host: "{{ item.public_ip }}"
+    port: 22
+    state: started
+    timeout: 60
+  with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  tags:
+    - create

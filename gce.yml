@@ -1,0 +1,26 @@
+- name: "Darkbulb Lab Environment"
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  pre_tasks:
+    - name: "Load Darkbulb Configuration"
+      include_vars:
+        file: darkbulb_config.yml
+
+    - name: "Image with nested virtualization is required"
+      fail:
+        msg: |
+          1- Follow the steps https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances.
+          2- Create new image named nested-centos-7.
+          3- When done uncomment nested_configuration variable from darkbulb_config.yml
+      when: nested_virtualization is not defined
+
+  tasks:
+    - name: "Setup Darkbulb Cloud Environment"
+      include_role:
+        name: darkbulb
+        tasks_from: gce
+      with_sequence: count="{{ students|int }}" format=student%02x
+      loop_control:
+        loop_var: student
