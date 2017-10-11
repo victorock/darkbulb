@@ -43,7 +43,7 @@
   tags:
     - install
 
-- name: "Git clone Darkbulb content to [ /home/{{ student }}/darkbulb ]"
+- name: "Git clone Darkbulb content to student's home"
   git:
     repo: 'https://github.com/victorock/darkbulb.git'
     version: master
@@ -53,7 +53,7 @@
   tags:
     - install
 
-- name: "Ensure student account {{ student }} exists"
+- name: "Ensure student's account exists"
   user:
     name: "{{ student }}"
     createhome: yes
@@ -77,7 +77,7 @@
   tags:
     - configure
 
-- name: "Fetch {{ student }} id_rsa"
+- name: "Fetch student's id_rsa"
   fetch:
     src: "/home/{{ student }}/.ssh/id_rsa"
     dest: "keychain/{{ student }}/id_rsa"
@@ -85,7 +85,7 @@
   tags:
     - configure
 
-- name: "Fetch {{ student }} id_rsa.pub"
+- name: "Fetch student's id_rsa.pub"
   fetch:
     src: "/home/{{ student }}/.ssh/id_rsa.pub"
     dest: "keychain/{{ student }}/id_rsa.pub"
@@ -93,7 +93,7 @@
   tags:
     - configure
 
-- name: "Recursive ownership of /home/{{ student }} to {{ student }}"
+- name: "Recursive ownership of student's home to student"
   file:
     path: "/home/{{ student }}"
     state: directory
