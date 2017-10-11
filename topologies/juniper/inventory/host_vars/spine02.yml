@@ -1,0 +1,3 @@
+eapi_port: 12443
+switchname: spine02
+device_os: eos

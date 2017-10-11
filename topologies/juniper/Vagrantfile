@@ -14,7 +14,15 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
+
+    ansible.groups = {
+    "vqfx10k"      => ["spine1", "spine2", "leaf1", "leaf2", "leaf3" ],
+    "spine"        => ["spine1", "spine2"],
+    "leaf"         => ["leaf1", "leaf2", "leaf3" ],
+    "server"       => ["srv1", "srv2", "srv3" ],
+    "all:children" => ["vqfx10k", "server" ]
+    }
+
     ansible.playbook = "playbook.yml"
-    ansible.inventory_path = "inventory"
   end
 end
