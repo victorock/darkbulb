@@ -9,14 +9,14 @@ cloud_provider: gce
 
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
-nested_virtualization: yes
+# nested_virtualization_configured: yes
 
 # Google Computing Engine supports nested virtualization in some regions
 # Currently it is under Beta, therefore some additional steps are required to active it
 gce_zone: europe-west1-d
-gce_project_id: "ansible-network-automation"
-gce_service_account_email: "jdacosta@ansible-network-automation.iam.gserviceaccount.com"
-gce_credentials_file: "keychain/ansible-network-automation-af381a36ea68.json"
+gce_project_id: "PROJECT_ID"
+gce_service_account_email: "username@{{ gce_project_id }}.iam.gserviceaccount.com"
+gce_credentials_file: "keychain/{{ gce_project_id }}.json"
 
 # Google Computing Engine
 gce_cloud_instance_image: nested-image-centos-7
