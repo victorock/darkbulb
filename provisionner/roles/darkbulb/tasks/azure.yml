@@ -1,0 +1,47 @@
+---
+- name: Create resource group
+  azure_rm_resourcegroup:
+      name: "{{ resource_group }}"
+      location: "{{ location }}"
+  register: output
+
+- debug: var=output
+  when: playbook_debug
+
+- name: Create VM with defaults
+  azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: testvm10
+      vm_size: Standard_D1
+      admin_username: dasdadad
+      admin_password: Password123
+      short_hostname: test10
+      os_type: Linux
+      open_ports:
+        - "22-23"
+      image: "{{ image }}"
+  register: output
+
+- debug: var=output
+  when: playbook_debug
+
+- name: "Add instance to inventory groups [ darkbulb ]"
+  add_host:
+    name: "{{ student }}"
+    ansible_host: "{{ item.public_ip }}"
+    student: "{{ student }}"
+    groupname: "darkbulb"
+  with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  tags:
+    - create
+
+- name: "Wait for SSH for student instance"
+  wait_for:
+    delay: 1
+    host: "{{ item.public_ip }}"
+    port: 22
+    state: started
+    timeout: 60
+  with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  tags:
+    - create
