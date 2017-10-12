@@ -2,7 +2,7 @@
 - name: "Tower Playbook"
   hosts: tower
   become: true
-  gather_facts: false
+  gather_facts: true
 
   tasks:
     - name: "Role vagrant-base"
