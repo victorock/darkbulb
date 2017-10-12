@@ -40,7 +40,8 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--nicproperty5", "dport=20401"]
     end
 
-    # EAPI Port mapping
+    # Port mapping
+    device.vm.network "forwarded_port", guest: 22, host: 11022
     device.vm.network "forwarded_port", guest: 80, host: 11080
     device.vm.network "forwarded_port", guest: 443, host: 11443
 

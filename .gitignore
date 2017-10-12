@@ -1,8 +1,5 @@
 # Ansible
-provisionner/keychain/*
-!provisionner/keychain/README.md
 *.retry
-
 
 # Vagrant
 .vagrant

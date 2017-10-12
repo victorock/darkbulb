@@ -41,7 +41,8 @@ Vagrant.configure('2') do |config|
 
     end
 
-    # EAPI Port mapping
+    # Port mapping
+    device.vm.network "forwarded_port", guest: 22, host: 15022
     device.vm.network "forwarded_port", guest: 80, host: 15080
     device.vm.network "forwarded_port", guest: 443, host: 15443
 

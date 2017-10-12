@@ -1,5 +1,0 @@
----
-- name: Building vagrant-base configuration
-  template: >
-    src=main.conf.j2
-    dest={{ build_dir }}/common.conf.part
