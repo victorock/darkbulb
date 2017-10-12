@@ -1,5 +1,5 @@
 ---
-- name: "Student Environment"
+- name: "Student Darkbulb Environment"
   hosts: darkbulb
   become: yes
   become_method: sudo
@@ -10,23 +10,7 @@
         file: vars/main.yml
 
   tasks:
-    - name: "Setup Student Environment"
+    - name: "Setup Darkbulb Environment"
       include_role:
         name: darkbulb
         tasks_from: setup
-
-- name: "Vagrant Environment"
-  hosts: darkbulb
-  become: true
-  become_user: "{{ student }}"
-
-  pre_tasks:
-    - name: "Load Configuration"
-      include_vars:
-        file: vars/main.yml
-
-  tasks:
-    - name: "Setup Student Vagrant Environment"
-      include_role:
-        name: darkbulb
-        tasks_from: vagrant

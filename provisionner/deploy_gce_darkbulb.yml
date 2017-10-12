@@ -1,2 +1,3 @@
 - import_playbook: gce.yml
 - import_playbook: darkbulb.yml
+- import_playbook: student.yml

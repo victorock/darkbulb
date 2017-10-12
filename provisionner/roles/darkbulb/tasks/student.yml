@@ -1,0 +1,35 @@
+- name: "Git clone Darkbulb content to student's home"
+  git:
+    repo: 'https://github.com/victorock/darkbulb.git'
+    version: master
+    clone: yes
+    dest: "/home/{{ student }}/darkbulb"
+    force: no
+  tags:
+    - install
+
+- name: "Copy student's id_rsa.pub to authorized_keys"
+  copy:
+    src: "/home/{{ student }}/.ssh/id_rsa.pub"
+    dest: "/home/{{ student }}/.ssh/authorized_keys"
+    owner: "{{ student }}"
+    group: "{{ student }}"
+    remote_src: yes
+  tags:
+    - configure
+
+- name: "Fetch student's id_rsa"
+  fetch:
+    src: "/home/{{ student }}/.ssh/id_rsa"
+    dest: "keychain/{{ student }}/id_rsa"
+    flat: yes
+  tags:
+    - configure
+
+- name: "Fetch student's id_rsa.pub"
+  fetch:
+    src: "/home/{{ student }}/.ssh/id_rsa.pub"
+    dest: "keychain/{{ student }}/id_rsa.pub"
+    flat: yes
+  tags:
+    - configure

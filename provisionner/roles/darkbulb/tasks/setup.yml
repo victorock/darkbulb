@@ -43,16 +43,6 @@
   tags:
     - install
 
-- name: "Git clone Darkbulb content to student's home"
-  git:
-    repo: 'https://github.com/victorock/darkbulb.git'
-    version: master
-    clone: yes
-    dest: "/home/{{ student }}/darkbulb"
-    force: yes
-  tags:
-    - install
-
 - name: "Ensure student's account exists"
   user:
     name: "{{ student }}"
@@ -64,42 +54,5 @@
     generate_ssh_key: yes
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
-  tags:
-    - configure
-
-- name: "Copy student's id_rsa.pub to authorized_keys"
-  copy:
-    src: "/home/{{ student }}/.ssh/id_rsa.pub"
-    dest: "/home/{{ student }}/.ssh/authorized_keys"
-    owner: "{{ student }}"
-    group: "{{ student }}"
-    remote_src: yes
-  tags:
-    - configure
-
-- name: "Fetch student's id_rsa"
-  fetch:
-    src: "/home/{{ student }}/.ssh/id_rsa"
-    dest: "keychain/{{ student }}/id_rsa"
-    flat: yes
-  tags:
-    - configure
-
-- name: "Fetch student's id_rsa.pub"
-  fetch:
-    src: "/home/{{ student }}/.ssh/id_rsa.pub"
-    dest: "keychain/{{ student }}/id_rsa.pub"
-    flat: yes
-  tags:
-    - configure
-
-- name: "Recursive ownership of student's home to student"
-  file:
-    path: "/home/{{ student }}"
-    state: directory
-    recurse: yes
-    owner: "{{ student }}"
-    group: "{{ student }}"
-    mode: 0755
   tags:
     - configure
