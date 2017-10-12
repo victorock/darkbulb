@@ -11,6 +11,10 @@ Vagrant.configure('2') do |config|
       v.cpus = 1
     end
 
+    # Port mapping
+    device.vm.network "forwarded_port", guest: 80, host: 80
+    device.vm.network "forwarded_port", guest: 443, host: 443
+
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     node.vm.synced_folder ".", "/vagrant", disabled: true
 

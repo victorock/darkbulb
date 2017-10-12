@@ -1,0 +1,3 @@
+---
+- import_playbook: tower.yml
+- import_playbook: node.yml

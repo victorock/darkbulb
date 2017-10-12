@@ -3,13 +3,9 @@
   tags:
     - always
 
-- name: RHEL | Install Packages
+- name: RHEL | Install {{ firewall_name }} and libselinux-python
   yum:
     name:
-      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-      - python2-rpm
-      - python-firewall
-      - python-yumdaemon
       - libselinux-python
       - "{{ firewall_name }}"
     state: present
