@@ -6,8 +6,8 @@
 - name: "Add Vagrant Boxes"
   shell:
     vagrant box add "{{ item }}" --provider virtualbox
-  args:
-    creates: .vagrant.d/boxes/centos-VAGRANTSLASH-7
+  when:
+    - item not in return_vagrant_box_list.stdout
   with_items:
     - centos/7
     - juniper/vqfx10k-re
