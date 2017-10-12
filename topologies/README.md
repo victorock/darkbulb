@@ -86,26 +86,27 @@ The goals is to make it easier to expand to multiple notebooks or allow the "Dat
 Ansible Tower and Servers based on Centos7.
 This will spawn the servers connected to Leaf switches and Ansible server connected to Vagrant-MGMT Network
 
-* Enter the Ansible Lab Folder:
+*Enter the Ansible Lab Folder*
+
 ```
 cd <darkbulb>/topologies/Ansible
 ```
 
-* Launch the Lab
+*Launch the Lab Environment*
 
-***1 Tower and 0 Servers***
+>1 Tower and 0 Server
 ```
 ansible-playbook play.yml -e topology=1t0s
 ```
-***1 Tower and 1 Servers***
+>1 Tower and 1 Server
 ```
 ansible-playbook play.yml -e topology=1t1s
 ```
-***1 Tower and 2 Servers***
+>1 Tower and 2 Server
 ```
 ansible-playbook play.yml -e topology=1t2s
 ```
-***0 Tower and 0 Servers***
+>0 Tower and 0 Server
 ```
 ansible-playbook play.yml -e topology=0t0s
 ```
@@ -115,38 +116,39 @@ ansible-playbook play.yml -e topology=0t0s
 Network Devices based on Cumulus VX.
 Cumulus does provides VX images in Vagrant Box public repository.
 
-* Enter the Cumulus Lab folder:
+*Enter the Cumulus Lab folder:*
+
 ```
 cd <darkbulb>/topologies/cumulus
 ```
 
-* Launch the Lab Topology
+*Launch the Lab Environment*
 
-***0 Spines and 0 Leafs***
+>0 Spines and 0 Leaf
 ```
 ansible-playbook play.yml -e topology=0s0l
 ```
-***1 Spines and 0 Leafs***
+>1 Spines and 0 Leaf
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***1 Spines and 1 Leafs***
+>1 Spines and 1 Leaf
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***2 Spines and 1 Leafs***
+>2 Spines and 1 Leaf
 ```
 ansible-playbook play.yml -e topology=2s1l
 ```
-***2 Spines and 2 Leafs***
+>2 Spines and 2 Leaf
 ```
 ansible-playbook play.yml -e topology=2s2l
 ```
-***2 Spines and 3 Leafs***
+>2 Spines and 3 Leaf
 ```
 ansible-playbook play.yml -e topology=2s3l
 ```
-***2 Spines and 4 Leafs***
+>2 Spines and 4 Leaf
 ```
 ansible-playbook play.yml -e topology=2s4l
 ```
@@ -155,38 +157,39 @@ ansible-playbook play.yml -e topology=2s4l
 Network Devices based on Juniper vQFX10K.
 Juniper does provides vQFX images in Vagrant Box public repository.
 
-* Enter the Juniper Lab folder:
+*Enter the Juniper Lab folder:*
+
 ```
 cd <darkbulb>/topologies/juniper
 ```
 
-* Launch the Lab Topology
+*Launch the Lab Environment*
 
-***0 Spines and 0 Leafs***
+>0 Spines and 0 Leaf
 ```
 ansible-playbook play.yml -e topology=0s0l
 ```
-***1 Spine and 0 Leafs***
+>1 Spine and 0 Leaf
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***1 Spines and 1 Leaf***
+>1 Spines and 1 Leaf
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***2 Spines and 1 Leaf***
+>2 Spines and 1 Leaf
 ```
 ansible-playbook play.yml -e topology=2s1l
 ```
-***2 Spines and 2 Leafs***
+>2 Spines and 2 Leaf
 ```
 ansible-playbook play.yml -e topology=2s2l
 ```
-***2 Spines and 3 Leafs***
+>2 Spines and 3 Leaf
 ```
 ansible-playbook play.yml -e topology=2s3l
 ```
-***2 Spines and 4 Leafs***
+>2 Spines and 4 Leafs
 ```
 ansible-playbook play.yml -e topology=2s4l
 ```
@@ -195,19 +198,20 @@ ansible-playbook play.yml -e topology=2s4l
 
 Just cherry devices like spine, leafs from different vendors and chose what you want to spawn.
 
-Ex:
-***2 Spines from Juniper:***
+**Ex:**
+
+>2 Spines from Juniper:
 ```
     cd topologies/juniper
     ansible-playbook play.yml -e device=spine01
     ansible-playbook play.yml -e device=spine02
 ```
-***1 Leaf from Cumulus:***
+>1 Leaf from Cumulus:
 ```
     cd topologies/cumulus
     ansible-playbook play.yml -e device=leaf01
 ```
-***1 Server from Ansible:***
+>1 Server from Ansible:
 > server01 is connected to leaf01 and leaf02)
 ```
     cd topologies/ansible
