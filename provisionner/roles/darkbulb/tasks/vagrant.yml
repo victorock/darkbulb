@@ -2,6 +2,7 @@
   shell:
     vagrant box list
   register: return_vagrant_box_list
+  changed_when: false
 
 - name: "Add Vagrant Boxes"
   shell:
