@@ -196,7 +196,7 @@ ansible-playbook play.yml -e topology=2s4l
 
 ### How to blend and spawn your topology
 
-Just cherry devices like spine, leafs from different vendors and chose what you want to spawn.
+Just chose devices like spine, leafs from different vendors and chose what you want to spawn.
 
 **Ex:**
 
@@ -211,8 +211,7 @@ Just cherry devices like spine, leafs from different vendors and chose what you 
     cd topologies/cumulus
     ansible-playbook play.yml -e device=leaf01
 ```
->1 Server from Ansible:
-> server01 is connected to leaf01 and leaf02)
+>1 Server from Ansible (POD1):
 ```
     cd topologies/ansible
     ansible-playbook play.yml -e device=server01
