@@ -1,3 +1,5 @@
+username: instructor
+
 common_node_config_options:
   - dest: /etc/ssh/sshd_config
     regexp: '^#?Port'
@@ -27,7 +29,7 @@ common_node_config_options:
 firewall_rules:
   - service: http
   - service: https
-  - service: ssh
+  - service: sshd
 
 firewalld_service: firewalld
 common_ssh_service_name: ssh
