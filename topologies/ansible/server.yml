@@ -1,6 +1,6 @@
 ---
-- name: "Node Playbook"
-  hosts: node
+- name: "Server Playbook"
+  hosts: server
   become: true
   gather_facts: true
 
