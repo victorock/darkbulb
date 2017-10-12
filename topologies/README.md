@@ -92,19 +92,20 @@ cd <darkbulb>/topologies/Ansible
 ```
 
 * Launch the Lab
-**1 Tower and 0 Servers**
+
+***1 Tower and 0 Servers***
 ```
 ansible-playbook play.yml -e topology=1t0s
 ```
-**1 Tower and 1 Servers**
+***1 Tower and 1 Servers***
 ```
 ansible-playbook play.yml -e topology=1t1s
 ```
-**1 Tower and 2 Servers**
+***1 Tower and 2 Servers***
 ```
 ansible-playbook play.yml -e topology=1t2s
 ```
-**0 Tower and 0 Servers**
+***0 Tower and 0 Servers***
 ```
 ansible-playbook play.yml -e topology=0t0s
 ```
@@ -120,31 +121,32 @@ cd <darkbulb>/topologies/cumulus
 ```
 
 * Launch the Lab Topology
-**0 Spines and 0 Leafs**
+
+***0 Spines and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=0s0l
 ```
-**1 Spines and 0 Leafs**
+***1 Spines and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-**1 Spines and 1 Leafs**
+***1 Spines and 1 Leafs***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-**2 Spines and 1 Leafs**
+***2 Spines and 1 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s1l
 ```
-**2 Spines and 2 Leafs**
+***2 Spines and 2 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s2l
 ```
-**2 Spines and 3 Leafs**
+***2 Spines and 3 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s3l
 ```
-**2 Spines and 4 Leafs**
+***2 Spines and 4 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s4l
 ```
@@ -159,31 +161,31 @@ cd <darkbulb>/topologies/juniper
 ```
 
 * Launch the Lab Topology
-**0 Spines and 0 Leafs**
+***0 Spines and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=0s0l
 ```
-**1 Spines and 0 Leafs**
+***1 Spines and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-**1 Spines and 1 Leafs**
+***1 Spines and 1 Leafs***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-**2 Spines and 1 Leafs**
+***2 Spines and 1 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s1l
 ```
-**2 Spines and 2 Leafs**
+***2 Spines and 2 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s2l
 ```
-**2 Spines and 3 Leafs**
+***2 Spines and 3 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s3l
 ```
-**2 Spines and 4 Leafs**
+***2 Spines and 4 Leafs***
 ```
 ansible-playbook play.yml -e topology=2s4l
 ```
@@ -193,18 +195,18 @@ ansible-playbook play.yml -e topology=2s4l
 Just cherry devices like spine, leafs from different vendors and chose what you want to spawn.
 
 Ex:
-* 2 Spines from Juniper:
+***2 Spines from Juniper:***
 ```
     cd topologies/juniper
     ansible-playbook play.yml -e device=spine01
     ansible-playbook play.yml -e device=spine02
 ```
-* 1 Leaf from Cumulus:
+***1 Leaf from Cumulus:***
 ```
     cd topologies/cumulus
     ansible-playbook play.yml -e device=leaf01
 ```
-* 1 Server from Ansible (The one connected to leaf01):
+***1 Server from Ansible (The one connected to leaf01):***
 ```
     cd topologies/ansible
     ansible-playbook play.yml -e device=server01
