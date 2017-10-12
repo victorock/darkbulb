@@ -1,6 +1,13 @@
+- name: "List Vagrant Boxes"
+  shell:
+    vagrant box list
+  register: return_vagrant_box_list
+
 - name: "Add Vagrant Boxes"
-  command:
-    vagrant box add "{{ item }}"
+  shell:
+    vagrant box add "{{ item }}" --provider virtualbox
+    args:
+      creates: .vagrant.d/boxes/centos-VAGRANTSLASH-7
   with_items:
     - centos/7
     - juniper/vqfx10k-re
