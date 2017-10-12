@@ -4,7 +4,7 @@ students: 1
 
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
-nested_virtualization_configured: yes
+# nested_virtualization_configured: yes
 
 # Google Computing Engine supports nested virtualization in some regions
 # Currently it is under Beta, therefore some additional steps are required to active it
