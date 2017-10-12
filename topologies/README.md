@@ -161,19 +161,20 @@ cd <darkbulb>/topologies/juniper
 ```
 
 * Launch the Lab Topology
+
 ***0 Spines and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=0s0l
 ```
-***1 Spines and 0 Leafs***
+***1 Spine and 0 Leafs***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***1 Spines and 1 Leafs***
+***1 Spines and 1 Leaf***
 ```
 ansible-playbook play.yml -e topology=1s0l
 ```
-***2 Spines and 1 Leafs***
+***2 Spines and 1 Leaf***
 ```
 ansible-playbook play.yml -e topology=2s1l
 ```
@@ -206,7 +207,8 @@ Ex:
     cd topologies/cumulus
     ansible-playbook play.yml -e device=leaf01
 ```
-***1 Server from Ansible (The one connected to leaf01):***
+***1 Server from Ansible:***
+> server01 is connected to leaf01 and leaf02)
 ```
     cd topologies/ansible
     ansible-playbook play.yml -e device=server01
