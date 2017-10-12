@@ -1,2 +1,7 @@
 firewall_name: iptables
 common_ssh_service_name: sshd
+
+firewall_rules:
+  - service: http
+  - service: https
+  - service: "{{ common_ssh_service_name }}"

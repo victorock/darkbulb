@@ -1,1 +1,6 @@
 common_ssh_service_name: ssh
+
+firewall_rules:
+  - service: http
+  - service: https
+  - service: "{{ common_ssh_service_name }}"

@@ -29,7 +29,7 @@ common_node_config_options:
 firewall_rules:
   - service: http
   - service: https
-  - service: sshd
+  - service: ssh
 
 firewalld_service: firewalld
 common_ssh_service_name: ssh
