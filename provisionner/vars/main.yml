@@ -1,21 +1,16 @@
 ---
-# Students
-students: 2
-
-# The Cloud Provider to use
-# Currently GCE is the only supported cloud_provider
-# TODO: Azure
-cloud_provider: gce
+# Number of Students
+students: 1
 
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
-# nested_virtualization_configured: yes
+nested_virtualization_configured: yes
 
 # Google Computing Engine supports nested virtualization in some regions
 # Currently it is under Beta, therefore some additional steps are required to active it
 gce_zone: europe-west1-d
 gce_project_id: "PROJECT_ID"
-gce_service_account_email: "username@{{ gce_project_id }}.iam.gserviceaccount.com"
+gce_service_account_email: "USERNAME@{{ gce_project_id }}.iam.gserviceaccount.com"
 gce_credentials_file: "keychain/{{ gce_project_id }}.json"
 
 # Google Computing Engine

@@ -1,0 +1,10 @@
+- name: "Add Vagrant Boxes"
+  command:
+    vagrant box add "{{ item }}"
+  with_items:
+    - centos/7
+    - juniper/vqfx10k-re
+    - CumulusCommunity/cumulus-vx
+  tags:
+    - box
+    - box_add

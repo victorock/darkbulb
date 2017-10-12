@@ -1,0 +1,20 @@
+---
+- name: "Leaf Playbook"
+  hosts: leaf
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: remove host build temp directory
+      file:
+        path: "{{ build_dir }}"
+        state: absent
+
+    - name: create host build temp directory
+      file:
+        path: "{{ build_dir }}"
+        state: directory
+
+    - name: "Role vagrant-base"
+      include_role:
+        name: vagrant-base

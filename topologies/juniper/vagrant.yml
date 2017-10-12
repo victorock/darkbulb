@@ -1,3 +1,126 @@
 ---
-- import_playbook: spine.yml
-- import_playbook: leaf.yml
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  pre_tasks:
+    - name: "Topology"
+      fail:
+        msg: |
+          The following topologies are available:
+            0- 0s0l (0 Spine, 0 Leafs)
+            1- 1s0l (1 Spine, 0 Leafs)
+            2- 2s1l (1 Spine, 1 Leafs)
+            3- 2s2l (1 Spine, 2 Leafs)
+            4- 2s3l (1 Spine, 3 Leafs)
+            5- 2s4l (1 Spine, 4 Leafs)
+
+          Follow below few examples showing how to chose your topology:
+            -e topology=1
+            -e topology=2
+            -e topology=2s2l
+            -e topology=2s3l
+            -e topology=5
+
+          In order to destroy the topology:
+            -e topology=0
+
+      when: topology is not defined
+
+  tasks:
+    - name: "Topology 0s0l"
+      command:
+        vagrant destroy -f
+      args:
+        chdir: files
+      when:
+        - ( topology == '0s0l' ) or ( topology == '0' )
+
+    - name: "Topology 1s0l"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - files/.vagrant/machines/spine01/virtualbox/id
+      when:
+        - ( topology == '1s0l' ) or ( topology == '1' )
+      with_items:
+        - spine01
+
+    - name: "Topology 1s1l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '1s1l' ) or ( topology == '2' )
+      with_items:
+        - spine01
+        - leaf01
+
+    - name: "Topology 2s1l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s1l' ) or ( topology == '3' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+
+    - name: "Topology 2s2l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s2l' ) or ( topology == '4' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+
+    - name: "Topology 2s3l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s3l' ) or ( topology == '5' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+        - leaf03
+
+    - name: "Topology 2s4l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s4l' ) or ( topology == '6' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+        - leaf03
+        - leaf04

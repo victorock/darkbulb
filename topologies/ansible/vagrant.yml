@@ -1,3 +1,77 @@
 ---
-- import_playbook: tower.yml
-- import_playbook: node.yml
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  pre_tasks:
+    - name: "Topology"
+      fail:
+        msg: |
+          The following topologies are available:
+            0- 0t0s (0 Tower, 0 Servers)
+            1- 1t0s (1 Tower, 0 Servers)
+            2- 1t1s (1 Tower, 1 Servers)
+            3- 1t2s (1 Tower, 2 Servers)
+
+          Follow below few examples showing how to chose your topology:
+            -e topology=1
+            -e topology=2
+            -e topology=1t1s
+            -e topology=1t2s
+
+          In order to destroy the topology:
+            -e topology=0
+
+      when: topology is not defined
+
+  tasks:
+    - name: "Topology 0t0n"
+      command:
+        vagrant destroy -f
+      args:
+        chdir: files
+      when:
+        - ( topology == '0t0n' ) or ( topology == '0' )
+
+    - name: "Topology 1t0s"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '1t0s' ) or ( topology == '1' )
+      with_items:
+        - tower
+
+    - name: "Topology 1t1s"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '1t1s' ) or ( topology == '2' )
+      with_items:
+        - tower
+        - server01
+
+      - name: "Topology 1t2s"
+        command:
+          vagrant up {{ item | quote }}
+        register: return_vagrant_up
+        args:
+          chdir: files
+          creates:
+            - ".vagrant/machines/{{ item }}/virtualbox/id"
+        when:
+          - ( topology == '1t2s' ) or ( topology == '3' )
+        with_items:
+          - tower
+          - server01
+          - server02
