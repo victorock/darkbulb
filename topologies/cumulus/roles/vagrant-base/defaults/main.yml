@@ -28,14 +28,6 @@ firewall_rules:
   - service: http
   - service: https
   - service: ssh
-  - port: 5432
-    protocol: udp
-  - port: 5672
-    protocol: udp
-  - port: 5432
-    protocol: tcp
-  - port: 5672
-    protocol: tcp
 
 firewalld_service: firewalld
 common_ssh_service_name: ssh

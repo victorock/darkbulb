@@ -8,7 +8,7 @@
   static: no
   when: ansible_distribution == 'Ubuntu'
 
-- name: Include Cumulus tasks
+- name: Include Debian tasks
   include: "{{ ansible_distribution }}.yml"
   static: no
   when: ansible_distribution == 'Debian'

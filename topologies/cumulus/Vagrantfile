@@ -13,7 +13,13 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
-    ansible.inventory_path = "inventory"
+
+    ansible.groups = {
+      "juniper"      => ["spine01", "spine02", "leaf01", "leaf02", "leaf03" ],
+      "spine"        => ["spine01", "spine02"],
+      "leaf"         => ["leaf01", "leaf02", "leaf03", "leaf04" ]
+    }
+
+    ansible.playbook = "vagrant.yml"
   end
 end
