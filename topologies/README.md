@@ -96,19 +96,19 @@ cd <darkbulb>/topologies/Ansible
 
 >1 Tower and 0 Server
 ```
-ansible-playbook play.yml -e topology=1t0s
+ansible-playbook build.yml -e topology=1t0s
 ```
 >1 Tower and 1 Server
 ```
-ansible-playbook play.yml -e topology=1t1s
+ansible-playbook build.yml -e topology=1t1s
 ```
 >1 Tower and 2 Server
 ```
-ansible-playbook play.yml -e topology=1t2s
+ansible-playbook build.yml -e topology=1t2s
 ```
 >0 Tower and 0 Server
 ```
-ansible-playbook play.yml -e topology=0t0s
+ansible-playbook build.yml -e topology=0t0s
 ```
 
 ### Cumulus
@@ -126,31 +126,31 @@ cd <darkbulb>/topologies/cumulus
 
 >0 Spines and 0 Leaf
 ```
-ansible-playbook play.yml -e topology=0s0l
+ansible-playbook build.yml -e topology=0s0l
 ```
 >1 Spines and 0 Leaf
 ```
-ansible-playbook play.yml -e topology=1s0l
+ansible-playbook build.yml -e topology=1s0l
 ```
 >1 Spines and 1 Leaf
 ```
-ansible-playbook play.yml -e topology=1s0l
+ansible-playbook build.yml -e topology=1s0l
 ```
 >2 Spines and 1 Leaf
 ```
-ansible-playbook play.yml -e topology=2s1l
+ansible-playbook build.yml -e topology=2s1l
 ```
 >2 Spines and 2 Leaf
 ```
-ansible-playbook play.yml -e topology=2s2l
+ansible-playbook build.yml -e topology=2s2l
 ```
 >2 Spines and 3 Leaf
 ```
-ansible-playbook play.yml -e topology=2s3l
+ansible-playbook build.yml -e topology=2s3l
 ```
 >2 Spines and 4 Leaf
 ```
-ansible-playbook play.yml -e topology=2s4l
+ansible-playbook build.yml -e topology=2s4l
 ```
 
 ### Juniper
@@ -167,31 +167,31 @@ cd <darkbulb>/topologies/juniper
 
 >0 Spines and 0 Leaf
 ```
-ansible-playbook play.yml -e topology=0s0l
+ansible-playbook build.yml -e topology=0s0l
 ```
 >1 Spine and 0 Leaf
 ```
-ansible-playbook play.yml -e topology=1s0l
+ansible-playbook build.yml -e topology=1s0l
 ```
 >1 Spines and 1 Leaf
 ```
-ansible-playbook play.yml -e topology=1s0l
+ansible-playbook build.yml -e topology=1s0l
 ```
 >2 Spines and 1 Leaf
 ```
-ansible-playbook play.yml -e topology=2s1l
+ansible-playbook build.yml -e topology=2s1l
 ```
 >2 Spines and 2 Leaf
 ```
-ansible-playbook play.yml -e topology=2s2l
+ansible-playbook build.yml -e topology=2s2l
 ```
 >2 Spines and 3 Leaf
 ```
-ansible-playbook play.yml -e topology=2s3l
+ansible-playbook build.yml -e topology=2s3l
 ```
 >2 Spines and 4 Leafs
 ```
-ansible-playbook play.yml -e topology=2s4l
+ansible-playbook build.yml -e topology=2s4l
 ```
 
 ### How to blend and spawn your topology
@@ -203,16 +203,16 @@ Just chose devices like spine, leafs from different vendors and chose what you w
 >2 Spines from Juniper:
 ```
     cd topologies/juniper
-    ansible-playbook play.yml -e device=spine01
-    ansible-playbook play.yml -e device=spine02
+    ansible-playbook build.yml -e device=spine01
+    ansible-playbook build.yml -e device=spine02
 ```
 >1 Leaf from Cumulus:
 ```
     cd topologies/cumulus
-    ansible-playbook play.yml -e device=leaf01
+    ansible-playbook build.yml -e device=leaf01
 ```
 >1 Server from Ansible (POD1):
 ```
     cd topologies/ansible
-    ansible-playbook play.yml -e device=server01
+    ansible-playbook build.yml -e device=server01
 ```
