@@ -77,156 +77,104 @@ SRV02:
 The topologies are created adopting Virtualbox tunnels to provide the interfaces connectivity.
 The goals is to make it easier to expand to multiple notebooks or allow the "Data Centers Interconnection" (Notebook <-> Notebook).
 
-
 * Ansible
-
 * Cumulus
-
 * Juniper
 
 ### Ansible
 
 Ansible Tower and Servers based on Centos7.
-
 This will spawn the servers connected to Leaf switches and Ansible server connected to Vagrant-MGMT Network
 
 * Enter the Ansible Lab Folder:
-
     cd <darkbulb>/topologies/Ansible
 
 * Launch the Lab
-
   * 1 Tower and 0 Servers
-
     ansible-playbook play.yml -e topology=1t0s
 
   * 1 Tower and 1 Servers
-
     ansible-playbook play.yml -e topology=1t1s
 
-
   * 1 Tower and 2 Servers
-
     ansible-playbook play.yml -e topology=1t2s
 
-
   * 0 Tower and 0 Servers
-
     ansible-playbook play.yml -e topology=0t0s
-
 
 ### Cumulus
 
 Network Devices based on Cumulus VX.
-
 Cumulus does provides VX images in Vagrant Box public repository.
 
 * Enter the Cumulus Lab folder:
-
     cd <darkbulb>/topologies/cumulus
 
 * Launch the Lab Topology
-
     * 0 Spines and 0 Leafs
-
       ansible-playbook play.yml -e topology=0s0l
 
     * 1 Spines and 0 Leafs
-
       ansible-playbook play.yml -e topology=1s0l
 
     * 1 Spines and 1 Leafs
-
       ansible-playbook play.yml -e topology=1s0l
 
-
     * 2 Spines and 1 Leafs
-
       ansible-playbook play.yml -e topology=2s1l
 
-
     * 2 Spines and 2 Leafs
-
       ansible-playbook play.yml -e topology=2s2l
 
-
     * 2 Spines and 3 Leafs
-
       ansible-playbook play.yml -e topology=2s3l
 
-
     * 2 Spines and 4 Leafs
-
       ansible-playbook play.yml -e topology=2s4l
 
 ### Juniper
-
 Network Devices based on Juniper vQFX10K.
-
 Juniper does provides vQFX images in Vagrant Box public repository.
 
 * Enter the Juniper Lab folder:
-
     cd <darkbulb>/topologies/juniper
 
 * Launch the Lab
-
     * 0 Spines and 0 Leafs
-
       ansible-playbook play.yml -e topology=0s0l
 
     * 1 Spines and 0 Leafs
-
       ansible-playbook play.yml -e topology=1s0l
 
     * 1 Spines and 1 Leafs
-
       ansible-playbook play.yml -e topology=1s0l
 
-
     * 2 Spines and 1 Leafs
-
       ansible-playbook play.yml -e topology=2s1l
 
-
     * 2 Spines and 2 Leafs
-
       ansible-playbook play.yml -e topology=2s2l
 
-
     * 2 Spines and 3 Leafs
-
       ansible-playbook play.yml -e topology=2s3l
 
-
     * 2 Spines and 4 Leafs
-
       ansible-playbook play.yml -e topology=2s4l
-
-
 
 ### How to blend and spawn your topology
 
 Just cherry devices like spine, leafs from different vendors and chose what you want to spawn.
 
 Ex:
-
 * 2 Spines from Juniper:
-
     cd topologies/juniper
-
     ansible-playbook play.yml -e device=spine01
-
     ansible-playbook play.yml -e device=spine02
 
 * 1 Leaf from Cumulus:
-
     cd topologies/cumulus
-
     ansible-playbook play.yml -e device=leaf01
 
 * 1 Server from Ansible (The one connected to leaf01):
-
     cd topologies/ansible
-
     ansible-playbook play.yml -e device=server01

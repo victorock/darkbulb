@@ -14,7 +14,9 @@ The Ansible Darkbulb project has been designed to be used as a toolkit focused o
 
 * Examples
 * Topologies
-* Cloud Provisioner
+* Provisioner
+  * Google Computing Engine
+  * Azure (Future)
 
 #### Examples
 
@@ -24,12 +26,21 @@ These examples are an excellent educational reference for communicating how Ansi
 
 This content is a great source for canned demos or something you can walk-thru to illustrate automating with Ansible to a group. Some of the examples  serve as the solutions to the workshops.
 
-#### Cloud Provisioner
+#### Provisioner
 
-Lab provisioner to create topologies for personal lab environment in public clouds.
+It will provision everything that you need to run your personal lab environment in public clouds.
+
+Howto (GCE):
+
+* Setup your cloud account.
+* Copy GCE service account generated file to keychain folder.
+* Register your ssh public key in GCE associated as "instructor" user.
+* Add your ssh-keys to your local keychain (ssh-add <file>).
+* Create image with nested virtualisation.
+* Edit the configuration file: vars/main.yml
+* Play ansible-playbook deploy_gce_darkbulb.yml
 
 ### Requirements
-
 
 * Modern HTML5 Standard Compliant Web Browser.
 * A recent stable version of Python 2.7.
