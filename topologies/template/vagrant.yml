@@ -16,6 +16,15 @@
             4- 2s3l (1 Spine, 3 Leafs)
             5- 2s4l (1 Spine, 4 Leafs)
 
+          The following devices are available:
+            0- none
+            11- spine01
+            12- spine02
+            21- leaf01
+            22- leaf02
+            23- leaf03
+            24- leaf04
+
           Follow below few examples showing how to chose your topology:
             -e topology=1
             -e topology=2
@@ -26,7 +35,9 @@
           In order to destroy the topology:
             -e topology=0
 
-      when: topology is not defined
+      when:
+        - topology is not defined
+        - device is not defined
 
   tasks:
     - name: "Topology 0s0l"
@@ -123,4 +134,76 @@
         - spine02
         - leaf02
         - leaf03
+        - leaf04
+
+    - name: "Device spine01"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'spine01' ) or ( device == '11' )
+      with_items:
+        - spine01
+
+    - name: "Device spine02"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'spine02' ) or ( device == '12' )
+      with_items:
+        - spine02
+
+    - name: "Device leaf01"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf01' ) or ( device == '21' )
+      with_items:
+        - leaf01
+
+    - name: "Device leaf02"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf02' ) or ( device == '22' )
+      with_items:
+        - leaf02
+
+    - name: "Device leaf03"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf03' ) or ( device == '23' )
+      with_items:
+        - leaf03
+
+    - name: "Device leaf04"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf04' ) or ( device == '24' )
+      with_items:
         - leaf04

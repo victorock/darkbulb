@@ -14,6 +14,11 @@
             2- 1t1s (1 Tower, 1 Servers)
             3- 1t2s (1 Tower, 2 Servers)
 
+          The following devices are available:
+            11- tower
+            21- server01
+            22- server02
+
           Follow below few examples showing how to chose your topology:
             -e topology=1
             -e topology=2
@@ -61,17 +66,56 @@
         - tower
         - server01
 
-      - name: "Topology 1t2s"
-        command:
-          vagrant up {{ item | quote }}
-        register: return_vagrant_up
-        args:
-          chdir: files
-          creates:
-            - ".vagrant/machines/{{ item }}/virtualbox/id"
-        when:
-          - ( topology == '1t2s' ) or ( topology == '3' )
-        with_items:
-          - tower
-          - server01
-          - server02
+    - name: "Topology 1t2s"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '1t2s' ) or ( topology == '3' )
+      with_items:
+        - tower
+        - server01
+        - server02
+
+    - name: "Device Tower"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'tower' ) or ( topology == '11' )
+      with_items:
+        - tower
+
+    - name: "Topology Server01"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == 'server01' ) or ( topology == '21' )
+      with_items:
+        - server01
+
+    - name: "Topology Server02"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == 'server02' ) or ( topology == '22' )
+      with_items:
+        - server02
