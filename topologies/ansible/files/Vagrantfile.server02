@@ -26,9 +26,9 @@ Vagrant.configure('2') do |config|
     end
 
     # Port mapping
-    node.vm.network "forwarded_port", guest: 22, host: 22022
-    node.vm.network "forwarded_port", guest: 80, host: 22080
-    node.vm.network "forwarded_port", guest: 443, host: 22443
+    node.vm.network "forwarded_port", guest: 22, host: 22022, protocol: "tcp"
+    node.vm.network "forwarded_port", guest: 80, host: 22080, protocol: "tcp"
+    node.vm.network "forwarded_port", guest: 443, host: 22443, protocol: "tcp"
 
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     node.vm.synced_folder ".", "/vagrant", disabled: true
