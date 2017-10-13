@@ -1,6 +1,7 @@
 ---
 - name: "Leaf Playbook"
   hosts: leaf
+  become: true
   gather_facts: true
 
   tasks:
