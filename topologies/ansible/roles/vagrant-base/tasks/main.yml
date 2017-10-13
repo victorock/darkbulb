@@ -1,3 +1,4 @@
+---
 - name: "Ansible Repo is present"
   yum_repository:
     name: ansible_release
