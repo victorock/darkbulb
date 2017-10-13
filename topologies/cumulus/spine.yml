@@ -5,16 +5,6 @@
   gather_facts: true
 
   tasks:
-    - name: remove host build temp directory
-      file:
-        path: "{{ build_dir }}"
-        state: absent
-
-    - name: create host build temp directory
-      file:
-        path: "{{ build_dir }}"
-        state: directory
-
     - name: "Role vagrant-base"
       include_role:
         name: vagrant-base
