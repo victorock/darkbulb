@@ -1,0 +1,10 @@
+---
+- name: "Ensure directory {{ junos_conf_dir }} is present"
+  file:
+    path: "{{ junos_conf_dir }}"
+    state: directory
+
+- name: "Assemble configurations from {{ build_dir }} to {{ junos_conf }}"
+  assemble:
+    src: "{{ build_dir }}"
+    dest: "{{ junos_conf }}"

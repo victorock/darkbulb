@@ -1,0 +1,9 @@
+- name: "Fetch configuration"
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Getting config ... please wait
+      junos_get_config:
+        dest: "{{ junos_conf }}"

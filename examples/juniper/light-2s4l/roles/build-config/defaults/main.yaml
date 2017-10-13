@@ -1,0 +1,3 @@
+junos_conf_dir: configs
+junos_conf_file: "{{ inventory_hostname }}.conf"
+junos_conf: "{{ junos_conf_dir }}/{{ junos_conf_file }}"
