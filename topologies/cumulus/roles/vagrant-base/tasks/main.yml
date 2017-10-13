@@ -1,2 +1,29 @@
 ---
-# tasks file for vagrant-base
+- name: "Ansible Repo is present"
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+    state: present
+    update_cache: yes
+  tags:
+    - configure
+
+- name: "Ansible Repo Key is present"
+  apt_key:
+    id: 93C4A3FD7BB9C367
+    keyserver: keyserver.ubuntu.com
+    state: present
+  tags:
+    - configure
+
+- name: "Baseline packages state is latest"
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - git
+    - wget
+    - net-tools
+  tags:
+    - install
