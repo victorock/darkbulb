@@ -1,0 +1,20 @@
+- name: Generate and Deploy Configuration
+  hosts: juniper
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "gather_facts: junos"
+      junos_facts:
+
+    - name: "Build configuration"
+      template:
+        src: vqfx.conf.j2
+        dest: "/tmp/{{ inventory_hostname }}.conf"
+
+    - name: "Deploy config to device ... please wait"
+      junos_install_config:
+        file: "/tmp/{{ inventory_hostname }}.conf"
+        overwrite: yes
+        replace: no
+        logfile: /tmp/changes.log
