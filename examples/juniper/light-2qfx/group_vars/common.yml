@@ -1,6 +1,2 @@
 junos_conf_dir: "configs"
 junos_conf_file_path: "{{ junos_conf_dir }}/{{ inventory_hostname }}.conf"
-
-underlay:
-  mtu_phy_int: 1600
-  mtu_logical_int: 1500

@@ -11,10 +11,10 @@
     - name: "Build configuration"
       template:
         src: vqfx.conf.j2
-        dest: "configs/{{ inventory_hostname }}.conf"
+        dest: "{{ junos_conf_file_path }}"
 
     - name: "Deploy config to device"
       junos_config:
         backup: yes
-        src: "configs/{{ inventory_hostname }}.conf"
+        src: "{{ junos_conf_file_path }}"
         update: merge
