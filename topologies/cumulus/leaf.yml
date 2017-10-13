@@ -1,8 +1,7 @@
 ---
 - name: "Leaf Playbook"
   hosts: leaf
-  connection: local
-  gather_facts: no
+  gather_facts: true
 
   tasks:
     - name: remove host build temp directory
