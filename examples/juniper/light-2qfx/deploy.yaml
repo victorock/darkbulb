@@ -2,6 +2,7 @@
   hosts: juniper
   connection: local
   gather_facts: no
+  become: no
 
   tasks:
     - name: "gather_facts: junos"
@@ -10,11 +11,10 @@
     - name: "Build configuration"
       template:
         src: vqfx.conf.j2
-        dest: "/tmp/{{ inventory_hostname }}.conf"
+        dest: "configs/{{ inventory_hostname }}.conf"
 
-    - name: "Deploy config to device ... please wait"
-      junos_install_config:
-        file: "/tmp/{{ inventory_hostname }}.conf"
-        overwrite: yes
-        replace: no
-        logfile: /tmp/changes.log
+    - name: "Deploy config to device"
+      junos_config:
+        backup: yes
+        src: "configs/{{ inventory_hostname }}.conf"
+        update: merge
