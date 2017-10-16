@@ -1,0 +1,74 @@
+---
+- fail:
+  msg: |
+    No entities are specified.
+    You need to specify at least one entity of spine, leaf or server.
+  with_items:
+    - "{{ datacenter | json_query('spines[*]') }}"
+    - "{{ datacenter | json_query('leafs[*]') }}"
+    - "{{ datacenter | json_query('servers[*]') }}"
+  when:
+    - item.0.name is not defined
+    - item.1.name is not defined
+    - item.2.name is not defined
+
+- fail:
+  msg: |
+    Entity has no os specified.
+  with_items:
+    - "{{ datacenter | json_query('spines[*]') }}"
+    - "{{ datacenter | json_query('leafs[*]') }}"
+    - "{{ datacenter | json_query('servers[*]') }}"
+  when:
+    - item.0.os is not defined
+    - item.1.os is not defined
+    - item.2.os is not defined
+
+- fail:
+  msg: |
+    Entity has no cpu specified.
+  with_items:
+    - "{{ datacenter | json_query('spines[*]') }}"
+    - "{{ datacenter | json_query('leafs[*]') }}"
+    - "{{ datacenter | json_query('servers[*]') }}"
+  when:
+    - item.0.cpu is not defined
+    - item.1.cpu is not defined
+    - item.2.cpu is not defined
+
+- fail:
+  msg: |
+    Entity has no mem specified.
+  with_items:
+    - "{{ datacenter | json_query('spines[*]') }}"
+    - "{{ datacenter | json_query('leafs[*]') }}"
+    - "{{ datacenter | json_query('servers[*]') }}"
+  when:
+    - item.0.mem is not defined
+    - item.1.mem is not defined
+    - item.2.mem is not defined
+
+- fail:
+  msg: |
+    Entities have no interface.
+    You need at least one entity with at least one interface.
+  with_items:
+    - "{{ datacenter | json_query('spines[*].interfaces') }}"
+    - "{{ datacenter | json_query('leafs[*].interfaces') }}"
+    - "{{ datacenter | json_query('servers[*].interfaces') }}"
+  when:
+    - item.0.name is not defined
+    - item.1.name is not defined
+    - item.2.name is not defined
+
+- fail:
+  msg: |
+    You have entities with no link connectivity.
+  with_items:
+    - "{{ datacenter | json_query('spines[*].interfaces[*]') }}"
+    - "{{ datacenter | json_query('leafs[*].interfaces[*]') }}"
+    - "{{ datacenter | json_query('servers[*].interfaces[*]') }}"
+  when:
+    - item.0.link is not defined
+    - item.1.link is not defined
+    - item.2.link is not defined

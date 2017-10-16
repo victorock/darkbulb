@@ -1,0 +1,8 @@
+---
+# Topology-builder reserved words
+# Datacenters
+datacenter:
+  spines:
+  leafs:
+  servers:
+  

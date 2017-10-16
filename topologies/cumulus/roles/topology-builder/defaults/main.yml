@@ -1,0 +1,88 @@
+---
+# defaults file for topology-builder
+# Datacenter
+datacenter:
+## dc01
+  name: dc01
+  ### Spines
+    spines:
+  #### Spine01
+      - name: spine01
+        cpu: 1
+        memory: 300
+        os: CumulusCommunity/cumulus-vx
+        interfaces:
+          - name: e0
+            type: bridge
+            link: eth0
+          - name: e1
+            type: tunnel
+            link: "{{ datacenter.name['dc01'].leafs[0].interfaces[1] }}"
+          - name: e2
+            type: tunnel
+            link: "{{ datacenter.name['dc01'].leafs[1].interfaces[1] }}"
+  #### Spine02
+      - name: spine02
+        cpu: 1
+        memory: 300
+        os: CumulusCommunity/cumulus-vx
+        interfaces:
+          - name: e0
+            type: bridge
+            link: eth0
+          - name: e1
+            type: tunnel
+            link: "{{ datacenter.name['dc01'].leafs[0].interfaces[2] }}"
+          - name: e2
+            type: tunnel
+            link: "{{ datacenter.name['dc01'].leafs[1].interfaces[2] }}"
+          - name: e3
+            type: tunnel
+            link: leaf03.e2
+          - name: e4
+            type: tunnel
+            link: leaf04.e2
+  ### Leafs
+    leafs:
+  #### Leaf01
+      - name: leaf01
+        cpu: 1
+        memory: 300
+        os: CumulusCommunity/cumulus-vx
+        interfaces:
+          - name: e0
+            type: bridge
+            link: eth0
+          - name: e1
+            type: tunnel
+            link: spine01.e1
+          - name: e2
+            type: tunnel
+            link: spine02.e1
+          - name: e3
+            type: tunnel
+            link: leaf02.e1
+          - name: e4
+            type: tunnel
+            link: leaf02.e2
+  #### Leaf02
+      - name: leaf02
+        cpu: 1
+        memory: 300
+        os: CumulusCommunity/cumulus-vx
+        interfaces:
+          - name: e0
+            type: bridge
+            link: eth0
+          - name: e1
+            type: tunnel
+            link: spine01.e2
+          - name: e2
+            type: tunnel
+            link: spine02.e2
+          - name: e3
+            type: tunnel
+            link: leaf01.e1
+          - name: e4
+            type: tunnel
+            link: leaf01.e2
