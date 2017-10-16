@@ -6,5 +6,4 @@ galaxy_info:
   categories:
    - networking
 
-dependencies:
-   - { role: Juniper.junos }
+dependencies: []
