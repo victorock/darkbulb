@@ -22,7 +22,7 @@
         name: build-config
 
     - name: "Push config"
-      junos_install_config:
+      junos_config:
         src: "{{ junos_conf }}"
         backup: yes
         update: override
