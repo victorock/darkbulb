@@ -1,4 +1,9 @@
 ---
+- name: "Ensure directory {{ build_dir }} is present"
+  file:
+    path: "{{ build_dir }}"
+    state: directory
+
 - name: Building vagrant-base configuration
   template:
     src: main.conf.j2
