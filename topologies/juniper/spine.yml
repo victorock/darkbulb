@@ -1,6 +1,6 @@
 ---
 - name: "Spine Playbook"
-  hosts: spine
+  hosts: juniper:&spine
   connection: local
   gather_facts: no
 

@@ -1,6 +1,6 @@
 ---
 - name: "Leaf Playbook"
-  hosts: leaf
+  hosts: juniper:&leaf
   connection: local
   gather_facts: no
 
