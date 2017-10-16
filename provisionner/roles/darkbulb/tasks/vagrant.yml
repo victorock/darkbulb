@@ -10,6 +10,7 @@
   when:
     - item not in return_vagrant_box_list.stdout
   with_items:
+    - ansible/tower
     - centos/7
     - juniper/vqfx10k-re
     - CumulusCommunity/cumulus-vx
