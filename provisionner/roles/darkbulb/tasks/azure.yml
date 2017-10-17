@@ -19,26 +19,24 @@
       image: "{{ azure_cloud_image }}"
   register: return_azure_cloud_rm_virtualmachine
 
-- debug: var=output
+- debug: var=return_azure_cloud_rm_virtualmachine
   when: azure_cloud_debug
 
 - name: "Add instance to inventory groups [ darkbulb ]"
   add_host:
     name: "{{ student }}"
-    ansible_host: "{{ return_azure_cloud_rm_virtualmachine.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
+    ansible_host: "{{ azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}"
     student: "{{ student }}"
     groupname: "darkbulb"
-  with_items: "{{ return_gce_cloud_instance.instance_data }}"
   tags:
     - create
 
 - name: "Wait for SSH for student instance"
   wait_for:
     delay: 1
-    host: "{{ item.public_ip }}"
+    host: "{{ ansible_host }}"
     port: 22
     state: started
     timeout: 60
-  with_items: "{{ return_gce_cloud_instance.instance_data }}"
   tags:
     - create
