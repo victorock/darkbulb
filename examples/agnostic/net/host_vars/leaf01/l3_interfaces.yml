@@ -1,6 +1,6 @@
 net_l3_interface_state: present
 net_l3_interface_aggregate:
-  - name: lo0
-    ipv4: "{{ interfaces.loopback.ipv4.address }}/{{ interfaces.loopback.ipv4.mask }}"
-  - name: "{{ interfaces.e1.name }}"
-    ipv4: "{{ interfaces.e1.ipv4.address }}/{{ interfaces.e1.ipv4.mask }}"
+  - name: "{{ ips.interfaces.loopback.lo0.name }}"
+    ipv4: "{{ ips.interfaces.loopback.lo0.ipv4.address }}/{{ ips.interfaces.loopback.lo0.ipv4.mask }}"
+  - name: "{{ interfaces.ethernet.e1.name }}"
+    ipv4: "{{ ips.interfaces.ethernet.e1.ipv4.address }}/{{ ips.interfaces.ethernet.e1.ipv4.mask }}"

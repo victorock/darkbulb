@@ -2,4 +2,4 @@ net_user_state: present
 net_user_aggregate:
   - name: automation
     privilege: 15
-    configured_password: automation
+    configured_password: _4ut0m4t10n_
