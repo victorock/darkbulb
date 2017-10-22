@@ -8,11 +8,19 @@
       include_vars:
         file: vars/main.yml
 
+    - name: "Create list of machines"
+      set_fact:
+        machines: "{{ machines }} + [ '{{ student }}' ]"
+      when: students|int > machines|int
+      with_sequence: count="{{ students|int }}" format=student%02x
+      loop_control:
+        loop_var: student
+
   tasks:
+
     - name: "Create GCE Environment"
       include_role:
         name: darkbulb
         tasks_from: gce
-      with_sequence: count="{{ students|int }}" format=student%02x
-      loop_control:
-        loop_var: student
+      vars:
+        gce_cloud_instance_names: "{{ machines | join(',') }}"

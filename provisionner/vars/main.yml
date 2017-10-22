@@ -2,6 +2,9 @@
 # Number of Students
 students: 1
 
+# Leave empty if you don't want to associate machines manually
+machines: []
+
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
 # nested_virtualization_configured: yes

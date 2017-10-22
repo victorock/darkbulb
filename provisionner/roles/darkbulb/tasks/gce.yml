@@ -7,9 +7,9 @@
       3- When done uncomment nested_virtualization_configured variable from darkbulb_config.yml
   when: nested_virtualization_configured is not defined
 
-- name: "Create student instance"
+- name: "Ensure instance(s) state is present"
   gce:
-    instance_names: "{{ student }}"
+    instance_names: "{{ gce_cloud_instance_names }}"
     zone: "{{ gce_cloud_instance_zone }}"
     machine_type: "{{ gce_cloud_instance_machine_type }}"
     image: "{{ gce_cloud_instance_image }}"
@@ -22,6 +22,20 @@
   tags:
     - create
 
+- name: "Ensure instance(s) state is started"
+  gce:
+    instance_names: "{{ gce_cloud_instance_names }}"
+    zone: "{{ gce_cloud_instance_zone }}"
+    machine_type: "{{ gce_cloud_instance_machine_type }}"
+    image: "{{ gce_cloud_instance_image }}"
+    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+    project_id: "{{ gce_cloud_instance_project_id }}"
+    tags: "{{ gce_cloud_instance_tags }}"
+    state: started
+  with_items: " {{ return_gce_cloud_instance.instance_data }}"
+  when: return_gce_cloud_instance.instance_data > 0
+
 - debug: var=return_gce_cloud_instance
   when: gce_cloud_instance_debug
   tags:
@@ -29,21 +43,23 @@
 
 - name: "Add instance to inventory groups [ darkbulb ]"
   add_host:
-    name: "{{ student }}"
+    name: "{{ item.name }}"
     ansible_host: "{{ item.public_ip }}"
-    student: "{{ student }}"
+    student: "{{ item.name }}"
     groupname: "darkbulb"
   with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  when: return_gce_cloud_instance.instance_data
   tags:
     - create
 
 - name: "Wait for SSH for student instance"
   wait_for:
-    delay: 1
+    delay: 20
     host: "{{ item.public_ip }}"
     port: 22
     state: started
     timeout: 120
   with_items: "{{ return_gce_cloud_instance.instance_data }}"
+  when: return_gce_cloud_instance.instance_data > 0
   tags:
     - create
