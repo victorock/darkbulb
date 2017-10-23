@@ -9,7 +9,8 @@
 
 - name: "Ensure instance(s) state is present"
   gce:
-    instance_names: "{{ gce_cloud_instance_names }}"
+    base_name: "{{ gce_cloud_instance_base_name }}"
+    num_instances: "{{ gce_cloud_num_instances }}"
     zone: "{{ gce_cloud_instance_zone }}"
     machine_type: "{{ gce_cloud_instance_machine_type }}"
     image: "{{ gce_cloud_instance_image }}"
@@ -19,12 +20,21 @@
     tags: "{{ gce_cloud_instance_tags }}"
     state: present
   register: return_gce_cloud_instance
+  until: return_gce_cloud_instance.state == 'present'
+  retries: 5
+  delay: 10
+  tags:
+    - create
+
+- debug: var=return_gce_cloud_instance
+  when: gce_cloud_instance_debug
   tags:
     - create
 
 - name: "Ensure instance(s) state is started"
   gce:
-    instance_names: "{{ gce_cloud_instance_names }}"
+    base_name: "{{ gce_cloud_instance_base_name }}"
+    num_instances: "{{ gce_cloud_num_instances }}"
     zone: "{{ gce_cloud_instance_zone }}"
     machine_type: "{{ gce_cloud_instance_machine_type }}"
     image: "{{ gce_cloud_instance_image }}"
@@ -33,8 +43,31 @@
     project_id: "{{ gce_cloud_instance_project_id }}"
     tags: "{{ gce_cloud_instance_tags }}"
     state: started
-  with_items: " {{ return_gce_cloud_instance.instance_data }}"
-  when: return_gce_cloud_instance.instance_data > 0
+  register: return_gce_cloud_instance_status
+  until: return_gce_cloud_instance_status.state == 'started'
+  retries: 5
+  delay: 10
+  tags:
+    - create
+
+- debug: var=return_gce_cloud_instance_status
+  when: gce_cloud_instance_debug
+  tags:
+    - create
+
+- name: "Update instance(s) list of public_ip"
+  gce:
+    base_name: "{{ gce_cloud_instance_base_name }}"
+    num_instances: "{{ gce_cloud_num_instances }}"
+    zone: "{{ gce_cloud_instance_zone }}"
+    machine_type: "{{ gce_cloud_instance_machine_type }}"
+    image: "{{ gce_cloud_instance_image }}"
+    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+    project_id: "{{ gce_cloud_instance_project_id }}"
+    tags: "{{ gce_cloud_instance_tags }}"
+    state: present
+  register: return_gce_cloud_instance
 
 - debug: var=return_gce_cloud_instance
   when: gce_cloud_instance_debug
@@ -60,6 +93,6 @@
     state: started
     timeout: 120
   with_items: "{{ return_gce_cloud_instance.instance_data }}"
-  when: return_gce_cloud_instance.instance_data > 0
+  when: return_gce_cloud_instance.instance_data
   tags:
     - create

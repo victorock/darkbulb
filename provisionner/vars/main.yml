@@ -1,9 +1,6 @@
 ---
 # Number of Students
-students: 1
-
-# Leave empty if you don't want to associate machines manually
-machines: []
+students: 2
 
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
@@ -11,6 +8,7 @@ machines: []
 
 # Google Computing Engine supports nested virtualization in some regions
 # Currently it is under Beta, therefore some additional steps are required to active it
+gce_region: europe-west1
 gce_zone: europe-west1-d
 gce_project_id: "PROJECT_ID"
 gce_service_account_email: "USERNAME@{{ gce_project_id }}.iam.gserviceaccount.com"
