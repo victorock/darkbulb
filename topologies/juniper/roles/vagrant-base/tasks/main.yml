@@ -1,5 +1,6 @@
 ---
-- name: Building vagrant-base configuration
-  template:
-    src: main.conf.j2
-    dest: "configs/common.conf.part"
+- name: "Push Config"
+  junos_config:
+    src: "main.conf.j2"
+    backup: no
+    update: override

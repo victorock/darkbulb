@@ -5,6 +5,10 @@
   gather_facts: no
 
   tasks:
+    - name: "gather_facts: junos"
+      junos_facts:
+      register: ansible_junos_facts
+
     - name: "Role vagrant-base"
       include_role:
         name: vagrant-base
