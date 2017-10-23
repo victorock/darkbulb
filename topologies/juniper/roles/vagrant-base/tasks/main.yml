@@ -1,0 +1,5 @@
+---
+- name: Building vagrant-base configuration
+  template:
+    src: main.conf.j2
+    dest: "configs/common.conf.part"
