@@ -13,6 +13,10 @@
       include_role:
         name: baseline
 
+    - name: "Setup Standard L3"
+      include_role:
+        name: junos-std-l3
+
     - name: "Setup Underlay EBGP"
       include_role:
         name: underlay-ebgp

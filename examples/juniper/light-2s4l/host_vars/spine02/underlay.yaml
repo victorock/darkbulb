@@ -21,8 +21,8 @@ underlay:
         asn: 60013
         peer_ip: "{{ p2p.link6.2 }}"
         local_ip: "{{ p2p.link6.1 }}"
-      # - interface: em8
-      #   name: leaf4
-      #   asn: 60014
-      #   peer_ip: "{{ p2p.link8.2 }}"
-      #   local_ip: "{{ p2p.link8.1 }}"
+      - interface: em8
+        name: leaf4
+        asn: 60014
+        peer_ip: "{{ p2p.link8.2 }}"
+        local_ip: "{{ p2p.link8.1 }}"
