@@ -7,6 +7,7 @@
       3- When done uncomment nested_virtualization_configured variable from darkbulb_config.yml
   when: nested_virtualization_configured is not defined
 
+
 - name: "Ensure instance(s) state is present"
   gce:
     base_name: "{{ gce_cloud_instance_base_name }}"
@@ -14,15 +15,13 @@
     zone: "{{ gce_cloud_instance_zone }}"
     machine_type: "{{ gce_cloud_instance_machine_type }}"
     image: "{{ gce_cloud_instance_image }}"
+    disk_size: "{{ gce_cloud_boot_disk_size }}"
     service_account_email: "{{ gce_cloud_instance_service_account_email }}"
     credentials_file: "{{ gce_cloud_instance_credentials_file }}"
     project_id: "{{ gce_cloud_instance_project_id }}"
     tags: "{{ gce_cloud_instance_tags }}"
     state: present
   register: return_gce_cloud_instance
-  until: return_gce_cloud_instance.state == 'present'
-  retries: 5
-  delay: 10
   tags:
     - create
 
@@ -41,12 +40,8 @@
     service_account_email: "{{ gce_cloud_instance_service_account_email }}"
     credentials_file: "{{ gce_cloud_instance_credentials_file }}"
     project_id: "{{ gce_cloud_instance_project_id }}"
-    tags: "{{ gce_cloud_instance_tags }}"
     state: started
   register: return_gce_cloud_instance_status
-  until: return_gce_cloud_instance_status.state == 'started'
-  retries: 5
-  delay: 10
   tags:
     - create
 
@@ -57,7 +52,7 @@
 
 - name: "Update instance(s) list of public_ip"
   gce:
-    base_name: "{{ gce_cloud_instance_base_name }}"
+    name: "{{ gce_cloud_instance_base_name }}"
     num_instances: "{{ gce_cloud_num_instances }}"
     zone: "{{ gce_cloud_instance_zone }}"
     machine_type: "{{ gce_cloud_instance_machine_type }}"
@@ -74,18 +69,20 @@
   tags:
     - create
 
-- name: "Add instance to inventory groups [ darkbulb ]"
+- name: "Add instance(s) to groups in inventory"
   add_host:
     name: "{{ item.name }}"
     ansible_host: "{{ item.public_ip }}"
     student: "{{ item.name }}"
-    groupname: "darkbulb"
-  with_items: "{{ return_gce_cloud_instance.instance_data }}"
+    groupname: "{{ item.tags | join(',') }}"
+  with_items:
+    - "{{ return_gce_cloud_instance.instance_data }}"
   when: return_gce_cloud_instance.instance_data
+  when_changed: no
   tags:
     - create
 
-- name: "Wait for SSH for student instance"
+- name: "Wait SSH connectivity for instance(s)"
   wait_for:
     delay: 20
     host: "{{ item.public_ip }}"

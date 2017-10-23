@@ -16,4 +16,5 @@ gce_cloud_instance_service_account_email: "{{ gce_service_account_email }}"
 gce_cloud_instance_credentials_file: "{{ gce_credentials_file }}"
 gce_cloud_instance_machine_type: n1-standard-1
 gce_cloud_instance_image: nested-centos-7
-gce_cloud_instance_tags: darkbulb
+gce_cloud_boot_disk_size: 30
+gce_cloud_instance_tags: [ "darkbulb" ]
