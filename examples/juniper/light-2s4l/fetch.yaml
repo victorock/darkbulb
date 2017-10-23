@@ -4,6 +4,6 @@
   gather_facts: no
 
   tasks:
-    - name: Getting config ... please wait
-      junos_get_config:
-        dest: "{{ junos_conf }}"
+    - name: "Backup config"
+      junos_config:
+        backup: yes
