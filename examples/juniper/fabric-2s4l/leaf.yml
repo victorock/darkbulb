@@ -39,6 +39,6 @@
 
     - name: "Push config"
       junos_config:
-        src: "{{ junos_conf }}"
+        src: "{{ assemble.config.conf }}"
         backup: yes
         update: override
