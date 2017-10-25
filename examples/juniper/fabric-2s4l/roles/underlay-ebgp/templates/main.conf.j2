@@ -10,7 +10,7 @@ protocols {
         local-as {{ underlay.ebgp.asn }};
         multipath multiple-as;
 
-      {% for neighbor in underlay.ebgp.neighbors.iteritems() %}
+      {% for neighbor in underlay.ebgp.neighbors %}
         neighbor {{ neighbor.peer }} {
             peer-as {{ neighbor.asn }} {{ 'default-originate' if neighbor.default_originate }};
         }
