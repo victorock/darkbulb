@@ -4,7 +4,7 @@
     path: "{{ conf_dir }}"
     state: directory
 
-- name: "Assemble configurations from {{ build_dir }} to {{ conf_dir }}"
+- name: "Assemble configurations from {{ build_dir }} to {{ conf }}"
   assemble:
     src: "{{ build_dir }}"
-    dest: "{{ conf_dir }}"
+    dest: "{{ conf }}"
