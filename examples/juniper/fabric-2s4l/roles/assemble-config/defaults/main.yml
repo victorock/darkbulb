@@ -1,2 +1,2 @@
 build_dir: "files/{{ inventory_hostname }}/tmp"
-conf_dir: "configs/"
+conf_dir: "configs"
