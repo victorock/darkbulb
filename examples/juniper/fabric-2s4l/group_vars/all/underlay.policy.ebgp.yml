@@ -268,7 +268,7 @@ underlay:
           action: accept
           community:
             name: "{{ inventory_hostname_short|upper }}"
-            tag: "{{ hostvars[inventory_hostname_short].underlay.ebgp.asn }}:1"
+            tag: "{{ hostvars[inventory_hostname_short]['underlay']['ebgp']['asn'] }}:1"
           networks:
             - 1.1.1.0/24
             - 10.0.0.0/8
