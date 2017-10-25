@@ -1,9 +1,0 @@
-- name: "Fetch configuration"
-  hosts: juniper
-  connection: local
-  gather_facts: no
-
-  tasks:
-    - name: "Backup config"
-      junos_config:
-        backup: yes

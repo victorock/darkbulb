@@ -1,2 +1,0 @@
-build_dir: "files/{{ inventory_hostname }}/tmp"
-junos_conf: "configs/{{ inventory_hostname }}.conf"

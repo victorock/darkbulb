@@ -1,6 +1,0 @@
-build_dir: "files/{{ inventory_hostname }}/tmp"
-junos_conf: "configs/{{ inventory_hostname }}.conf"
-
-underlay:
-  mtu_phy_int: 1600
-  mtu_logical_int: 1500
