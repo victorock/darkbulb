@@ -1,0 +1,21 @@
+protocols {
+  bgp {
+    log-updown;
+    graceful-restart;
+    group underlay-ebgp {
+        import underlay-ebgp-in;
+        export  underlay-ebgp-out;
+        type external;
+        mtu-discovery;
+        local-as {{ underlay.ebgp.asn }};
+        multipath multiple-as;
+
+      {% for neighbor in underlay.ebgp.neighbors %}
+        neighbor {{ neighbor.peer }} {
+            peer-as {{ neighbor.asn }} {{ 'default-originate' if neighbor.default-originate }};
+        }
+      {% endfor %}
+      
+    }
+  }
+}

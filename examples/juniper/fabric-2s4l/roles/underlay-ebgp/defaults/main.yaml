@@ -1,0 +1,23 @@
+build_dir: "files/{{ inventory_hostname }}/tmp"
+underlay:
+  bgp:
+    router-id: 1.1.1.1
+    asn: 65001
+    neighbors:
+      - name: PEER1
+        asn: 65000
+        peer: 1.1.1.2
+        local: 1.1.1.1
+    policies:
+      ingress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"
+      egress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"

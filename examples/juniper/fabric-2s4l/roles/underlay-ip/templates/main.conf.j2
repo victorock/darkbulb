@@ -1,0 +1,11 @@
+interfaces {
+{% for interface, address in underlay.ip %}
+    {{ interface }} {
+      unit 0 {
+        family inet {
+            address {{ address }};
+        }
+      }
+    }
+{% endfor %}
+}

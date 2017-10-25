@@ -1,0 +1,5 @@
+build_dir: "files/{{ inventory_hostname }}/tmp"
+
+underlay:
+  routing:
+    router-id: "1.1.1.1"

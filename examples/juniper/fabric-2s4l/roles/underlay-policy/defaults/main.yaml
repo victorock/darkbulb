@@ -1,0 +1,17 @@
+build_dir: "files/{{ inventory_hostname }}/tmp"
+
+underlay:
+  policy:
+    ebgp:
+      ingress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"
+      egress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"

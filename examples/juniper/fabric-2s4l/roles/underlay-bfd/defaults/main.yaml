@@ -1,0 +1,7 @@
+build_dir: "files/{{ inventory_hostname }}/tmp"
+
+underlay:
+  bfd:
+    minimum-interval: 500
+    multiplier: 3
+    session-mode: automatic

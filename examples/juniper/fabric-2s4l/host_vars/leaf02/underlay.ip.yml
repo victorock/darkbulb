@@ -1,0 +1,8 @@
+underlay:
+  ip:
+    loopback0: 1.1.1.102/32
+    # em0: Vagrant
+    em0: 10.0.2.15/24
+    em1: 10.1.0.102/32
+    em2: "{{ link.spine01.2 }}"
+    em3: "{{ link.spine02.2 }}"

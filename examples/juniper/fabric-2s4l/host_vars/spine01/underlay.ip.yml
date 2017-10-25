@@ -1,0 +1,9 @@
+underlay:
+  ip:
+    lo0: 1.1.1.11/32
+    em0: 10.0.2.15/24
+    em1: 10.1.0.11/24
+    em2: "{{ link.leaf01.1 }}"
+    em3: "{{ link.leaf02.1 }}"
+    em4: "{{ link.leaf03.1 }}"
+    em5: "{{ link.leaf04.1 }}"

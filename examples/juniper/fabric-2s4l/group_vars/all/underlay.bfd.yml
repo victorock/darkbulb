@@ -1,0 +1,5 @@
+underlay:
+  bfd:
+    minimum-interval: 500
+    multiplier: 3
+    session-mode: automatic

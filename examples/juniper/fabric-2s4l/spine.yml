@@ -1,0 +1,44 @@
+---
+- name: "Create and apply configuration on Spine"
+  hosts: juniper:&spine
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "gather_facts: junos"
+      junos_facts:
+      register: ansible_junos_facts
+
+    - name: "Underlay Baseline"
+      include_role:
+        name: underlay-baseline
+
+    - name: "Underlay IP"
+      include_role:
+        name: underlay-ip
+
+    - name: "Underlay Routing"
+      include_role:
+        name: underlay-routing
+
+    - name: "Underlay BFD"
+      include_role:
+        name: underlay-ebgp
+
+    - name: "Underlay EBGP"
+      include_role:
+        name: underlay-ebgp
+
+    - name: "Underlay Policy"
+      include_role:
+        name: underlay-ebgp
+
+    - name: "Assemble Config"
+      include_role:
+        name: assemble-config
+
+    - name: "Push config"
+      junos_config:
+        src: "{{ junos_conf }}"
+        backup: yes
+        update: override

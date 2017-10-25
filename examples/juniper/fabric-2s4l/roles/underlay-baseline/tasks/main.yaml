@@ -1,0 +1,10 @@
+---
+- name: "Ensure directory {{ build_dir }} is present"
+  file:
+    path: "{{ build_dir }}"
+    state: directory
+
+- name: "Build baseline configuration"
+  template:
+    src: main.conf.j2
+    dest: "{{ build_dir }}/underlay.baseline.conf.part"
