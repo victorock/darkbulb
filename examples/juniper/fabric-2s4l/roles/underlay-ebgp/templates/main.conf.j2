@@ -10,12 +10,12 @@ protocols {
         local-as {{ underlay.ebgp.asn }};
         multipath multiple-as;
 
-      {% for neighbor in underlay.ebgp.neighbors %}
+      {% for neighbor in underlay.ebgp.neighbors.iteritems() %}
         neighbor {{ neighbor.peer }} {
             peer-as {{ neighbor.asn }} {{ 'default-originate' if neighbor.default-originate }};
         }
       {% endfor %}
-      
+
     }
   }
 }

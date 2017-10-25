@@ -1,5 +1,5 @@
 interfaces {
-{% for interface, address in underlay.ip %}
+{% for interface, address in underlay.ip.iteritems() %}
     {{ interface }} {
       unit 0 {
         family inet {
