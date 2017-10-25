@@ -23,7 +23,7 @@
 
     - name: "Underlay BFD"
       include_role:
-        name: underlay-ebgp
+        name: underlay-bfd
 
     - name: "Underlay EBGP"
       include_role:
