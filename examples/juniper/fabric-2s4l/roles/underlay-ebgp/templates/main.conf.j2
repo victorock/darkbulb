@@ -12,7 +12,7 @@ protocols {
 
       {% for neighbor in underlay.ebgp.neighbors.iteritems() %}
         neighbor {{ neighbor.peer }} {
-            peer-as {{ neighbor.asn }} {{ 'default-originate' if neighbor.default-originate }};
+            peer-as {{ neighbor.asn }} {{ 'default-originate' if neighbor.default_originate }};
         }
       {% endfor %}
 
