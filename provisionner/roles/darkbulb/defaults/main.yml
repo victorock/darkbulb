@@ -1,7 +1,7 @@
 ---
 ## GCE Global
 gce_debug: no
-gce_zone: europe-west1
+gce_region: europe-west1
 gce_zone: europe-west1-d
 gce_project_id: "darkbulb"
 gce_service_account_email: "USERNAME@{{ project_id }}.iam.gserviceaccount.com"
