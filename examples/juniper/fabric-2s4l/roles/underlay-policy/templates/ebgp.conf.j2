@@ -5,10 +5,10 @@ policy-options {
       then default-action reject;
     }
 
-  {% for ingress in underlay.policy.ebgp.ingress.iteritems() %}
+  {% for ingress in underlay.policy.ebgp.ingress %}
     term from-route-{{ ingress.name }} {
       from {
-      {% for network in ingress.networks.iteritems() %}
+      {% for network in ingress.networks %}
         route-filter {{ network }} orlonger;
       {% endfor %}
       }
@@ -24,11 +24,11 @@ policy-options {
       then default-action reject;
     }
 
-  {% for egress in underlay.policy.ebgp.egress.iteritems() %}
+  {% for egress in underlay.policy.ebgp.egress %}
     term from-route-{{ egress.name }} {
       from {
         protocol direct;
-        {% for network in egress.networks.iteritems() %}
+        {% for network in egress.networks %}
           route-filter {{ network }} orlonger;
         {% endfor %}
       }
@@ -52,7 +52,7 @@ policy-options {
   }
 
   as-path asPathLength2 ".{2,}";
-{% for ingress in underlay.policy.ebgp.ingress.iteritems() %}
+{% for ingress in underlay.policy.ebgp.ingress %}
   community from-{{ ingress.community.name }} members {{ ingress.community.tag }};
 {% endfor%}
 
