@@ -1,8 +1,8 @@
 protocols {
   bgp {
     bfd-liveness-detection {
-        minimum-interval {{ underlay.bfd.min-interval }};
+        minimum-interval {{ underlay.bfd.min_interval }};
         multiplier {{ underlay.bfd.multiplier }};
-        session-mode {{ underlay.bfd.mode }};
+        session-mode {{ underlay.bfd.session_mode }};
     }
 }
