@@ -1,10 +1,10 @@
 ---
-- name: "Ensure directory {{ conf_dir }} is present"
+- name: "Ensure directory {{ assemble.config.conf_dir }} is present"
   file:
-    path: "{{ conf_dir }}"
+    path: "{{ assemble.config.conf_dir }}"
     state: directory
 
-- name: "Assemble configurations from {{ build_dir }} to {{ conf }}"
+- name: "Assemble configurations from {{ assemble.config.build_dir }} to {{ assemble.config.conf }}"
   assemble:
-    src: "{{ build_dir }}"
-    dest: "{{ conf }}"
+    src: "{{ assemble.config.build_dir }}"
+    dest: "{{ assemble.config.conf }}"
