@@ -1,8 +1,6 @@
 underlay:
   ip:
     lo0: 1.1.1.12/32
-    # Vagrant
-    #em0: 10.0.2.15/24
     em1: 10.1.0.12/24
     em2: "{{ link.leaf01.2 }}"
     em3: "{{ link.leaf02.2 }}"

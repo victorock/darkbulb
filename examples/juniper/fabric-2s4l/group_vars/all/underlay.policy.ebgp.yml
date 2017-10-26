@@ -8,9 +8,24 @@ underlay:
             name: INTERNET
             tag: "65000:1"
           networks:
+            - 200.0.0.0/8
+      egress:
+        - name: "{{ inventory_hostname_short|upper }}_EXPORT"
+          action: accept
+          community:
+            name: "{{ inventory_hostname_short|upper }}"
+            tag: "{{ hostvars[inventory_hostname_short]['underlay']['ebgp']['asn'] }}:1"
+          networks:
+            - 1.1.1.0/24
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
+
+
+### FULL INTERNET NETWORKS
 #            - 0.0.0.0/8
 #            - 1.0.0.0/8
-            - 2.0.0.0/8
+#            - 2.0.0.0/8
 #            - 3.0.0.0/8
 #            - 4.0.0.0/8
 #            - 5.0.0.0/8
@@ -263,14 +278,3 @@ underlay:
 #            - 253.0.0.0/8
 #            - 254.0.0.0/8
 #            - 255.0.0.0/8
-      egress:
-        - name: "{{ inventory_hostname_short|upper }}_EXPORT"
-          action: accept
-          community:
-            name: "{{ inventory_hostname_short|upper }}"
-            tag: "{{ hostvars[inventory_hostname_short]['underlay']['ebgp']['asn'] }}:1"
-          networks:
-            - 1.1.1.0/24
-            - 10.0.0.0/8
-            - 172.16.0.0/12
-            - 192.168.0.0/16
