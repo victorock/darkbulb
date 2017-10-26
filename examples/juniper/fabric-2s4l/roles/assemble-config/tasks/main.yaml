@@ -1,4 +1,9 @@
 ---
+- name: "Ensure directory {{ assemble.config.build_dir }} is present"
+  file:
+    path: "{{ assemble.config.build_dir }}"
+    state: directory
+
 - name: "Ensure directory {{ assemble.config.conf_dir }} is present"
   file:
     path: "{{ assemble.config.conf_dir }}"
