@@ -2,4 +2,4 @@
 - name: "Build BFD Configuration for EBGP"
   template:
     src: ebgp.conf.j2
-    dest: "{{ build_dir }}/underlay.bfd.ebgp.conf.part"
+    dest: "{{ assemble.config.build_dir }}/underlay.bfd.ebgp.conf.part"

@@ -2,4 +2,4 @@
 - name: "Build IP Configuration"
   template:
     src: main.conf.j2
-    dest: "{{ build_dir }}/underlay.ip.conf.part"
+    dest: "{{ assemble.config.build_dir }}/underlay.ip.conf.part"

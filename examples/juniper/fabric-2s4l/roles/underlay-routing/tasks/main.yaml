@@ -2,4 +2,4 @@
 - name: "Build Routing Configuration"
   template:
     src: main.conf.j2
-    dest: "{{ build_dir }}/underlay.routing.conf.part"
+    dest: "{{ assemble.config.build_dir }}/underlay.routing.conf.part"

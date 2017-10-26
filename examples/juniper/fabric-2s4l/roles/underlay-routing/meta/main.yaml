@@ -5,4 +5,5 @@ galaxy_info:
   categories:
    - networking
 
-dependencies: []
+dependencies:
+  - assemble-config

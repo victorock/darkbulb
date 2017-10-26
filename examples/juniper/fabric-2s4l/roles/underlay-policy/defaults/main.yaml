@@ -1,5 +1,3 @@
-build_dir: "files/{{ inventory_hostname }}/tmp"
-
 underlay:
   policy:
     ebgp:

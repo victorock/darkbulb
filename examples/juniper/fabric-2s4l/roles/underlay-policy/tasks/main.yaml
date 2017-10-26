@@ -2,9 +2,9 @@
 - name: "Build Policy Configuration"
   template:
     src: main.conf.j2
-    dest: "{{ build_dir }}/underlay.policy.conf.part"
+    dest: "{{ assemble.config.build_dir }}/underlay.policy.conf.part"
 
 - name: "Build Policy Configuration for EBGP"
   template:
     src: ebgp.conf.j2
-    dest: "{{ build_dir }}/underlay.policy.ebgp.conf.part"
+    dest: "{{ assemble.config.build_dir }}/underlay.policy.ebgp.conf.part"
