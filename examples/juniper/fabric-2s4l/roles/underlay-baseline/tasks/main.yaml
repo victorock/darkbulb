@@ -1,9 +1,4 @@
 ---
-- name: "Ensure directory {{ assemble.config.build_dir }} is present"
-  file:
-    path: "{{ assemble.config.build_dir }}"
-    state: directory
-
 - name: "Build baseline configuration"
   template:
     src: main.conf.j2
