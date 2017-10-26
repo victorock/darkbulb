@@ -33,10 +33,6 @@
       include_role:
         name: underlay-policy
 
-    - name: "Assemble Config"
-      include_role:
-        name: assemble-config
-
     - name: "Push config"
       junos_config:
         src: "{{ assemble.config.conf }}"
