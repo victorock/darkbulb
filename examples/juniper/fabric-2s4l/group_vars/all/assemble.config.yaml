@@ -2,4 +2,4 @@ assemble:
   config:
     build_dir: "files/{{ inventory_hostname }}"
     conf_dir: "configs/{{ inventory_hostname }}"
-    conf: "{{ assemble.config.conf_dir }}/{{ inventory_hostname }}.conf"
+    conf: "configs/{{ inventory_hostname }}/{{ inventory_hostname }}.conf"
