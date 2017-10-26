@@ -1,5 +1,5 @@
 assemble:
   config:
-    build_dir: "files/{{ inventory_hostname }}/tmp"
-    conf_dir: "configs"
-    conf: "configs/{{ inventory_hostname }}.conf"
+    build_dir: "files/{{ inventory_hostname }}"
+    conf_dir: "configs/{{ inventory_hostname }}"
+    conf: "{{ assemble.config.conf_dir }}/{{ inventory_hostname }}.conf"
