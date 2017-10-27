@@ -43,8 +43,8 @@
     - htop
     - ansible
     - dkms
-    - VirtualBox-5.1
-    - https://releases.hashicorp.com/vagrant/1.9.6/vagrant_1.9.6_x86_64.rpm
+    - VirtualBox-5.2
+    - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm
   tags:
     - install
 
