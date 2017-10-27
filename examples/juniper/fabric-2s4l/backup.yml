@@ -1,5 +1,5 @@
 - name: "Fetch configuration"
-  hosts: juniper
+  hosts: dc1
   connection: local
   gather_facts: no
 
