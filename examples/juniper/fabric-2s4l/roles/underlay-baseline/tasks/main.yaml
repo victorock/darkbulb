@@ -1,5 +1,0 @@
----
-- name: "Build baseline configuration"
-  template:
-    src: main.conf.j2
-    dest: "{{ assemble.config.build_dir }}/underlay.baseline.conf.part"

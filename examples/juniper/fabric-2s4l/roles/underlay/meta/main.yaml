@@ -5,4 +5,7 @@ galaxy_info:
   categories:
    - networking
 
-dependencies: []
+dependencies:
+  - role: underlay-baseline
+  - role: underlay-system
+  - role: underlay-ebgp

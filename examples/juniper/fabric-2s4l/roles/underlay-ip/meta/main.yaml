@@ -1,9 +1,0 @@
-galaxy_info:
-  author: Victor da Costa
-  company: Red Hat
-  min_ansible_version: 2.4
-  categories:
-   - networking
-
-dependencies:
-  - assemble-config

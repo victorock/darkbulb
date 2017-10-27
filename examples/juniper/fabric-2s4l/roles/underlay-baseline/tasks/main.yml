@@ -1,0 +1,10 @@
+---
+- name: "Ensure {{ underlay.build_dir }} is directory"
+  file:
+    path: "{{ underlay.build_dir }}"
+    state: directory
+
+- name: "Ensure {{ underlay.conf_dir }} is directory"
+  file:
+    path: "{{ underlay.conf_dir }}"
+    state: directory

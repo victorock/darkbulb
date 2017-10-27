@@ -1,3 +1,0 @@
-underlay:
-  routing:
-    router_id: "{{ hostvars[inventory_hostname_short]['underlay']['ip']['lo0'] }}"

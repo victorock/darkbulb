@@ -1,3 +1,0 @@
-underlay:
-  mtu_phy_int: 1600
-  mtu_logical_int: 1500

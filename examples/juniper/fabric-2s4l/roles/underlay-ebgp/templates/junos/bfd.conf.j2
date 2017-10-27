@@ -1,0 +1,16 @@
+{% if underlay.ebgp.bfd is defined %}
+  bfd-liveness-detection {
+
+    {% if underlay.ebgp.bfd.minimum_interval is defined%}
+      minimum-interval {{ underlay.ebgp.bfd.minimum_interval }};
+    {% endif %}
+
+    {% if underlay.ebgp.bfd.multiplier is defined%}
+      multiplier {{ underlay.ebgp.bfd.multiplier }};
+    {% endif %}
+
+    {% if underlay.ebgp.bfd.session_mode is defined%}
+      session-mode {{ underlay.ebgp.bfd.session_mode }};
+    {% endif %}
+  }
+{% endif %}

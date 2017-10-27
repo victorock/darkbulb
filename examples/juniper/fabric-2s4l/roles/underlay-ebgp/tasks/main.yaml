@@ -1,5 +1,2 @@
 ---
-- name: "Build EBGP Configuration"
-  template:
-    src: main.conf.j2
-    dest: "{{ assemble.config.build_dir }}/underlay.ebgp.conf.part"
+- import_tasks: junos.yml

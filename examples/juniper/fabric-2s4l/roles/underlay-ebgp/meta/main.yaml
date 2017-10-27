@@ -6,4 +6,6 @@ galaxy_info:
    - networking
 
 dependencies:
-  - assemble-config
+  - role: underlay-l3
+  - role: underlay-policy
+  - role: underlay-routing

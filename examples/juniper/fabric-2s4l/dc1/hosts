@@ -1,0 +1,33 @@
+spine01 ansible_host=127.0.0.1 ansible_port=11022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+spine02 ansible_host=127.0.0.1 ansible_port=12022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+leaf01 ansible_host=127.0.0.1 ansible_port=13022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+leaf02 ansible_host=127.0.0.1 ansible_port=14022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+leaf03 ansible_host=127.0.0.1 ansible_port=15022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+leaf04 ansible_host=127.0.0.1 ansible_port=16022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+
+[fr-dc1]
+spine01
+spine02
+leaf01
+leaf02
+leaf03
+leaf04
+
+
+[juniper]
+spine01
+spine02
+leaf01
+leaf02
+leaf03
+leaf04
+
+[spine]
+spine01
+spine02
+
+[leaf]
+leaf01
+leaf02
+leaf03
+leaf04

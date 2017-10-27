@@ -1,0 +1,5 @@
+---
+- name: "Build system configuration"
+  template:
+    src: main.conf.j2
+    dest: "{{ underlay.build_dir }}/underlay.system.conf.part"

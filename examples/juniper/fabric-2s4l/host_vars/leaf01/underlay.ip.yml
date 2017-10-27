@@ -1,6 +1,0 @@
-underlay:
-  ip:
-    lo0: 1.1.1.101/32
-    em1: 10.1.0.101/24
-    em2: "{{ link.spine01.1 }}"
-    em3: "{{ link.spine02.1 }}"

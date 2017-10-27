@@ -1,5 +1,5 @@
 ---
-- name: "Create and apply configuration on Leaf"
+- name: "Fabric Leaf"
   hosts: juniper:&leaf
   connection: local
   gather_facts: no
@@ -9,32 +9,6 @@
       junos_facts:
       register: ansible_junos_facts
 
-    - name: "Underlay Baseline"
+    - name: "Underlay Fabric"
       include_role:
-        name: underlay-baseline
-
-    - name: "Underlay IP"
-      include_role:
-        name: underlay-ip
-
-    - name: "Underlay Routing"
-      include_role:
-        name: underlay-routing
-
-    - name: "Underlay BFD"
-      include_role:
-        name: underlay-bfd
-
-    - name: "Underlay EBGP"
-      include_role:
-        name: underlay-ebgp
-
-    - name: "Underlay Policy"
-      include_role:
-        name: underlay-policy
-
-    - name: "Push config"
-      junos_config:
-        src: "{{ assemble.config.conf }}"
-        backup: yes
-        update: override
+        name: underlay

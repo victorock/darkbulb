@@ -1,0 +1,47 @@
+protocols {
+  bgp {
+    log-updown;
+    graceful-restart;
+
+    {% include 'bfd.conf.j2' %}
+
+    group underlay-ebgp {
+
+    {% if underlay.ebgp.import is defined %}
+      import {{ underlay.ebgp.import }};
+    {% endif %}
+
+    {% if underlay.ebgp.export is defined %}
+      export {{ underlay.ebgp.export }};
+    {% endif %}
+
+    {% if underlay.ebgp.type is defined %}
+      type {{ underlay.ebgp.type }};
+    {% endif %}
+
+    {% if underlay.ebgp.mtu_discovery is defined %}
+      mtu-discovery;
+    {% endif %}
+
+    {% if underlay.ebgp.multipath is defined %}
+      local-as {{ underlay.ebgp.local_as }};
+    {% endif %}
+
+    {% if underlay.ebgp.multipath is defined %}
+      multipath {{ underlay.ebgp.multipath }};
+    {% endif %}
+
+    {% for neighbor in topology                           %}
+    {%  if inventory_hostname in neighbor.left_member     %}
+      neighbor {{ neighbor.left_ip }} {
+          peer-as {{ neighbor.left_as }};
+      }
+    {%  elif inventory_hostname in neighbor.right_member  %}
+      neighbor {{ neighbor.right_ip }} {
+          peer-as {{ neighbor.right_as }};
+      }
+    {%  endif                                             %}
+    {% endfor %}
+    }
+  }
+}

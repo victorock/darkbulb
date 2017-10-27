@@ -1,0 +1,5 @@
+---
+- name: "Junos: Build EBGP Configuration"
+  template:
+    src: "junos/main.conf.j2"
+    dest: "{{ underlay.build_dir }}/underlay.ebgp.conf.part"

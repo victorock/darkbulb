@@ -1,0 +1,49 @@
+{%- if underlay.ebgp.export is defined %}
+  policy-statement {{ underlay.ebgp.export }} {
+    term set-default {
+      then default-action reject;
+    }
+
+  {%- if underlay.policy.ebgp.egress is defined    %}
+  {%-  for egress in underlay.policy.ebgp.egress   %}
+  {%-    if egress.name is defined                 %}
+    term from-route-{{ egress.name }} {
+      from {
+        protocol direct;
+
+        {%- if egress.networks is defined   %}
+        {%-  for network in egress.networks %}
+          route-filter {{ network }} orlonger;
+        {%- endfor %}
+        {%- endif %}
+      }
+      then {
+
+      {%- if egress.community.name is defined %}
+        community add {{ egress.community.name }};
+        next-hop self;
+      {%- endif %}
+
+      {%- if egress.action is defined %}
+        {{ egress.action }};
+      {%- else %}
+        reject;
+      {%- endif %}
+      }
+    }
+  {%- endif %}
+  {%- if egress.community.name is defined    %}
+    term from-as-path-{{ egress.community.name }} {
+      from {
+          as-path asPathLength2;
+          community {{ egress.community.name }};
+      }
+      then {
+        reject;
+      }
+    }
+  {%- endif %}
+  {%- endfor %}
+  {%- endif %}
+  }
+{%- endif %}
