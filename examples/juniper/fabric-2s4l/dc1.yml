@@ -1,6 +1,6 @@
 ---
-- name: "Fabric Leaf"
-  hosts: juniper:&leaf
+- name: "Fabric Spine"
+  hosts: dc1
   connection: local
   gather_facts: no
 

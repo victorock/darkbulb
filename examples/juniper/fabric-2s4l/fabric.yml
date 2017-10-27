@@ -1,3 +1,4 @@
 - import_playbook: galaxy.yml
-- import_playbook: spine.yml
-- import_playbook: leaf.yml
+- import_playbook: backup.yml
+- import_playbook: dc1.yml
+- import_playbook: backup.yml
