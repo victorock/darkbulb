@@ -4,3 +4,5 @@
     src: "main.conf.j2"
     backup: no
     update: override
+    commit_config: yes
+    commit: 0
