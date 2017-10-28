@@ -5,4 +5,4 @@
     backup: no
     update: override
     confirm_commit: yes
-    commit: 0
+    confirm: 0
