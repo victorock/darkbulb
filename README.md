@@ -37,7 +37,7 @@ Howto (GCE):
 * Register your ssh public key in GCE associated as "instructor" user.
 * Add your ssh-keys to your local keychain (ssh-add <file>).
 * Create image with nested virtualisation.
-* Edit the configuration file: vars/main.yml
+* Edit the configuration file: group_vars/all/darkbulb.yml
 * Play ansible-playbook deploy_gce_darkbulb.yml
 
 ### Requirements
