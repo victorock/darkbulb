@@ -1,6 +1,6 @@
 ---
 # Number of Students
-students: 2
+students: 1
 
 # Nested configuration is required.
 # Not all Public Cloud Providers allow nested virtualization
