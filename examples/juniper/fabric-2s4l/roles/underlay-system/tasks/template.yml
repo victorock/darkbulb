@@ -1,0 +1,4 @@
+- name: "Build system configuration for non-native commands"
+  template:
+    src: main.conf.j2
+    dest: "{{ underlay.build_dir }}/underlay.system.conf.part"

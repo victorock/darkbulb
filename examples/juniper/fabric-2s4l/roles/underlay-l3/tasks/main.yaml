@@ -3,8 +3,8 @@
   block:
     - name: "left_members"
       junos_l3_interface:
-          name: "{{ item.left_port }}"
-          ipv4: "{{ item.left_ip }}"
+        name: "{{ item.left_port }}"
+        ipv4: "{{ item.left_ip }}"
       #delegate_to: "{{ item.left_member }}"
       #connection: local
       when: inventory_hostname in item.left_member
@@ -12,8 +12,8 @@
 
     - name: "right_members"
       junos_l3_interface:
-          name: "{{ item.right_port }}"
-          ipv4: "{{ item.right_ip }}"
+        name: "{{ item.right_port }}"
+        ipv4: "{{ item.right_ip }}"
       #delegate_to: "{{ item.right_member }}"
       #connection: local
       when: inventory_hostname in item.right_member

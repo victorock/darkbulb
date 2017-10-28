@@ -8,4 +8,5 @@
   junos_config:
     src: "{{ underlay.conf }}"
     backup: no
-    update: override
+    update: merge
+    confirm_commit: yes

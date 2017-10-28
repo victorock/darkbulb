@@ -1,5 +1,7 @@
 ---
-- name: "Build system configuration"
-  template:
-    src: main.conf.j2
-    dest: "{{ underlay.build_dir }}/underlay.system.conf.part"
+- import_tasks: banner.yml
+- import_tasks: system.yml
+- import_tasks: user.yml
+- import_tasks: logging.yml
+- import_tasks: lldp.yml
+- import_tasks: template.yml
