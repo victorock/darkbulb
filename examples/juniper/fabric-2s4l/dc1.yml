@@ -9,6 +9,14 @@
       junos_facts:
       register: ansible_junos_facts
 
+    - name: "Apply native-modules configuration"
+      junos_config:
+        backup: no
+        update: override
+        confirm_commit: yes
+        confirm: 0
+        comment: "Ansible, configured by junos_config"
+
     - name: "Underlay Fabric"
       include_role:
         name: underlay

@@ -1,0 +1,72 @@
+---
+- name: "Fabric Spine"
+  hosts: dc1
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "gather_facts: junos"
+      junos_facts:
+      register: ansible_junos_facts
+
+    - name: "Apply"
+      junos_config:
+        backup: no
+        update: override
+        confirm_commit: yes
+        confirm: 0
+        comment: "Ansible, configured by junos_config"
+        provider:
+          username: vagrant
+          ssh_keyfile: /Users/jdacosta/.vagrant.d/insecure_private_key
+          transport: cli
+
+    - name: "Configure Login Banner"
+      junos_banner:
+        banner: login
+        text: |
+          this is my login banner
+          that contains a multiline
+          string
+        state: present
+        provider:
+          username: vagrant
+          ssh_keyfile: /Users/jdacosta/.vagrant.d/insecure_private_key
+          transport: cli
+
+    - name: "Apply"
+      junos_config:
+        backup: no
+        update: override
+        confirm_commit: yes
+        confirm: 0
+        comment: "Ansible, configured by junos_config"
+        provider:
+          username: vagrant
+          ssh_keyfile: /Users/jdacosta/.vagrant.d/insecure_private_key
+          transport: cli
+
+    - name: "Configure MOTD Banner"
+      junos_banner:
+        banner: motd
+        text: |
+          this is my MOTD banner
+          that contains a multiline
+          string
+        state: present
+        provider:
+          username: vagrant
+          ssh_keyfile: /Users/jdacosta/.vagrant.d/insecure_private_key
+          transport: cli
+
+    - name: "Apply"
+      junos_config:
+        backup: no
+        update: override
+        confirm_commit: yes
+        confirm: 0
+        comment: "Ansible, configured by junos_config"
+        provider:
+          username: vagrant
+          ssh_keyfile: /Users/jdacosta/.vagrant.d/insecure_private_key
+          transport: cli
