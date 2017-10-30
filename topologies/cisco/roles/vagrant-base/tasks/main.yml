@@ -1,6 +1,6 @@
 ---
 - name: "Push Config"
-  junos_config:
+  nxos_config:
     src: "main.conf.j2"
     backup: no
     update: override
