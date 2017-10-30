@@ -47,18 +47,3 @@
     - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm
   tags:
     - install
-
-- name: "Ensure student's account exists"
-  become: true
-  user:
-    name: "{{ student }}"
-    createhome: yes
-    home: "/home/{{ student }}"
-    skeleton: yes
-    groups: vboxusers
-    append: yes
-    generate_ssh_key: yes
-    ssh_key_bits: 2048
-    ssh_key_file: .ssh/id_rsa
-  tags:
-    - configure

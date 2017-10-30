@@ -3,11 +3,6 @@
   become: true
   become_user: "{{ student }}"
 
-  pre_tasks:
-    - name: "Load Configuration"
-      include_vars:
-        file: vars/main.yml
-
   tasks:
     - name: "Setup Student Home Environment"
       include_role:

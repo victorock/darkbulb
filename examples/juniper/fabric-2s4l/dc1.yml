@@ -12,7 +12,7 @@
     - name: "Apply native-modules configuration"
       junos_config:
         backup: no
-        update: override
+        update: merge
         confirm_commit: yes
         confirm: 0
         comment: "Ansible, configured by junos_config"

@@ -4,16 +4,22 @@
   gather_facts: false
 
   pre_tasks:
-    - name: "Load Configuration"
-      include_vars:
-        file: vars/main.yml
+    - name: "Validate Topology"
+      include_role:
+        name: darkbulb
+        tasks_from: topology
 
   tasks:
-
-    - name: "Create GCE Environment"
+    - name: "Create GCE Topology"
       include_role:
         name: darkbulb
         tasks_from: gce
       vars:
-        gce_cloud_instance_base_name: "student"
-        gce_cloud_num_instances: "{{ students }}"
+        gce_cloud_instance_name: "{{ gogce.0.name }}-{{ gogce.1 }}"
+        student: "{{ gogce.0.name }}"
+      with_nested:
+        - "{{ students }}"
+        - "{{ nodes }}"
+      loop_control:
+        loop_var: gogce
+        label: "{{ gogce.0.name }}-{{ gogce.1 }}"

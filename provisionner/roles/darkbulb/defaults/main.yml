@@ -1,6 +1,6 @@
 ---
 ## GCE Global
-gce_debug: no
+gce_debug: "{{ debug | default('false')}}"
 gce_region: europe-west1
 gce_zone: europe-west1-d
 gce_project_id: "darkbulb"
