@@ -18,4 +18,4 @@
       junos_config:
         backup: yes
         src: "{{ junos_conf }}"
-        update: override
+        update: merge
