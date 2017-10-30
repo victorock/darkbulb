@@ -6,7 +6,9 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = false
 
   config.vm.define "spine02" do |device|
-    device.vm.box = "juniper/vqfx10k-re"
+## Image doesn't seems stable
+#    device.vm.box = "juniper/vqfx10k-re"
+    device.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
     device.vm.boot_timeout = 600
 
     device.vm.provider :virtualbox do |v|
@@ -43,6 +45,7 @@ Vagrant.configure('2') do |config|
 
     # Port mapping
     device.vm.network "forwarded_port", guest: 22, host: 12022, protocol: "tcp"
+    device.vm.network "forwarded_port", guest: 25, host: 12025, protocol: "tcp"
     device.vm.network "forwarded_port", guest: 80, host: 12080, protocol: "tcp"
     device.vm.network "forwarded_port", guest: 443, host: 12443, protocol: "tcp"
 
