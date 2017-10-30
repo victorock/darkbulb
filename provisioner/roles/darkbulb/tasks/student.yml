@@ -10,36 +10,115 @@
   tags:
     - install
 
-- name: "Copy images to student's machine"
+- name: "Create folders of box images in student's machine"
+  become: true
+  become_user: "{{ student }}"
+  file:
+    path: "/home/{{ student }}/images/boxes/{{ box_dir.path }}"
+    state: directory
+  with_filetree: "files/boxes"
+  when: box_dir.state == 'directory'
+  loop_control:
+    loop_var: box_dir
+  tags:
+    - install
 
-- name: "Copy student's id_rsa.pub to authorized_keys"
+- name: "Push box images to student's machine"
   become: true
   become_user: "{{ student }}"
   copy:
-    src: "/home/{{ student }}/.ssh/id_rsa.pub"
+    src: "files/boxes/{{ box_file.path }}"
+    dest: "/home/{{ student }}/images/boxes/{{ box_file.path }}"
+    force: no
+  with_filetree: "files/boxes"
+  when: box_file.state == 'file'
+  loop_control:
+    loop_var: box_file
+    label: "{{ box_file.path }}"
+  tags:
+    - install
+
+- name: "Create folders of qcow2 images in student's machine"
+  become: true
+  become_user: "{{ student }}"
+  file:
+    path: "/home/{{ student }}/images/qcow2/{{ qcow2_dir.path }}"
+    state: directory
+  with_filetree: "files/qcow2"
+  when: qcow2_dir.state == 'directory'
+  loop_control:
+    loop_var: qcow2_dir
+    label: "{{ qcow2_dir.path }}"
+  tags:
+    - install
+
+- name: "Push qcow2 images to student's machine"
+  become: true
+  become_user: "{{ student }}"
+  copy:
+    src: "files/qcow2/{{ qcow2_file.path }}"
+    dest: "/home/{{ student }}/images/qcow2/{{ qcow2_file.path }}"
+    force: no
+  with_filetree: "files/qcow2"
+  when: qcow2_file.state == 'file'
+  loop_control:
+    loop_var: qcow2_file
+    label: "{{ qcow2_file.path }}"
+  tags:
+    - install
+
+- name: "Create keychain folder for {{ student|quote }}"
+  file:
+    path: "files/keychain/{{ student|quote }}/ssh/"
+    state: directory
+    mode: 0600
+  tags:
+    - config
+
+- name: "Create student ssh keys"
+  delegate_to: localhost
+  become: false
+  shell: ssh-keygen -b 2048 -t rsa -f files/keychain/{{ student|quote }}/ssh/id_rsa -N '' -C ''
+  args:
+    creates: "files/keychain/{{ student|quote }}/ssh/id_rsa"
+  tags:
+    - config
+
+- name: "Push student's id_rsa.pub to authorized_keys"
+  become: true
+  become_user: "{{ student }}"
+  copy:
+    src: "files/keychain/{{ student }}/ssh/id_rsa.pub"
     dest: "/home/{{ student }}/.ssh/authorized_keys"
+    force: yes
     owner: "{{ student }}"
     group: "{{ student }}"
-    remote_src: yes
+    mode: 0644
   tags:
     - configure
 
-- name: "Fetch student's id_rsa"
+- name: "Push student's id_rsa.pub"
   become: true
   become_user: "{{ student }}"
-  fetch:
-    src: "/home/{{ student }}/.ssh/id_rsa"
-    dest: "files/keychain/{{ student }}/ssh/id_rsa"
-    flat: yes
+  copy:
+    src: "files/keychain/{{ student }}/ssh/id_rsa.pub"
+    dest: "/home/{{ student }}/.ssh/"
+    force: yes
+    owner: "{{ student }}"
+    group: "{{ student }}"
+    mode: 0644
   tags:
     - configure
 
-- name: "Fetch student's id_rsa.pub"
+- name: "Push student's id_rsa"
   become: true
   become_user: "{{ student }}"
-  fetch:
-    src: "/home/{{ student }}/.ssh/id_rsa.pub"
-    dest: "files/keychain/{{ student }}/id_rsa.pub"
-    flat: yes
+  copy:
+    src: "files/keychain/{{ student }}/ssh/id_rsa"
+    dest: "/home/{{ student }}/.ssh/"
+    force: yes
+    owner: "{{ student }}"
+    group: "{{ student }}"
+    mode: 0600
   tags:
     - configure

@@ -1,6 +1,5 @@
 - name: "GCE Lab Environment"
   hosts: localhost
-  become: false
   gather_facts: false
 
   pre_tasks:

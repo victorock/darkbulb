@@ -4,23 +4,23 @@
       then default-action reject;
     }
 
-    {%- if underlay.policy.ebgp.ingress is defined    %}
-    {%-  for ingress in underlay.policy.ebgp.ingress   %}
-    {%-    if ingress.name is defined                 %}
+    {% if underlay.policy.ebgp.ingress is defined    %}
+    {%  for ingress in underlay.policy.ebgp.ingress   %}
+    {%    if ingress.name is defined                 %}
     term from-route-{{ ingress.name }} {
 
       from {
-      {%- for network in ingress.networks %}
+      {% for network in ingress.networks %}
         route-filter {{ network }} orlonger;
-      {%- endfor %}
+      {% endfor %}
       }
 
       then {
-      {%- if ingress.action is defined %}
+      {% if ingress.action is defined %}
         {{ ingress.action }};
-      {%- else %}
+      {% else %}
         reject;
-      {%- endif %}
+      {% endif %}
       }
     }
     {% endif %}

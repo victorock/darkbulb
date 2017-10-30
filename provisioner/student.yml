@@ -1,7 +1,5 @@
 - name: "Setup Student Environment"
   hosts: darkbulb
-  become: true
-  become_user: "{{ student }}"
 
   tasks:
     - name: "Setup Student Home Environment"

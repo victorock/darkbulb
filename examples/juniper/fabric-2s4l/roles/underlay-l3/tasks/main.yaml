@@ -3,18 +3,20 @@
   block:
     - name: "left_members"
       junos_l3_interface:
-        name: "{{ item.left_port }}"
-        ipv4: "{{ item.left_ip }}"
-      delegate_to: "{{ item.left_member }}"
-      connection: local
-      #when: inventory_hostname in item.left_member
+        name: "{{ left.left_port }}"
+        ipv4: "{{ left.left_ip }}"
+      when: inventory_hostname in left.left_member
+      loop_control:
+        loop_var: left
+        label: "{{ left.left_member }}"
       with_items: "{{ topology }}"
 
     - name: "right_members"
       junos_l3_interface:
-        name: "{{ item.right_port }}"
-        ipv4: "{{ item.right_ip }}"
-      delegate_to: "{{ item.right_member }}"
-      connection: local
-      #when: inventory_hostname in item.right_member
+        name: "{{ right.right_port }}"
+        ipv4: "{{ right.right_ip }}"
+      when: inventory_hostname in right.right_member
       with_items: "{{ topology }}"
+      loop_control:
+        loop_var: right
+        label: "{{ right.right_member }}"

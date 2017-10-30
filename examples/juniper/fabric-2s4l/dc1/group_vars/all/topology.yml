@@ -1,8 +1,8 @@
 topology:
   - left_member: spine01
     right_member: leaf01
-    left_port: em2
-    right_port: em2
+    left_port: ge-0/0/2
+    right_port: ge-0/0/2
     left_ip: 172.16.0.1/30
     right_ip: 172.16.0.2/30
     left_as: 65011
@@ -10,8 +10,8 @@ topology:
 
   - left_member: spine01
     right_member: leaf02
-    left_port: em3
-    right_port: em2
+    left_port: ge-0/0/3
+    right_port: ge-0/0/2
     left_ip: 172.16.0.5/30
     right_ip: 172.16.0.6/30
     left_as: 65011
@@ -19,8 +19,8 @@ topology:
 
   - left_member: spine01
     right_member: leaf03
-    left_port: em4
-    right_port: em2
+    left_port: ge-0/0/4
+    right_port: ge-0/0/2
     left_ip: 172.16.0.9/30
     right_ip: 172.16.0.10/30
     left_as: 65011
@@ -28,8 +28,8 @@ topology:
 
   - left_member: spine01
     right_member: leaf04
-    left_port: em5
-    right_port: em2
+    left_port: ge-0/0/5
+    right_port: ge-0/0/2
     left_ip: 172.16.0.13/30
     right_ip: 172.16.0.14/30
     left_as: 65011
@@ -37,8 +37,8 @@ topology:
 
   - left_member: spine02
     right_member: leaf01
-    left_port: em2
-    right_port: em3
+    left_port: ge-0/0/2
+    right_port: ge-0/0/3
     left_ip: 172.16.0.17/30
     right_ip: 172.16.0.18/30
     left_as: 65012
@@ -46,8 +46,8 @@ topology:
 
   - left_member: spine02
     right_member: leaf02
-    left_port: em3
-    right_port: em3
+    left_port: ge-0/0/3
+    right_port: ge-0/0/3
     left_ip: 172.16.0.21/30
     right_ip: 172.16.0.22/30
     left_as: 65012
@@ -55,8 +55,8 @@ topology:
 
   - left_member: spine02
     right_member: leaf03
-    left_port: em4
-    right_port: em3
+    left_port: ge-0/0/4
+    right_port: ge-0/0/3
     left_ip: 172.16.0.25/30
     right_ip: 172.16.0.26/30
     left_as: 65012
@@ -64,8 +64,8 @@ topology:
 
   - left_member: spine02
     right_member: leaf04
-    left_port: em5
-    right_port: em3
+    left_port: ge-0/0/5
+    right_port: ge-0/0/3
     left_ip: 172.16.0.29/30
     right_ip: 172.16.0.30/30
     left_as: 65012

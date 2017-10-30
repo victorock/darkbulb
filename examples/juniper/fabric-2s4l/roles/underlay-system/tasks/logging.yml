@@ -11,10 +11,3 @@
     name: '*'
     facility: any
     level: emergency
-
-- name: "Configure logging for interactive-commands"
-  junos_logging:
-    dest: interactive-commands
-    name: '*'
-    facility: interactive-commands
-    level: any

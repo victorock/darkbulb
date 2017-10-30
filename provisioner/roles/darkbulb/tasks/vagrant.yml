@@ -1,3 +1,31 @@
+- name: "List Vagrant Plugins"
+  become: true
+  become_user: "{{ student }}"
+  shell:
+    vagrant plugin list
+  register: return_vagrant_plugin_list
+  changed_when: false
+  tags:
+    - plugin
+    - plugin_add
+
+- name: "Install Vagrant Plugins"
+  become: true
+  become_user: "{{ student }}"
+  shell:
+    vagrant plugin install {{ vagrant_plugin|quote }}
+  when:
+    - vagrant_plugin not in return_vagrant_plugin_list.stdout
+  with_items:
+    - hostmanager
+    - vagrant-host-shell
+    - vagrant-junos
+  loop_control:
+    loop_var: vagrant_plugin
+  tags:
+    - plugin
+    - plugin_add
+
 - name: "List Vagrant Boxes"
   become: true
   become_user: "{{ student }}"
@@ -5,19 +33,24 @@
     vagrant box list
   register: return_vagrant_box_list
   changed_when: false
+  tags:
+    - box
+    - box_add
 
 - name: "Add Vagrant Boxes"
   become: true
   become_user: "{{ student }}"
   shell:
-    vagrant box add "{{ item }}" --provider virtualbox
+    vagrant box add {{ vagrant_box|quote }} --provider virtualbox
   when:
-    - item not in return_vagrant_box_list.stdout
+    - vagrant_box not in return_vagrant_box_list.stdout
   with_items:
     - ansible/tower
     - centos/7
     - juniper/vqfx10k-re
     - CumulusCommunity/cumulus-vx
+  loop_control:
+    loop_var: vagrant_box
   tags:
     - box
     - box_add

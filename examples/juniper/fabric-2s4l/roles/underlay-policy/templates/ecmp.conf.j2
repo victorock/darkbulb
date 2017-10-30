@@ -1,9 +1,9 @@
-{% if underlay.policy.ecmp is defined %}
-  {% if underlay.policy.ecmp.load_balance is defined %}
+{%- if underlay.policy.ecmp is defined %}
+  {%- if underlay.policy.ecmp.load_balance is defined %}
   policy-statement pfe-ecmp {
       then {
           load-balance {{ underlay.policy.ecmp.load_balance }};
       }
   }
-  {% endif %}
-{% endif %}
+  {%- endif %}
+{%- endif %}
