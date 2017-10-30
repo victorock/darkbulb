@@ -1,0 +1,3 @@
+- name: "Ensure LLDP"
+  junos_lldp:
+    state: present

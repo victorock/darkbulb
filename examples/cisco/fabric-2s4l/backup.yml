@@ -1,0 +1,9 @@
+- name: "Fetch configuration"
+  hosts: dc1
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Backup config"
+      nxos_config:
+        backup: yes

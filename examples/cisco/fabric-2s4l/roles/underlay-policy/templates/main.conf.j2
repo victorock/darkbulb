@@ -1,0 +1,5 @@
+policy-options {
+  {% include 'ecmp.conf.j2' if underlay.policy.ecmp is defined %}
+  {% include 'ebgp.ingress.conf.j2' if underlay.policy.ebgp.ingress is defined %}
+  {% include 'ebgp.egress.conf.j2' if underlay.policy.ebgp.egress is defined %}
+}

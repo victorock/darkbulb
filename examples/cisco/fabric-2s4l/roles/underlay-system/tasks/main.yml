@@ -1,0 +1,7 @@
+---
+- import_tasks: banner.yml
+- import_tasks: system.yml
+- import_tasks: user.yml
+- import_tasks: logging.yml
+- import_tasks: lldp.yml
+- import_tasks: template.yml

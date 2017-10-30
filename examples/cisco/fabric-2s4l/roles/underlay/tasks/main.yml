@@ -1,0 +1,18 @@
+---
+- name: "Assemble {{ underlay.conf|quote }}"
+  assemble:
+    src: "{{ underlay.build_dir }}"
+    dest: "{{ underlay.conf }}"
+
+- name: "Apply native-modules configuration"
+  junos_config:
+    backup: no
+    update: override
+    confirm_commit: yes
+
+- name: "Apply {{ underlay.conf|quote }}"
+  junos_config:
+    src: "{{ underlay.conf }}"
+    backup: no
+    update: override
+    confirm_commit: yes

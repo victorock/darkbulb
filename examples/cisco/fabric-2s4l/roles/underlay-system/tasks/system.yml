@@ -1,0 +1,12 @@
+- name: "Configure hostname and domain name"
+  junos_system:
+    hostname: "{{ inventory_hostname }}"
+    domain_name: victorock.io
+    domain_search:
+      - ansible.com
+      - redhat.com
+      - juniper.com
+      - victorock.io
+    name_servers:
+      - 8.8.8.8
+      - 8.8.4.4

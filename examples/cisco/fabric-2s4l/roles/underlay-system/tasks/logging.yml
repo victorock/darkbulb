@@ -1,0 +1,20 @@
+- name: "Configure logging for messages"
+  junos_logging:
+    dest: file
+    name: messages
+    facility: any
+    level: notice
+
+- name: "Configure logging for user"
+  junos_logging:
+    dest: user
+    name: '*'
+    facility: any
+    level: emergency
+
+- name: "Configure logging for interactive-commands"
+  junos_logging:
+    dest: interactive-commands
+    name: '*'
+    facility: interactive-commands
+    level: any

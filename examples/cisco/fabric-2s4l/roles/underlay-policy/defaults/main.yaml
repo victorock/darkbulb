@@ -1,0 +1,22 @@
+---
+underlay:
+  build_dir: "files/builds/{{ inventory_hostname }}"
+  conf_dir: "files/configs/{{ inventory_hostname }}"
+  conf: "files/configs/{{ inventory_hostname }}/{{ inventory_hostname }}.conf"
+
+  policy:
+    ecmp:
+      load_balance: per-packet
+    ebgp:
+      ingress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"
+      egress:
+        - name: ANY
+          action: accept
+          community:
+            name: ANY
+            tag: "65000:1"

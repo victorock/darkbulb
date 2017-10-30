@@ -1,0 +1,67 @@
+---
+- name: "Virtualbox Repo is present"
+  become: true
+  yum_repository:
+    name: virtualbox
+    description: "Oracle Linux / RHEL / CentOS-$releasever / $basearch - VirtualBox"
+    baseurl: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
+    gpgcheck: no
+  ## Workaround as 7.4 doesn't exists
+    enabled: no
+    repo_gpgcheck: yes
+    gpgkey: "https://www.virtualbox.org/download/oracle_vbox.asc"
+  tags:
+    - configure
+
+- name: "Ansible Repo is present"
+  become: true
+  yum_repository:
+    name: ansible_release
+    description: "CentOS-$releasever / $basearch - Ansible"
+    baseurl: "http://releases.ansible.com/ansible/rpm/release/epel-$releasever-$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: no
+  tags:
+    - configure
+
+- name: "Darkbulb packages state is latest"
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - epel-release
+    - "@Development Tools"
+    - kernel-devel
+    - python-ncclient
+    - git
+    - ruby
+    - rubygems
+    - wget
+    - net-tools
+    - htop
+    - ansible
+    - dkms
+    - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm
+## Workaround as rpm for 7.4 doesn't exists
+#    - VirtualBox-5.2
+    - http://download.virtualbox.org/virtualbox/rpm/rhel/7/x86_64/VirtualBox-5.2-5.2.0_118431_el7-1.x86_64.rpm
+  tags:
+    - install
+
+- name: "Ensure student's account exists"
+  become: true
+  user:
+    name: "{{ student }}"
+    createhome: yes
+    home: "/home/{{ student }}"
+    skeleton: yes
+    groups: vboxusers
+    append: yes
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  tags:
+    - configure

@@ -1,0 +1,9 @@
+---
+- name: "Student Darkbulb Environment"
+  hosts: darkbulb
+
+  tasks:
+    - name: "Setup Darkbulb Environment"
+      include_role:
+        name: darkbulb
+        tasks_from: setup

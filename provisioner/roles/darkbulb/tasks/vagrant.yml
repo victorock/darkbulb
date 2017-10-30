@@ -1,0 +1,23 @@
+- name: "List Vagrant Boxes"
+  become: true
+  become_user: "{{ student }}"
+  shell:
+    vagrant box list
+  register: return_vagrant_box_list
+  changed_when: false
+
+- name: "Add Vagrant Boxes"
+  become: true
+  become_user: "{{ student }}"
+  shell:
+    vagrant box add "{{ item }}" --provider virtualbox
+  when:
+    - item not in return_vagrant_box_list.stdout
+  with_items:
+    - ansible/tower
+    - centos/7
+    - juniper/vqfx10k-re
+    - CumulusCommunity/cumulus-vx
+  tags:
+    - box
+    - box_add

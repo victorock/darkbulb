@@ -1,0 +1,3 @@
+underlay:
+  ebgp:
+    local_as: 65102

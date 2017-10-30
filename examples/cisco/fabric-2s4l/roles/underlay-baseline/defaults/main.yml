@@ -1,0 +1,5 @@
+---
+underlay:
+  build_dir: "files/builds/{{ inventory_hostname }}"
+  conf_dir: "files/configs/{{ inventory_hostname }}"
+  conf: "files/configs/{{ inventory_hostname }}/{{ inventory_hostname }}.conf"

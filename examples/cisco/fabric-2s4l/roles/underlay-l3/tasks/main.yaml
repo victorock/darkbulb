@@ -1,0 +1,20 @@
+---
+- name: "Underlay L3 Configuration"
+  block:
+    - name: "left_members"
+      junos_l3_interface:
+        name: "{{ item.left_port }}"
+        ipv4: "{{ item.left_ip }}"
+      delegate_to: "{{ item.left_member }}"
+      connection: local
+      #when: inventory_hostname in item.left_member
+      with_items: "{{ topology }}"
+
+    - name: "right_members"
+      junos_l3_interface:
+        name: "{{ item.right_port }}"
+        ipv4: "{{ item.right_ip }}"
+      delegate_to: "{{ item.right_member }}"
+      connection: local
+      #when: inventory_hostname in item.right_member
+      with_items: "{{ topology }}"

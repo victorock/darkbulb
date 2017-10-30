@@ -1,0 +1,17 @@
+- name: "Configure Login Banner"
+  junos_banner:
+    banner: login
+    text: |
+      this is my login banner
+      that contains a multiline
+      string
+    state: present
+
+- name: "Configure MOTD Banner"
+  junos_banner:
+    banner: motd
+    text: |
+      this is my MOTD banner
+      that contains a multiline
+      string
+    state: present

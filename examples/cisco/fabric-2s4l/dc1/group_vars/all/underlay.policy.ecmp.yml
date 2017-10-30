@@ -1,0 +1,4 @@
+underlay:
+  policy:
+    ecmp:
+      load_balance: per-packet

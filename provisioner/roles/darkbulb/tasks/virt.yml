@@ -1,0 +1,52 @@
+- name: "Darkbulb libvirt packages state is latest"
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - qemu-kvm
+    - qemu-img
+    - qemu-kvm-tools
+    - virt-top
+    - virt-install
+    - python-virtinst
+    - libvirt
+    - libvirt-python
+    - libvirt-client
+
+- name: "Copying image"
+  become: true
+  become_user: "{{ student }}"
+  copy:
+    src: "{{ nxos_image }}"
+    dest: "{{ nxos_image }}"
+
+
+- name: "Create Topology"
+  block:
+    - name: "Generate Port IDs"
+      set_fact:
+
+      with_items: "{{ topology }}"
+
+
+    - name: "Create Virt Network"
+      virt_net:
+        command: define
+        name: bridge
+        xml: '{{ lookup("template", "network/bridge.xml.j2") }}'
+
+- name: "Create Virt Instance"
+  virt:
+    name: switch
+    command: define
+    xml: "{{ lookup('template', 'virt/vm.xml.j2') }}"
+
+- name: "Create Spine01"
+  command:
+    virt-install --name=spine01 \
+    --file=/var/lib/libvirt/images/nxos7.qcow2 \
+    --file-size=10 \
+    --nonsparse --graphics spice --vcpus=2 --ram=2048 --cdrom=ubuntu-16.04-server-amd64.iso --network bridge=br0 --os-type=linux --os-variant=generic
