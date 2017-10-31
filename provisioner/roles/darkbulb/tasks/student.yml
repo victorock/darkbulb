@@ -1,124 +1,94 @@
-- name: "Git clone Darkbulb content to student's home"
+- name: "Ensure owner's account exists"
   become: true
-  become_user: "{{ student }}"
+  user:
+    name: "{{ owner }}"
+    createhome: yes
+    home: "/home/{{ owner }}"
+    groups: vboxusers
+    append: yes
+  tags:
+    - configure
+
+- name: "Git clone content to home directory of machine owner"
+  become: true
+  become_user: "{{ owner }}"
   git:
     repo: 'https://github.com/victorock/darkbulb.git'
     version: master
     clone: yes
-    dest: "/home/{{ student }}/darkbulb"
+    dest: "/home/{{ owner }}/darkbulb"
     force: no
   tags:
     - install
 
-- name: "Create folders of box images in student's machine"
+- name: "Create image folders in home directory of machine owner"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   file:
-    path: "/home/{{ student }}/images/boxes/{{ box_dir.path }}"
+    path: "/home/{{ owner }}/images/{{ image_dir.path }}"
     state: directory
-  with_filetree: "files/boxes"
-  when: box_dir.state == 'directory'
+  with_filetree: "files/images"
+  when: image_dir.state == 'directory'
   loop_control:
-    loop_var: box_dir
+    loop_var: image_dir
+    label: "{{ image_dir.path }}"
   tags:
     - install
 
-- name: "Push box images to student's machine"
-  become: true
-  become_user: "{{ student }}"
-  copy:
-    src: "files/boxes/{{ box_file.path }}"
-    dest: "/home/{{ student }}/images/boxes/{{ box_file.path }}"
-    force: no
-  with_filetree: "files/boxes"
-  when: box_file.state == 'file'
-  loop_control:
-    loop_var: box_file
-    label: "{{ box_file.path }}"
-  tags:
-    - install
-
-- name: "Create folders of qcow2 images in student's machine"
-  become: true
-  become_user: "{{ student }}"
-  file:
-    path: "/home/{{ student }}/images/qcow2/{{ qcow2_dir.path }}"
-    state: directory
-  with_filetree: "files/qcow2"
-  when: qcow2_dir.state == 'directory'
-  loop_control:
-    loop_var: qcow2_dir
-    label: "{{ qcow2_dir.path }}"
-  tags:
-    - install
-
-- name: "Push qcow2 images to student's machine"
-  become: true
-  become_user: "{{ student }}"
-  copy:
-    src: "files/qcow2/{{ qcow2_file.path }}"
-    dest: "/home/{{ student }}/images/qcow2/{{ qcow2_file.path }}"
-    force: no
-  with_filetree: "files/qcow2"
-  when: qcow2_file.state == 'file'
-  loop_control:
-    loop_var: qcow2_file
-    label: "{{ qcow2_file.path }}"
-  tags:
-    - install
-
-- name: "Create keychain folder for {{ student|quote }}"
-  file:
-    path: "files/keychain/{{ student|quote }}/ssh/"
-    state: directory
-    mode: 0600
-  tags:
-    - config
-
-- name: "Create student ssh keys"
+- name: "Create local keychain folder structure for {{ owner|quote }}"
   delegate_to: localhost
   become: false
-  shell: ssh-keygen -b 2048 -t rsa -f files/keychain/{{ student|quote }}/ssh/id_rsa -N '' -C ''
-  args:
-    creates: "files/keychain/{{ student|quote }}/ssh/id_rsa"
+  file:
+    path: "files/keychain/{{ owner|quote }}/ssh/"
+    state: directory
+    mode: 0755
   tags:
     - config
 
-- name: "Push student's id_rsa.pub to authorized_keys"
+- name: "Create machine owner ssh keys"
+  delegate_to: localhost
+  become: false
+  command: ssh-keygen -b 2048 -t rsa -f files/keychain/{{ owner|quote }}/ssh/id_rsa -N '' -C ''
+  args:
+    creates: "files/keychain/{{ owner|quote }}/ssh/id_rsa"
+  tags:
+    - config
+
+- name: "Push owner's id_rsa.pub to authorized_keys"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   copy:
-    src: "files/keychain/{{ student }}/ssh/id_rsa.pub"
-    dest: "/home/{{ student }}/.ssh/authorized_keys"
+    src: "files/keychain/{{ owner }}/ssh/id_rsa.pub"
+    dest: "/home/{{ owner }}/.ssh/authorized_keys"
     force: yes
-    owner: "{{ student }}"
-    group: "{{ student }}"
+    owner: "{{ owner }}"
+    group: "{{ owner }}"
     mode: 0644
   tags:
     - configure
 
-- name: "Push student's id_rsa.pub"
+- name: "Push owner's id_rsa.pub"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   copy:
-    src: "files/keychain/{{ student }}/ssh/id_rsa.pub"
-    dest: "/home/{{ student }}/.ssh/"
+    src: "files/keychain/{{ owner }}/ssh/id_rsa.pub"
+    dest: "/home/{{ owner }}/.ssh/"
     force: yes
-    owner: "{{ student }}"
-    group: "{{ student }}"
+    owner: "{{ owner }}"
+    group: "{{ owner }}"
     mode: 0644
   tags:
     - configure
 
-- name: "Push student's id_rsa"
+- name: "Push owner's id_rsa"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   copy:
-    src: "files/keychain/{{ student }}/ssh/id_rsa"
-    dest: "/home/{{ student }}/.ssh/"
+    src: "files/keychain/{{ owner }}/ssh/id_rsa"
+    dest: "/home/{{ owner }}/.ssh/"
     force: yes
-    owner: "{{ student }}"
-    group: "{{ student }}"
+    owner: "{{ owner }}"
+    group: "{{ owner }}"
     mode: 0600
   tags:
     - configure

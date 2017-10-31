@@ -1,16 +1,3 @@
----
-# Nested configuration is required.
-# Not all Public Cloud Providers allow nested virtualization
-# nested_virtualization_configured: yes
-
-# Google Computing Engine supports nested virtualization in some regions
-# Currently it is under Beta, therefore some additional steps are required to active it
-gce_region: europe-west1
-gce_zone: "{{ gce_region }}-d"
-gce_project_id: "PROJECT_ID"
-gce_service_account_email: "USERNAME@{{ gce_project_id }}.iam.gserviceaccount.com"
-gce_credentials_file: "files/keychain/{{ gce_project_id }}.json"
-
-# Google Computing Engine
-gce_cloud_instance_image: nested-image-centos-7
-gce_cloud_instance_machine_type: n1-standard-1
+students:
+  - name: student01
+    email: student01@acme.com

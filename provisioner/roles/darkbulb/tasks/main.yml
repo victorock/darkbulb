@@ -1,10 +1,6 @@
 ---
-- import_tasks: gce.yml
-  tags:
-    - gce_cloud
-    - gce_cloud_instance
-
 - import_tasks: setup.yml
-  tags:
-    - darkbulb
-    - darkbulb_setup
+- import_tasks: student.yml
+- import_tasks: virtualbox.yml
+- import_tasks: libvirt.yml
+- import_tasks: vagrant.yml

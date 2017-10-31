@@ -1,51 +1,51 @@
-# Physical wiring
+# Cloud Wiring
 topology:
-  - left_node: mgmt01
-    right_node: spine01
-    left_role: management
-    right_role: spine
+  - left_node: tower01
+    right_node: mgmt01
+    left_role: control
+    right_role: management
     left_link: 1
     right_link: 2
 
   - left_node: mgmt01
-    right_node: spine02
+    right_node: spine01
     left_role: management
     right_role: spine
     left_link: 3
     right_link: 4
 
   - left_node: mgmt01
-    right_node: leaf01
+    right_node: spine02
     left_role: management
-    right_role: leaf
+    right_role: spine
     left_link: 5
     right_link: 6
 
   - left_node: mgmt01
-    right_node: leaf02
+    right_node: leaf01
     left_role: management
     right_role: leaf
     left_link: 7
     right_link: 8
 
   - left_node: mgmt01
-    right_node: leaf03
+    right_node: leaf02
     left_role: management
     right_role: leaf
     left_link: 9
     right_link: 10
 
   - left_node: mgmt01
-    right_node: leaf04
+    right_node: leaf03
     left_role: management
     right_role: leaf
     left_link: 11
     right_link: 12
 
   - left_node: mgmt01
-    right_node: tower01
+    right_node: leaf04
     left_role: management
-    right_role: server
+    right_role: leaf
     left_link: 13
     right_link: 14
 

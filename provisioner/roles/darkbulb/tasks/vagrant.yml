@@ -1,6 +1,21 @@
+---
+- name: "Vagrant packages state is latest"
+  become: true
+  yum:
+    name: "{{ vagrant_package }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm
+  loop_control:
+    loop_var: vagrant_package
+    label: "{{ vagrant_package }}"
+  tags:
+    - install
+
 - name: "List Vagrant Plugins"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   shell:
     vagrant plugin list
   register: return_vagrant_plugin_list
@@ -11,7 +26,7 @@
 
 - name: "Install Vagrant Plugins"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   shell:
     vagrant plugin install {{ vagrant_plugin|quote }}
   when:
@@ -28,7 +43,7 @@
 
 - name: "List Vagrant Boxes"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   shell:
     vagrant box list
   register: return_vagrant_box_list
@@ -39,7 +54,7 @@
 
 - name: "Add Vagrant Boxes"
   become: true
-  become_user: "{{ student }}"
+  become_user: "{{ owner }}"
   shell:
     vagrant box add {{ vagrant_box|quote }} --provider virtualbox
   when:
@@ -54,3 +69,18 @@
   tags:
     - box
     - box_add
+
+- name: "Push Vagrant images to machine owner"
+  become: true
+  become_user: "{{ owner }}"
+  copy:
+    src: "files/images/boxes/{{ box_file.path }}"
+    dest: "/home/{{ owner }}/images/boxes/{{ box_file.path }}"
+    force: no
+  with_filetree: "files/images/boxes/"
+  when: box_file.state == 'file'
+  loop_control:
+    loop_var: box_file
+    label: "{{ box_file.path }}"
+  tags:
+    - install

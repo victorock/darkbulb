@@ -1,20 +1,4 @@
 ---
-- name: "Virtualbox Repo is present"
-  become: true
-  yum_repository:
-    name: virtualbox
-    description: "Oracle Linux / RHEL / CentOS-$releasever / $basearch - VirtualBox"
-    baseurl: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
-    gpgcheck: no
-## Workaround as 7.4 doesn't exists
-#    enabled: yes
-    enabled: no
-##
-    repo_gpgcheck: yes
-    gpgkey: "https://www.virtualbox.org/download/oracle_vbox.asc"
-  tags:
-    - configure
-
 - name: "Ansible Repo is present"
   become: true
   yum_repository:
@@ -27,11 +11,11 @@
   tags:
     - configure
 
-- name: "Darkbulb packages state is latest"
+- name: "Darkbulb base packages state is latest"
   become: true
   yum:
     name: "{{ darkbulb_package }}"
-    state: present
+    state: latest
     update_cache: yes
   with_items:
     - epel-release
@@ -46,36 +30,8 @@
     - ansible
     - dkms
     - "@Development Tools"
-## Virtualbox-5.2 is not supported yet by Vagrant
-    - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm
-## Workaround as rpm for 7.4 doesn't exists
-#    - VirtualBox-5.1
-    - kernel-devel-3.10.0-693.2.2.el7.x86_64
-    - http://download.virtualbox.org/virtualbox/rpm/rhel/7/x86_64/VirtualBox-5.1-5.1.8_111374_el7-1.x86_64.rpm
   loop_control:
     loop_var: darkbulb_package
     label: "{{ darkbulb_package }}"
-
   tags:
     - install
-
-- name: "Check if virtualbox is running fine"
-  become: true
-  command: /usr/bin/VBoxManage --version
-  register: vbox_version
-
-- name: "Run vboxconfig to rebuild Virtualbox kernel modules"
-  become: true
-  command: /usr/sbin/vboxconfig
-  when: "'vboxconfig' in vbox_version"
-
-- name: "Ensure student's account exists"
-  become: true
-  user:
-    name: "{{ student }}"
-    createhome: yes
-    home: "/home/{{ student }}"
-    groups: vboxusers
-    append: yes
-  tags:
-    - configure

@@ -11,3 +11,8 @@
       include_role:
         name: darkbulb
         tasks_from: vagrant
+
+    - name: "Setup Student Libvirt Environment"
+      include_role:
+        name: darkbulb
+        tasks_from: libvirt

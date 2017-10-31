@@ -1,0 +1,77 @@
+#### Black Magic Happens here....
+- name: "Extract Topology elements as columns"
+  become: false
+  set_fact:
+    left_nodes: "{{  topology|json_query('[*].left_node') }}"
+    right_nodes: "{{ topology|json_query('[*].right_node') }}"
+    left_roles: "{{  topology|json_query('[*].left_role') }}"
+    right_roles: "{{ topology|json_query('[*].right_role') }}"
+    left_links: "{{  topology|json_query('[*].left_link') }}"
+    right_links: "{{ topology|json_query('[*].right_link') }}"
+
+- name: "Validate topology"
+  become: false
+  block:
+    - name: "Check for missing roles in the left"
+      fail:
+        msg: Left Node missing role
+      when: (left_nodes|length) != (left_roles|length)
+
+    - name: "Check for missing roles in the right"
+      fail:
+        msg: Right Node missing role
+      when: (right_nodes|length) != (right_roles|length)
+
+    - name: "Check for missing links in the left"
+      fail:
+        msg: Left Node missing link
+      when: (left_nodes|length) != (left_links|length)
+
+    - name: "Check for missing links in the right"
+      fail:
+        msg: Right Node missing link
+      when: (left_nodes|length) != (right_links|length)
+
+#### Down here we start to create kv_* with the columns
+
+- name: "Node and Role as Key-Value Hash"
+  become: false
+  block:
+    - name: "Initialize kv_node_role: []"
+      set_fact:
+        kv_node_role: []
+
+    - name: "Set kv_node_role: [ { node:<node>, role:<role> } ]"
+      set_fact:
+        kv_node_role: "{{ kv_node_role }} + [ { 'node':'{{ column_node_role.0 }}' , 'role':'{{ column_node_role.1 }}' } ]"
+      with_together:
+        - "{{ left_nodes+right_nodes }}"
+        - "{{ left_roles+right_roles }}"
+      loop_control:
+        loop_var: column_node_role
+        label: "node:{{ column_node_role.0 }}, role:{{ column_node_role.1 }}"
+
+    - name: "Dedup kv_node_role: [ { node:<node>, role:<role> } ]"
+      set_fact:
+        kv_node_role: "{{ kv_node_role | unique }}"
+
+- name: "Node and Link as Key-Value Hash"
+  become: false
+  block:
+    - name: "Initialize kv_node_link: []"
+      set_fact:
+        kv_node_link: []
+
+    - name: "Set kv_node_link: [ { node:<node>, link:<link> } ]"
+      set_fact:
+        kv_node_link: "{{ kv_node_link }} + [ { 'node':'{{ column_node_link.0 }}' , 'role':'{{ column_node_link.1 }}' } ]"
+      with_together:
+        - "{{ left_nodes+right_nodes }}"
+        - "{{ left_links+right_links }}"
+      loop_control:
+        loop_var: column_node_link
+        label: "node:{{ column_node_link.0 }}, link:{{ column_node_link.1 }}"
+
+    - name: "Dedup kv_node_link: [ { node:<node>, link:<link> } ]"
+      set_fact:
+        kv_node_link: "{{ kv_node_link | unique }}"

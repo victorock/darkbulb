@@ -1,0 +1,8 @@
+# Cloud Wiring
+topology:
+  - left_node: server01
+    right_node: switch01
+    left_role: server
+    right_role: leaf
+    left_link: 1
+    right_link: 2
