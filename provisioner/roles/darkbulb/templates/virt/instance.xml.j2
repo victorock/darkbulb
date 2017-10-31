@@ -1,6 +1,8 @@
+<!-- {{ ansible_managed }} -->
+
 <domain type='kvm'>
-  <name>{{ kvm_instance_name }}</name>
-  <memory unit='GiB'>{{ kvm_instance_memory }}</memory>
+  <name>{{ libvirt_instance_name }}</name>
+  <memory unit='GiB'>{{ libvirt_instance_memory }}</memory>
   <vcpu>2</vcpu>
 
   <os>
@@ -24,13 +26,12 @@
   <devices>
     <disk type='block' device='disk'>
       <driver name='qemu' type='qcow2' cache='writeback'/>
-      <source dev='{{ kvm_img_path }}/{{ kvm_instance_name }}.qcow2'/>
+      <source dev='{{ libvirt_instance_img }}'/>
       <target dev='vda' bus='virtio'/>
     </disk>
 
 {%  for left_node, left_link, right_node, right_link in left_nodes, left_links, right_nodes, right_links %}
 {%    if inventory_hostname ~ left_node %}
-{%      for n in range(0,) %}
     <devices>
       <interface type='udp'>
         <source address='{{ right_node }}' port='{{ 10000+right_link }}'>
@@ -38,8 +39,16 @@
         </source>
       </interface>
     </devices>
-{%      endfor %}
 {%    elif inventory_hostname ~ right_node %}
+  <devices>
+    <interface type='udp'>
+      <source address='{{ left_node }}' port='{{ 10000+left_link }}'>
+        <local address='{{ right_node }}' port='{{ 10000+right_link }}'/>
+      </source>
+    </interface>
+  </devices>
+{%    endif %}
+{%  endfor %}
 
     <serial type='pty'>
       <target port='0'/>

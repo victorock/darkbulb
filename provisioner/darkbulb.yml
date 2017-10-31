@@ -1,5 +1,5 @@
 ---
-- name: "Student Darkbulb Environment"
+- name: "Darkbulb Environment"
   hosts: darkbulb
 
   tasks:

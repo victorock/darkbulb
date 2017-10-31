@@ -4,10 +4,19 @@
     name: "{{ owner }}"
     createhome: yes
     home: "/home/{{ owner }}"
-    groups: vboxusers
     append: yes
   tags:
     - configure
+
+- name: "Create .ssh folder in homedir of owner's account"
+  become: true
+  become_user: "{{ owner }}"
+  file:
+    path: "/home/{{ owner }}/.ssh"
+    state: directory
+    mode: 0755
+  tags:
+    - config
 
 - name: "Git clone content to home directory of machine owner"
   become: true

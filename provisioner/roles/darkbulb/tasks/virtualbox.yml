@@ -42,3 +42,14 @@
   become: true
   command: /usr/sbin/vboxconfig
   when: "'vboxconfig' in vbox_version"
+
+- name: "Ensure owner's is member of vboxusers"
+  become: true
+  user:
+    name: "{{ owner }}"
+    createhome: yes
+    home: "/home/{{ owner }}"
+    groups: vboxusers
+    append: yes
+  tags:
+    - configure

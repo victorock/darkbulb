@@ -33,7 +33,6 @@
       when: (left_nodes|length) != (right_links|length)
 
 #### Down here we start to create kv_* with the columns
-
 - name: "Node and Role as Key-Value Hash"
   become: false
   block:

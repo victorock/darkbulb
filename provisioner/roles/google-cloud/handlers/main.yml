@@ -1,2 +1,12 @@
----
-# handlers file for gce-cloud
+- name: "check instance availability"
+  ignore_errors: true
+  wait_for:
+    delay: 20
+    host: "{{ check_instance.public_ip }}"
+    port: 22
+    state: started
+    timeout: 120
+  with_items: "{{ return_gce_cloud_instance.results[2].instance_data }}"
+  loop_control:
+    loop_var: check_instance
+    label: "{{ check_instance.name }}"
