@@ -23,7 +23,7 @@
   become_user: "{{ owner }}"
   git:
     repo: 'https://github.com/victorock/darkbulb.git'
-    version: master
+    version: dev
     clone: yes
     dest: "/home/{{ owner }}/darkbulb"
     force: no
