@@ -29,6 +29,8 @@
     - htop
     - ansible
     - dkms
+    - telnet
+    - socat
     - "@Development Tools"
   loop_control:
     loop_var: darkbulb_package
