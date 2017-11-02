@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  connection: local
   gather_facts: no
   become: no
 
@@ -8,4 +7,4 @@
     - name: "Topology Builder"
       include_role:
         name: vagrant-topology
-        tasks_from: build.yml
+        tasks_from: build

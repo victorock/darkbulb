@@ -1,4 +1,5 @@
 provider: virtualbox
+mgmt01: 127.0.0.1
 tower01: 127.0.0.1
 server01: 127.0.0.1
 server02: 127.0.0.1
