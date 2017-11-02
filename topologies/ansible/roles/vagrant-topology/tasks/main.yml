@@ -1,0 +1,231 @@
+---
+- name: "Topology"
+  fail:
+    msg: |
+      The following topologies are available:
+        0- 0s0l (0 Spine, 0 Leafs)
+        1- 1s0l (1 Spine, 0 Leafs)
+        2- 1s1l (1 Spine, 1 Leafs)
+        3- 2s1l (2 Spine, 1 Leafs)
+        4- 2s2l (2 Spine, 2 Leafs)
+        5- 2s3l (2 Spine, 3 Leafs)
+        6- 2s4l (2 Spine, 4 Leafs)
+
+      The following devices are available:
+        0- none
+        11- spine01
+        12- spine02
+        21- leaf01
+        22- leaf02
+        23- leaf03
+        24- leaf04
+
+      Follow below few examples showing how to chose your topology:
+        -e topology=1
+        -e topology=2
+        -e topology=2s2l
+        -e topology=2s3l
+        -e topology=5
+
+      In order to destroy the topology:
+        -e topology=0
+
+  when:
+    - topology is not defined
+    - device is not defined
+
+- name: "Build Topology"
+  block:
+    - name: "Create directories"
+      file:
+        path: "files/{{ vagrant_template_dir.path }}"
+        state: directory
+      with_filetree: "templates/{{ provider }}"
+      when: vagrant_template_dir.state == 'directory'
+      loop_control:
+        loop_var: vagrant_template_dir
+
+    - name: "Process Vagrant Templates"
+      template:
+        src: "{{ vagrant_template_file.src }}"
+        dest: "files/{{ vagrant_template_file.path }}"
+      with_filetree: "templates/{{ provider }}"
+      when: vagrant_template_file.state == 'file'
+      loop_control:
+        loop_var: vagrant_template_file
+
+- name: "Start Topology"
+  block:
+    - name: "Topology 0s0l"
+      command:
+        vagrant destroy -f
+      args:
+        chdir: files
+      when:
+        - ( topology == '0s0l' ) or ( topology == '0' )
+
+    - name: "Topology 1s0l"
+      command:
+        vagrant up {{ item | quote }}
+      register: return_vagrant_up
+      args:
+        chdir: files
+        creates:
+          - files/.vagrant/machines/spine01/virtualbox/id
+      when:
+        - ( topology == '1s0l' ) or ( topology == '1' )
+      with_items:
+        - spine01
+
+    - name: "Topology 1s1l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '1s1l' ) or ( topology == '2' )
+      with_items:
+        - spine01
+        - leaf01
+
+    - name: "Topology 2s1l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s1l' ) or ( topology == '3' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+
+    - name: "Topology 2s2l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s2l' ) or ( topology == '4' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+
+    - name: "Topology 2s3l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s3l' ) or ( topology == '5' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+        - leaf03
+
+    - name: "Topology 2s4l"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( topology == '2s4l' ) or ( topology == '6' )
+      with_items:
+        - spine01
+        - leaf01
+        - spine02
+        - leaf02
+        - leaf03
+        - leaf04
+
+  when: topology is defined
+
+- name: "Start Device"
+  block:
+    - name: "Device spine01"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'spine01' ) or ( device == '11' )
+      with_items:
+        - spine01
+
+    - name: "Device spine02"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'spine02' ) or ( device == '12' )
+      with_items:
+        - spine02
+
+    - name: "Device leaf01"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf01' ) or ( device == '21' )
+      with_items:
+        - leaf01
+
+    - name: "Device leaf02"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf02' ) or ( device == '22' )
+      with_items:
+        - leaf02
+
+    - name: "Device leaf03"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf03' ) or ( device == '23' )
+      with_items:
+        - leaf03
+
+    - name: "Device leaf04"
+      command:
+        vagrant up {{ item | quote }}
+      args:
+        chdir: files
+        creates:
+          - ".vagrant/machines/{{ item }}/virtualbox/id"
+      when:
+        - ( device == 'leaf04' ) or ( device == '24' )
+      with_items:
+        - leaf04
+
+  when: device is defined

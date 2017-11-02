@@ -1,0 +1,10 @@
+provider: virtualbox
+tower01: 127.0.0.1
+server01: 127.0.0.1
+server02: 127.0.0.1
+spine01: 127.0.0.1
+spine02: 127.0.0.1
+leaf01: 127.0.0.1
+leaf02: 127.0.0.1
+leaf03: 127.0.0.1
+leaf04: 127.0.0.1

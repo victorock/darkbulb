@@ -52,8 +52,8 @@
   become: true
   lineinfile:
     path: /etc/hosts
-    regexp: "^{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }}"
-    line: '{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }}'
+    regexp: "^{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }} {{ hostvars[owner_node].node }}"
+    line: '{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }} {{ hostvars[owner_node].node }}'
   with_items:
     - "{{ groups[owner] }}"
   loop_control:
