@@ -3,7 +3,7 @@
 
 ##### DEFINE VM for tower #####
 Vagrant.configure('2') do |config|
-  config.vm.define "tower" do |node|
+  config.vm.define "tower01" do |node|
     node.vm.box = "ansible/tower"
 
     node.vm.provider :virtualbox do |v|

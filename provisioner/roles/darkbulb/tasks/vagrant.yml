@@ -88,7 +88,7 @@
 - name: "Add Vagrant box to inventory"
   become: true
   become_user: "{{ owner }}"
-  command: vagrant box add "/home/{{ owner|quote }}/images/boxes/{{ box_image.path|quote }}" --name {{ box_image.path|splittext|first|quote }}
+  command: vagrant box add "/home/{{ owner|quote }}/images/boxes/{{ box_image.path|quote }}" --name {{ box_image.path|splitext|first|quote }}
   with_filetree: "/home/{{ owner }}/images/boxes/"
   when:
     - box_image.state == 'file'
