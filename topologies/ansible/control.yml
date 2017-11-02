@@ -1,6 +1,6 @@
 ---
 - name: "Tower Playbook"
-  hosts: tower
+  hosts: control
   become: true
   gather_facts: true
 
