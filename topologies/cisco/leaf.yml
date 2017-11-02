@@ -1,22 +1,14 @@
 ---
 - name: "Leaf Playbook"
-  hosts: juniper:&leaf
+  hosts: leaf
   connection: local
   gather_facts: no
 
   tasks:
-    - name: "gather_facts: junos"
-      junos_facts:
-      register: ansible_junos_facts
+    - name: "gather_facts: Nxos"
+      nxos_facts:
+      register: ansible_nxos_facts
 
     - name: "Role vagrant-base"
       include_role:
         name: vagrant-base
-
-    - name: "Apply configuration"
-      junos_config:
-        backup: no
-        update: merge
-        confirm_commit: yes
-        confirm: 0
-        comment: "Ansible, configured by junos_config"

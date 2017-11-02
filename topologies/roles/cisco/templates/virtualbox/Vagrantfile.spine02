@@ -1,0 +1,67 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for spine02 #####
+Vagrant.configure('2') do |config|
+  config.ssh.insert_key = false
+
+  config.vm.define "spine02" do |device|
+    device.vm.box = "nxosv-final"
+    device.vm.boot_timeout = 600
+
+    device.vm.provider :virtualbox do |v|
+
+      # Serial port
+      v.customize ["modifyvm", :id, "--uart1", "0x3f8", "4"]
+      v.customize ["modifyvm", :id, "--uartmode1", "server", "/tmp/spine02-tty"]
+
+      # Cdrom with default nxosv config
+      v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
+
+      # SPINE02,E1 (10200) -> MGMT01,E2 (9103)
+      v.customize ["modifyvm", :id, "--nic2", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ mgmt01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=10200"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=9103"]
+
+      # SPINE02,E2 (10201) -> LEAF01,E2 (20102)
+      v.customize ["modifyvm", :id, "--nic3", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ leaf01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=10201"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20102"]
+
+      # SPINE02,E3 (10202) -> LEAF02,E2 (20202)
+      v.customize ["modifyvm", :id, "--nic4", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dest={{ leaf02 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "sport=10202"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20202"]
+
+      # SPINE02,E4 (10203) -> LEAF03,E2 (20302)
+      v.customize ["modifyvm", :id, "--nic5", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dest={{ leaf03 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "sport=10203"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dport=20302"]
+
+      # SPINE02,E5 (10204) -> LEAF04,E2 (20402)
+      v.customize ["modifyvm", :id, "--nic6", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv6", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "dest={{ leaf04 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "sport=10204"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "dport=20402"]
+    end
+
+    # Port mapping
+    device.vm.network "forwarded_port", guest: 25, host: 12025, protocol: "tcp"
+    device.vm.network "forwarded_port", guest: 22, host: 12022, protocol: "tcp"
+    device.vm.network "forwarded_port", guest: 80, host: 12080, protocol: "tcp"
+    device.vm.network "forwarded_port", guest: 443, host: 12443, protocol: "tcp"
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    device.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end
