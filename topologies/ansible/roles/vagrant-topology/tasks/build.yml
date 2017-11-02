@@ -2,9 +2,9 @@
   block:
     - name: "Create directories"
       file:
-        path: "files/{{ vagrant_template_dir.path }}"
+        path: "{{ playbook_dir }}/files/{{ vagrant_template_dir.path }}"
         state: directory
-      with_filetree: "templates/{{ provider }}"
+      with_filetree: "{{ playbook_dir }}/templates/{{ provider }}"
       when: vagrant_template_dir.state == 'directory'
       loop_control:
         loop_var: vagrant_template_dir
@@ -12,8 +12,8 @@
     - name: "Process Vagrant Templates"
       template:
         src: "{{ vagrant_template_file.src }}"
-        dest: "files/{{ vagrant_template_file.path }}"
-      with_filetree: "templates/{{ provider }}"
+        dest: "{{ playbook_dir }}/files/{{ vagrant_template_file.path }}"
+      with_filetree: "{{ playbook_dir }}templates/{{ provider }}"
       when: vagrant_template_file.state == 'file'
       loop_control:
         loop_var: vagrant_template_file
