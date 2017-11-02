@@ -18,28 +18,35 @@ Vagrant.configure('2') do |config|
       # Cdrom with default nxosv config
       v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
 
-      # SPINE01,E1 (10101) -> LEAF01,E1 (20101)
+      # SPINE01,E1 (10100) -> MGMT01,E2 (9102)
+      v.customize ["modifyvm", :id, "--nic1", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv1", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "dest={{ mgmt01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "sport=10100"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "dport=9102"]
+
+      # SPINE01,E2 (10101) -> LEAF01,E2 (20101)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ leaf01 }}"]
       v.customize ["modifyvm", :id, "--nicproperty2", "sport=10101"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dport=20101"]
 
-      # SPINE01,E2 (10102) -> LEAF02,E1 (20201)
+      # SPINE01,E3 (10102) -> LEAF02,E2 (20201)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ leaf02 }}"]
       v.customize ["modifyvm", :id, "--nicproperty3", "sport=10102"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dport=20201"]
 
-      # SPINE01,E3 (10103) -> LEAF03,E1 (20301)
+      # SPINE01,E4 (10103) -> LEAF03,E2 (20301)
       v.customize ["modifyvm", :id, "--nic4", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty4", "dest={{ leaf03 }}"]
       v.customize ["modifyvm", :id, "--nicproperty4", "sport=10103"]
       v.customize ["modifyvm", :id, "--nicproperty4", "dport=20301"]
 
-      # SPINE01,E4 (10101) -> LEAF04,E1 (20401)
+      # SPINE01,E5 (10101) -> LEAF04,E2 (20401)
       v.customize ["modifyvm", :id, "--nic5", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty5", "dest={{ leaf04 }}"]

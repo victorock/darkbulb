@@ -3,9 +3,8 @@
 
 VAGRANTFILE_API_VERSION = 2
 
-nodes = %w[ spine01 spine02
-            leaf01 leaf02
-            leaf03 leaf04 ]
+nodes = %w[ tower01 mgmt01
+            server01 server02 ]
 
 nodes.each do |node|
   vagrantfile = "./Vagrantfile.#{node}"
@@ -16,9 +15,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
 
     ansible.groups = {
-      "cisco"      => ["spine01", "spine02", "leaf01", "leaf02", "leaf03", "leaf04" ],
-      "spine"        => ["spine01", "spine02"],
-      "leaf"         => ["leaf01", "leaf02", "leaf03", "leaf04" ]
+      "management"   => [ "mgmt01" ],
+      "control"        => [ "tower01" ],
+      "server"         => [ "server01", "server02" ]
     }
 
     ansible.playbook = "../deploy.yml"

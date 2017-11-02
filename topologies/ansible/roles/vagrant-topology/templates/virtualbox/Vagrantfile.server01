@@ -12,14 +12,14 @@ Vagrant.configure('2') do |config|
       # SRV01,E1 (30101) -> LEAF01,E3 (20103)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dest=leaf01"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ leaf01 }}"]
       v.customize ["modifyvm", :id, "--nicproperty2", "sport=30101"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dport=20103"]
 
       # SRV01,E2 (30102) -> LEAF02,E3 (20203)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "dest=leaf02"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ leaf02 }}"]
       v.customize ["modifyvm", :id, "--nicproperty3", "sport=30102"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dport=20203"]
 

@@ -18,6 +18,13 @@ Vagrant.configure('2') do |config|
       # Cdrom with default nxosv config
       v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
 
+      # LEAF02,E1 (20100) -> MGMT01,E4 (9105)
+      v.customize ["modifyvm", :id, "--nic1", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv1", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "dest={{ mgmt01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "sport=20200"]
+      v.customize ["modifyvm", :id, "--nicproperty1", "dport=9105"]
+
       # LEAF02,E1 (20201) ->  SPINE01,E2 (10102)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
