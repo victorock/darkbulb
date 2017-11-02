@@ -3,7 +3,7 @@
   become: true
   yum:
     name: "{{ vagrant_package }}"
-    state: latest
+    state: present
     update_cache: yes
   with_items:
     - https://releases.hashicorp.com/vagrant/2.0.0/vagrant_2.0.0_x86_64.rpm

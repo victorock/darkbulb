@@ -1,4 +1,4 @@
 ---
-students:
-  - name: student01
-    email: student01@acme.com
+environments:
+  - name: env01
+    email: env01@acme.com

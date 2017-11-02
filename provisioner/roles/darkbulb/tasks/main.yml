@@ -1,6 +1,6 @@
 ---
 - import_tasks: setup.yml
-- import_tasks: student.yml
+- import_tasks: environment.yml
 - import_tasks: virtualbox.yml
 - import_tasks: libvirt.yml
 - import_tasks: vagrant.yml

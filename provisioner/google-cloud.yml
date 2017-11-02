@@ -13,11 +13,15 @@
         name: google-cloud
       vars:
         gce_cloud_instance_name: "{{ go_gce.0.name }}-{{ go_gce.1.node }}"
+        gce_cloud_instance_tags:
+          - darkbulb
+          - "{{ go_gce.0.name }}"
+          - "{{ go_gce.1.role }}"
         owner: "{{ go_gce.0.name }}"
         node: "{{ go_gce.1.node }}"
         role: "{{ go_gce.1.role }}"
       with_nested:
-        - "{{ students }}"
+        - "{{ environments }}"
         - "{{ kv_node_role }}"
       loop_control:
         loop_var: go_gce

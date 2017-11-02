@@ -1,4 +1,4 @@
-- name: "Ensure owner's account exists"
+- name: "Ensure owner account exists"
   become: true
   user:
     name: "{{ owner }}"
@@ -8,7 +8,7 @@
   tags:
     - configure
 
-- name: "Create .ssh folder in homedir of owner's account"
+- name: "Create .ssh folder in homedir of owner account"
   become: true
   become_user: "{{ owner }}"
   file:
@@ -76,7 +76,7 @@
   tags:
     - configure
 
-- name: "Push owner's id_rsa.pub"
+- name: "Push owner's id_rsa.pub to homedir"
   become: true
   become_user: "{{ owner }}"
   copy:
@@ -89,7 +89,7 @@
   tags:
     - configure
 
-- name: "Push owner's id_rsa"
+- name: "Push owner's id_rsa to homedir"
   become: true
   become_user: "{{ owner }}"
   copy:

@@ -5,4 +5,4 @@ topology:
     left_role: server
     right_role: leaf
     left_link: 1
-    right_link: 2
+    right_link: 1

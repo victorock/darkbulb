@@ -13,28 +13,28 @@ Vagrant.configure('2') do |config|
       # LEAF04,E1 (20401) ->  SPINE01,E4 (10104)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest=spie01"]
       v.customize ["modifyvm", :id, "--nicproperty2", "sport=20401"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dport=10104"]
 
       # LEAF04,E2 (20402) -> SPINE02,E4 (10204)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest=spine02"]
       v.customize ["modifyvm", :id, "--nicproperty3", "sport=20402"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dport=10204"]
 
       # LEAF04,E3 (20403) -> SRV02,E2 (30202)
       v.customize ["modifyvm", :id, "--nic4", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty4", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dest=server02"]
       v.customize ["modifyvm", :id, "--nicproperty4", "sport=20403"]
       v.customize ["modifyvm", :id, "--nicproperty4", "dport=30202"]
 
       # LEAF04,E4 (20404) -> LEAF03,E4 (20304)
       v.customize ["modifyvm", :id, "--nic5", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty5", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dest=leaf03"]
       v.customize ["modifyvm", :id, "--nicproperty5", "sport=20404"]
       v.customize ["modifyvm", :id, "--nicproperty5", "dport=20304"]
 
