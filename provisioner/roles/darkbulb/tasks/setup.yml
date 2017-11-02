@@ -52,11 +52,9 @@
   become: true
   lineinfile:
     path: /etc/hosts
-    regexp: "^{{ hostvars[owner_node.0].ansible_default_ipv4.address }} {{ owner_node.1.node }}"
-    line: '{{ hostvars[owner_node.0].ansible_default_ipv4.address }} {{ owner_node.1.node }}'
-  when: owner_node.0 in owner_node.1.node
+    regexp: "^{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }}"
+    line: '{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }}'
   with_items:
     - "{{ groups[owner] }}"
-    - "{{ kv_node_role }}"
   loop_control:
     loop_var: owner_node
