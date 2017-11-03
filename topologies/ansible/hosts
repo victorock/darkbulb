@@ -6,35 +6,31 @@ leaf
 server
 
 [control]
-tower01   ansible_host=127.0.0.1:20022
+tower01   ansible_host=127.0.0.1 ansible_port=20022 inbound_mgmt_ip=10.42.0.9/24
 
 [management]
-mgmt01    ansible_host=127.0.0.1:9022
+mgmt01    ansible_host=127.0.0.1 ansible_port=9022 inbound_mgmt_ip=10.42.0.2/24
 
 [spine]
-spine01   ansible_host=127.0.0.1:11022
-spine02   ansible_host=127.0.0.1:12022
+spine01   ansible_host=127.0.0.1 ansible_port=11022 inbound_mgmt_ip=10.42.0.11/24
+spine02   ansible_host=127.0.0.1 ansible_port=12022 inbound_mgmt_ip=10.42.0.12/24
 
 [leaf]
-leaf01    ansible_host=127.0.0.1:13022
-leaf02    ansible_host=127.0.0.1:14022
-leaf03    ansible_host=127.0.0.1:15022
-leaf04    ansible_host=127.0.0.1:16022
+leaf01    ansible_host=127.0.0.1 ansible_port=13022 inbound_mgmt_ip=10.42.0.21/24
+leaf02    ansible_host=127.0.0.1 ansible_port=14022 inbound_mgmt_ip=10.42.0.22/24
+leaf03    ansible_host=127.0.0.1 ansible_port=15022 inbound_mgmt_ip=10.42.0.23/24
+leaf04    ansible_host=127.0.0.1 ansible_port=16022 inbound_mgmt_ip=10.42.0.24/24
 
 [server]
-server01  ansible_host=127.0.0.1:21022
-server02  ansible_host=127.0.0.1:22022
+server01  ansible_host=127.0.0.1 ansible_port=21022 inbound_mgmt_ip=10.42.0.31/24
+server02  ansible_host=127.0.0.1 ansible_port=22022 inbound_mgmt_ip=10.42.0.32/24
 
 [all:vars]
 provider=virtualbox
-vendor=redhat
-tower01=127.0.0.1
-mgmt01=127.0.0.1
-spine01=127.0.0.1
-spine02=127.0.0.1
-leaf01=127.0.0.1
-leaf02=127.0.0.1
-leaf03=127.0.0.1
-leaf04=127.0.0.1
-server01=127.0.0.1
-server02=127.0.0.1
+inbound_mgmt_vlan=10
+
+[spine:vars]
+inbound_mgmt_port=e1/1
+
+[leaf:vars]
+inbound_mgmt_port=e1/1

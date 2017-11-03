@@ -14,7 +14,7 @@ interface vlan {{ inbound_mgmt_vlan }}
   ip address {{ inbound_mgmt_ip }}
   no shut
   exit
-interface ethernet {{ inbound_mgmt_port }}
+interface {{ inbound_mgmt_port }}
   switchport
   switchport mode access
   switchport access vlan {{ inbound_mgmt_vlan }}
