@@ -30,7 +30,7 @@ provider=virtualbox
 inbound_mgmt_vlan=10
 inbound_mgmt_network=10.42.0.0
 inbound_mgmt_mask=255.255.255.0
-inbound_mgmt_ip="{{ inbound_mgmt_network | ipaddr(id) | ipaddr('address')  }}"
+inbound_mgmt_ip="{{ inbound_mgmt_network | ipaddr(device_universal_unique_id) | ipaddr('address')  }}"
 
 [spine:vars]
 inbound_mgmt_port=e1/1
