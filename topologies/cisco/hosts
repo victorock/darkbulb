@@ -6,31 +6,30 @@ leaf
 server
 
 [control]
-tower01   ansible_host=127.0.0.1 ansible_port=20022 device_universal_unique_id=1
+tower01   ansible_host=127.0.0.1 ansible_port=20022 inbound_mgmt_ip=10.42.0.9
 
 [management]
-mgmt01    ansible_host=127.0.0.1 ansible_port=9022 device_universal_unique_id=2
+mgmt01    ansible_host=127.0.0.1 ansible_port=9022 inbound_mgmt_ip=10.42.0.2
 
 [spine]
-spine01   ansible_host=127.0.0.1 ansible_port=11022 device_universal_unique_id=11
-spine02   ansible_host=127.0.0.1 ansible_port=12022 device_universal_unique_id=12
+spine01   ansible_host=127.0.0.1 ansible_port=11022 inbound_mgmt_ip=10.42.0.11
+spine02   ansible_host=127.0.0.1 ansible_port=12022 inbound_mgmt_ip=10.42.0.12
 
 [leaf]
-leaf01    ansible_host=127.0.0.1 ansible_port=13022 device_universal_unique_id=21
-leaf02    ansible_host=127.0.0.1 ansible_port=14022 device_universal_unique_id=22
-leaf03    ansible_host=127.0.0.1 ansible_port=15022 device_universal_unique_id=23
-leaf04    ansible_host=127.0.0.1 ansible_port=16022 device_universal_unique_id=24
+leaf01    ansible_host=127.0.0.1 ansible_port=13022 inbound_mgmt_ip=10.42.0.21
+leaf02    ansible_host=127.0.0.1 ansible_port=14022 inbound_mgmt_ip=10.42.0.22
+leaf03    ansible_host=127.0.0.1 ansible_port=15022 inbound_mgmt_ip=10.42.0.23
+leaf04    ansible_host=127.0.0.1 ansible_port=16022 inbound_mgmt_ip=10.42.0.24
 
 [server]
-server01  ansible_host=127.0.0.1 ansible_port=21022 device_universal_unique_id=31
-server02  ansible_host=127.0.0.1 ansible_port=22022 device_universal_unique_id=32
+server01  ansible_host=127.0.0.1 ansible_port=21022 inbound_mgmt_ip=10.42.0.31
+server02  ansible_host=127.0.0.1 ansible_port=22022 inbound_mgmt_ip=10.42.0.32
 
 [all:vars]
 provider=virtualbox
 inbound_mgmt_vlan=10
 inbound_mgmt_network=10.42.0.0
 inbound_mgmt_mask=255.255.255.0
-inbound_mgmt_ip="{{ inbound_mgmt_network | ipaddr(device_universal_unique_id) | ipaddr('address')  }}"
 
 [spine:vars]
 inbound_mgmt_port=e1/1
