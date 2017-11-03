@@ -1,14 +1,5 @@
 - name: "Build Topology"
   block:
-    - name: "Git clone Darkbulb"
-      become: true
-      become_user: "{{ owner }}"
-      git:
-        repo: 'https://github.com/victorock/darkbulb.git'
-        version: dev
-        clone: yes
-        dest: "darkbulb"
-        force: yes
     - name: "Create directories"
       file:
         path: "darkbulb/topologies/files/{{ vagrant_template_dir.path }}"
