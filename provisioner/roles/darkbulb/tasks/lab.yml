@@ -1,0 +1,11 @@
+- name: "Build Lab"
+  become: true
+  become: "{{ owner }}"
+  command: ansible-playbook -i hosts darkbulb/topologies/cisco/build.yml
+
+- name: "Start Device"
+  become: true
+  become: "{{ owner }}"
+  command: vagrant up {{ node|quote }}
+    args:
+      chdir: darkbulb/topologies/{{ vendor|quote }}/
