@@ -13,7 +13,7 @@ feature interface-vlan
 vlan {{ inbound_mgmt_vlan }}
   exit
 interface vlan {{ inbound_mgmt_vlan }}
-  ip address {{ inboud_mgmt_ip }}/{{ inbound_mgmt_mask }}
+  ip address {{ inbound_mgmt_ip }}/{{ inbound_mgmt_mask }}
   no shut
   exit
 interface ethernet {{ inbound_mgmt_port }}
