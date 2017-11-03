@@ -1,3 +1,4 @@
 ---
+- import_playbook: management.yml
 - import_playbook: control.yml
 - import_playbook: server.yml
