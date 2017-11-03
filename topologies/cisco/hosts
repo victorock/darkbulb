@@ -6,28 +6,31 @@ leaf
 server
 
 [control]
-tower01   ansible_host=127.0.0.1:20022
+tower01   ansible_host=127.0.0.1:20022 device_universal_unique_id=1
 
 [management]
-mgmt01    ansible_host=127.0.0.1:9022
+mgmt01    ansible_host=127.0.0.1:9022 device_universal_unique_id=2
 
 [spine]
-spine01   ansible_host=127.0.0.1:11022
-spine02   ansible_host=127.0.0.1:12022
+spine01   ansible_host=127.0.0.1:11022 device_universal_unique_id=11
+spine02   ansible_host=127.0.0.1:12022 device_universal_unique_id=12
 
 [leaf]
-leaf01    ansible_host=127.0.0.1:13022
-leaf02    ansible_host=127.0.0.1:14022
-leaf03    ansible_host=127.0.0.1:15022
-leaf04    ansible_host=127.0.0.1:16022
+leaf01    ansible_host=127.0.0.1:13022 device_universal_unique_id=21
+leaf02    ansible_host=127.0.0.1:14022 device_universal_unique_id=22
+leaf03    ansible_host=127.0.0.1:15022 device_universal_unique_id=23
+leaf04    ansible_host=127.0.0.1:16022 device_universal_unique_id=24
 
 [server]
-server01  ansible_host=127.0.0.1:21022
-server02  ansible_host=127.0.0.1:22022
+server01  ansible_host=127.0.0.1:21022 device_universal_unique_id=31
+server02  ansible_host=127.0.0.1:22022 device_universal_unique_id=32
 
 [all:vars]
 provider=virtualbox
-vendor=cisco
+inbound_mgmt_vlan=10
+inbound_mgmt_network=10.42.0.0
+inbound_mgmt_mask=255.255.255.0
+inbound_mgmt_ip="{{ inbound_mgmt_network | ipaddr(id) | ipaddr('address')  }}"
 tower01=127.0.0.1
 mgmt01=127.0.0.1
 spine01=127.0.0.1
@@ -38,3 +41,9 @@ leaf03=127.0.0.1
 leaf04=127.0.0.1
 server01=127.0.0.1
 server02=127.0.0.1
+
+[spine:vars]
+inbound_mgmt_port=e1/1
+
+[leaf:vars]
+inbound_mgmt_port=e1/1

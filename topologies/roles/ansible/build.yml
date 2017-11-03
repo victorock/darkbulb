@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+    - name: "Topology Builder"
+      include_role:
+        name: vagrant-topology
+        tasks_from: build

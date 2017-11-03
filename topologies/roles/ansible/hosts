@@ -1,0 +1,40 @@
+[all:children]
+control
+management
+spine
+leaf
+server
+
+[control]
+tower01   ansible_host=127.0.0.1:20022
+
+[management]
+mgmt01    ansible_host=127.0.0.1:9022
+
+[spine]
+spine01   ansible_host=127.0.0.1:11022
+spine02   ansible_host=127.0.0.1:12022
+
+[leaf]
+leaf01    ansible_host=127.0.0.1:13022
+leaf02    ansible_host=127.0.0.1:14022
+leaf03    ansible_host=127.0.0.1:15022
+leaf04    ansible_host=127.0.0.1:16022
+
+[server]
+server01  ansible_host=127.0.0.1:21022
+server02  ansible_host=127.0.0.1:22022
+
+[all:vars]
+provider=virtualbox
+vendor=redhat
+tower01=127.0.0.1
+mgmt01=127.0.0.1
+spine01=127.0.0.1
+spine02=127.0.0.1
+leaf01=127.0.0.1
+leaf02=127.0.0.1
+leaf03=127.0.0.1
+leaf04=127.0.0.1
+server01=127.0.0.1
+server02=127.0.0.1

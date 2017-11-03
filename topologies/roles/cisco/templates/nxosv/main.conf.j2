@@ -1,1 +1,14 @@
 switchname {{ inventory_hostname }}
+feature interface-vlan
+vlan {{ mgmt_vlan }}
+  exit
+interface vlan {{ mgmt_vlan }}
+  ip address {{ mgmt_ip }}
+  no shut
+  exit
+interface ethernet 1/1
+  switchport
+  switchport mode access
+  switchport access vlan {{ mgmt_vlan }}
+  exit
+end

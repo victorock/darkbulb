@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+##### DEFINE VM for tower #####
+Vagrant.configure('2') do |config|
+  config.vm.define "tower01" do |node|
+    node.vm.box = "ansible/tower"
+
+    node.vm.provider :virtualbox do |v|
+      v.memory = 2048
+      v.cpus = 2
+
+      # SRV01,E1 (9000) -> MGMT01,E1 (9101)
+      v.customize ["modifyvm", :id, "--nic2", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ mgmt01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=9000"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=9101"]
+
+    end
+
+    # Port mapping
+    node.vm.network "forwarded_port", guest: 22, host: 20022, protocol: "tcp"
+    node.vm.network "forwarded_port", guest: 80, host: 20080, protocol: "tcp"
+    node.vm.network "forwarded_port", guest: 443, host: 20443, protocol: "tcp"
+
+    #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
+    node.vm.synced_folder ".", "/vagrant", disabled: true
+
+  end
+end

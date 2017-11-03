@@ -1,0 +1,10 @@
+---
+valid_roles:
+  - control
+  - leaf
+  - spine
+  - management
+  - server
+  - router
+  - firewall
+  - loadbalance

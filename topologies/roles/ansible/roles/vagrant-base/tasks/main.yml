@@ -1,0 +1,24 @@
+---
+- name: "Ansible Repo is present"
+  yum_repository:
+    name: ansible_release
+    description: "CentOS-$releasever / $basearch - Ansible"
+    baseurl: "http://releases.ansible.com/ansible/rpm/release/epel-$releasever-$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: no
+  tags:
+    - configure
+
+- name: "Baseline packages state is latest"
+  yum:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - epel-release
+    - git
+    - wget
+    - net-tools
+  tags:
+    - install

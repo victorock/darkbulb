@@ -1,14 +1,24 @@
+! Boot image
+boot nxos bootflash:nxos.7.0.3.I7.1.bin
+! Switchname
 switchname {{ inventory_hostname }}
+! Vagrant Credentials
+username vagrant password 0 vagrant role network-admin
+username vagrant shelltype vsh
+username vagrant sshkey ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0
+aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF
+96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
+! Management Inband Configuration
 feature interface-vlan
-vlan 10
+vlan {{ inbound_mgmt_vlan }}
   exit
-interface vlan 10
-  ip address 10.42.0.11/24
+interface vlan {{ inbound_mgmt_vlan }}
+  ip address {{ inboud_mgmt_ip }}/{{ inbound_mgmt_mask }}
   no shut
   exit
-interface ethernet 1/1
+interface ethernet {{ inbound_mgmt_port }}
   switchport
   switchport mode access
-  switchport access vlan 10
+  switchport access vlan {{ inbound_mgmt_vlan }}
   exit
 end

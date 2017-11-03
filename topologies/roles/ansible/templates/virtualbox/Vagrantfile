@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = 2
+
+nodes = %w[ tower01 mgmt01
+            server01 server02 ]
+
+nodes.each do |node|
+  vagrantfile = "./Vagrantfile.#{node}"
+  load File.expand_path(vagrantfile) if File.exists?(vagrantfile)
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "ansible" do |ansible|
+
+    ansible.groups = {
+      "management"   => [ "mgmt01" ],
+      "control"        => [ "tower01" ],
+      "server"         => [ "server01", "server02" ]
+    }
+
+    ansible.playbook = "../deploy.yml"
+  end
+end
