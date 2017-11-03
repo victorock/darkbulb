@@ -1,1 +1,15 @@
 switchname {{ inventory_hostname }}
+feature interface-vlan
+vlan 10
+  exit
+interface vlan 10
+  ip address 10.42.0.11/24
+  no shut
+  exit
+interface ethernet 1/1
+  switchport
+  switchport mode access
+  switchport access vlan 10
+  exit
+end
+copy run start

@@ -4,4 +4,3 @@
     src: "main.conf.j2"
     backup: no
     save: yes
-    save_when: always
