@@ -2,27 +2,18 @@
   hosts: localhost
   gather_facts: false
 
-  pre_tasks:
-    - name: "Parse Topology"
-      include_role:
-        name: topology
-
   tasks:
     - name: "Create Topology in Google Cloud"
       include_role:
         name: google-cloud
       vars:
-        gce_cloud_instance_name: "{{ go_gce.0.name }}-{{ go_gce.1.node }}"
+        gce_cloud_instance_name: "{{ go_gce.name }}"
         gce_cloud_instance_tags:
           - darkbulb
-          - "{{ go_gce.0.name }}"
-          - "{{ go_gce.1.role }}"
-        owner: "{{ go_gce.0.name }}"
-        node: "{{ go_gce.1.node }}"
-        role: "{{ go_gce.1.role }}"
-      with_nested:
+          - "{{ go_gce.name }}"
+        owner: "{{ go_gce.name }}"
+      with_items:
         - "{{ environments }}"
-        - "{{ kv_node_role }}"
       loop_control:
         loop_var: go_gce
-        label: "{{ go_gce.0.name }}-{{ go_gce.1.role }}"
+        label: "{{ go_gce.name }}"

@@ -67,8 +67,6 @@
         ansible_host: "{{ add_instance.public_ip }}"
         groupname: "{{ gce_cloud_instance_tags | join(',') }}"
         owner: "{{ owner }}"
-        node: "{{ node }}"
-        role: "{{ role }}"
       changed_when: no
       with_items: "{{ return_gce_cloud_instance.results[2].instance_data }}"
       loop_control:

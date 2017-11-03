@@ -42,39 +42,3 @@
   become: false
   group_by:
     key: "{{ owner }}"
-
-- name: "Group hosts by role"
-  become: false
-  group_by:
-    key: "{{ role }}"
-
-- name: "Reset /etc/hosts"
-  become: true
-  block:
-    - file:
-        path: /etc/hosts
-        state: absent
-
-    - file:
-        path: /etc/hosts
-        state: touch
-
-    - lineinfile:
-        path: /etc/hosts
-        line: "{{ locahost_line }}"
-      with_items:
-        - "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4"
-        - "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6"
-      loop_control:
-        loop_var: locahost_line
-
-- name: "Add entries to /etc/hosts"
-  become: true
-  lineinfile:
-    path: /etc/hosts
-    regexp: "^{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }} {{ hostvars[owner_node].node }}"
-    line: '{{ hostvars[owner_node].ansible_default_ipv4.address }} {{ owner_node }} {{ hostvars[owner_node].node }}'
-  with_items:
-    - "{{ groups[owner] }}"
-  loop_control:
-    loop_var: owner_node

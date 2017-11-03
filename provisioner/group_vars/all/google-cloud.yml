@@ -13,4 +13,4 @@ gce_credentials_file: "files/keychain/{{ gce_project_id }}.json"
 
 # Google Computing Engine
 gce_cloud_instance_image: nested-image-centos-7
-gce_cloud_instance_machine_type: n1-highmem-2
+gce_cloud_instance_machine_type: n1-highmem-8

@@ -1,0 +1,10 @@
+---
+- name: "Management Playbook"
+  hosts: management
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: "Role vagrant-base"
+      include_role:
+        name: vagrant-base
