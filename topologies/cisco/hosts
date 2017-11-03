@@ -12,7 +12,7 @@ tower01   ansible_host=127.0.0.1 ansible_port=20022 device_universal_unique_id=1
 mgmt01    ansible_host=127.0.0.1 ansible_port=9022 device_universal_unique_id=2
 
 [spine]
-spine01   ansible_host=127.0.0.1 ansible_port=11022 ansible_user=admin device_universal_unique_id=11
+spine01   ansible_host=127.0.0.1 ansible_port=11022 device_universal_unique_id=11
 spine02   ansible_host=127.0.0.1 ansible_port=12022 device_universal_unique_id=12
 
 [leaf]
