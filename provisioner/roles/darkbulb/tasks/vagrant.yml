@@ -90,9 +90,7 @@
   become_user: "{{ owner }}"
   command: vagrant box add /home/{{ owner|quote }}/images/boxes/{{ box_image.path|quote }} --name {{ box_image.path|splitext|first|quote }}
   with_filetree: "/home/{{ owner|quote }}/images/boxes/"
-  when:
-    - box_image.state == 'file'
-    - "'.box' in box_image.path"
+  when: box_image.state == 'file'
   loop_control:
     loop_var: box_image
     label: "{{ box_image.path }}"
