@@ -1,9 +1,10 @@
-spine01 ansible_host=127.0.0.1 ansible_port=11022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
-spine02 ansible_host=127.0.0.1 ansible_port=12022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
-leaf01 ansible_host=127.0.0.1 ansible_port=13022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
-leaf02 ansible_host=127.0.0.1 ansible_port=14022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
-leaf03 ansible_host=127.0.0.1 ansible_port=15022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
-leaf04 ansible_host=127.0.0.1 ansible_port=16022 ansible_user='vagrant' ansible_ssh_private_key_file='/Users/jdacosta/.vagrant.d/insecure_private_key'
+
+spine01 ansible_host=10.42.0.11
+spine02 ansible_host=10.42.0.12
+leaf01 ansible_host=10.42.0.21
+leaf02 ansible_host=10.42.0.22
+leaf03 ansible_host=10.42.0.23
+leaf04 ansible_host=10.42.0.24
 
 [dc1]
 spine01
@@ -14,7 +15,7 @@ leaf03
 leaf04
 
 
-[juniper]
+[nxos]
 spine01
 spine02
 leaf01
