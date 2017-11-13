@@ -1,4 +1,4 @@
-[dc1:child]
+[dc1:children]
 spine
 leaf
 
@@ -6,7 +6,7 @@ leaf
 spine01 ansible_host=10.42.0.11
 spine02 ansible_host=10.42.0.12
 
-[leaf:child]
+[leaf:children]
 pod01
 pod02
 
