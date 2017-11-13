@@ -26,6 +26,9 @@ server01  ansible_host=127.0.0.1 ansible_port=21022 inbound_mgmt_ip=10.42.0.31/2
 server02  ansible_host=127.0.0.1 ansible_port=22022 inbound_mgmt_ip=10.42.0.32/24
 
 [all:vars]
+ansible_user=vagrant
+ansible_host=127.0.0.1
+ansible_ssh_private_key='~/.vagrant.d/insecure_private_key'
 provider=virtualbox
 inbound_mgmt_vlan=10
 
