@@ -1,3 +1,6 @@
+[nxos:children]
+dc1
+
 [dc1:children]
 spine
 leaf
