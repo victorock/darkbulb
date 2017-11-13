@@ -7,17 +7,17 @@ spine
 leaf
 
 [spine]
-spine01 ansible_host=10.42.0.11
-spine02 ansible_host=10.42.0.12
+spine01 ansible_host=10.42.0.11 network_os=nxos
+spine02 ansible_host=10.42.0.12 network_os=nxos
 
 [leaf:children]
 pod01
 pod02
 
 [pod01]
-leaf01 ansible_host=10.42.0.21
-leaf02 ansible_host=10.42.0.22
+leaf01 ansible_host=10.42.0.21 network_os=nxos
+leaf02 ansible_host=10.42.0.22 network_os=nxos
 
 [pod02]
-leaf03 ansible_host=10.42.0.23
-leaf04 ansible_host=10.42.0.24
+leaf03 ansible_host=10.42.0.23 network_os=nxos
+leaf04 ansible_host=10.42.0.24 network_os=nxos
