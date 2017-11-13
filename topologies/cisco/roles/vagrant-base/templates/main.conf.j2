@@ -9,8 +9,8 @@ username vagrant sshkey ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTky
 ! Management Inband Configuration
 no interface vlan {{ inbound_mgmt_vlan }}
 interface {{ inbound_mgmt_port }}
-    no switchport
-    ip address {{ inbound_mgmt_ip }}
-    no shutdown
-    exit
+  no switchport
+  ip address {{ inbound_mgmt_ip }}
+  no shutdown
+  exit
 end
