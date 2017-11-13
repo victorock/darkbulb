@@ -18,12 +18,16 @@ Vagrant.configure('2') do |config|
       # Cdrom with default nxosv config
       v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
 
+      # regen mac for mgmt0
+      v.customize ["modifyvm", :id, "--macaddress1", "auto"]
+
       # SPINE02,E1 (10200) -> MGMT01,E2 (9103)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ mgmt01 }}"]
       v.customize ["modifyvm", :id, "--nicproperty2", "sport=10200"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dport=9103"]
+      v.customize ["modifyvm", :id, "--macaddress2", "auto"]
 
       # SPINE02,E2 (10201) -> LEAF01,E2 (20102)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
@@ -31,6 +35,7 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ leaf01 }}"]
       v.customize ["modifyvm", :id, "--nicproperty3", "sport=10201"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dport=20102"]
+      v.customize ["modifyvm", :id, "--macaddress3", "auto"]
 
       # SPINE02,E3 (10202) -> LEAF02,E2 (20202)
       v.customize ["modifyvm", :id, "--nic4", "generic"]
@@ -38,6 +43,7 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--nicproperty4", "dest={{ leaf02 }}"]
       v.customize ["modifyvm", :id, "--nicproperty4", "sport=10202"]
       v.customize ["modifyvm", :id, "--nicproperty4", "dport=20202"]
+      v.customize ["modifyvm", :id, "--macaddress4", "auto"]
 
       # SPINE02,E4 (10203) -> LEAF03,E2 (20302)
       v.customize ["modifyvm", :id, "--nic5", "generic"]
@@ -45,6 +51,7 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--nicproperty5", "dest={{ leaf03 }}"]
       v.customize ["modifyvm", :id, "--nicproperty5", "sport=10203"]
       v.customize ["modifyvm", :id, "--nicproperty5", "dport=20302"]
+      v.customize ["modifyvm", :id, "--macaddress5", "auto"]
 
       # SPINE02,E5 (10204) -> LEAF04,E2 (20402)
       v.customize ["modifyvm", :id, "--nic6", "generic"]
@@ -52,6 +59,8 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--nicproperty6", "dest={{ leaf04 }}"]
       v.customize ["modifyvm", :id, "--nicproperty6", "sport=10204"]
       v.customize ["modifyvm", :id, "--nicproperty6", "dport=20402"]
+      v.customize ["modifyvm", :id, "--macaddress6", "auto"]
+
     end
 
     # Port mapping
