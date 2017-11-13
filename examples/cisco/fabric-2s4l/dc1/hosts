@@ -1,34 +1,19 @@
-
-spine01 ansible_host=10.42.0.11
-spine02 ansible_host=10.42.0.12
-leaf01 ansible_host=10.42.0.21
-leaf02 ansible_host=10.42.0.22
-leaf03 ansible_host=10.42.0.23
-leaf04 ansible_host=10.42.0.24
-
-[dc1]
-spine01
-spine02
-leaf01
-leaf02
-leaf03
-leaf04
-
-
-[nxos]
-spine01
-spine02
-leaf01
-leaf02
-leaf03
-leaf04
+[dc1:child]
+spine
+leaf
 
 [spine]
-spine01
-spine02
+spine01 ansible_host=10.42.0.11
+spine02 ansible_host=10.42.0.12
 
-[leaf]
-leaf01
-leaf02
-leaf03
-leaf04
+[leaf:child]
+pod01
+pod02
+
+[pod01]
+leaf01 ansible_host=10.42.0.21
+leaf02 ansible_host=10.42.0.22
+
+[pod02]
+leaf03 ansible_host=10.42.0.23
+leaf04 ansible_host=10.42.0.24
