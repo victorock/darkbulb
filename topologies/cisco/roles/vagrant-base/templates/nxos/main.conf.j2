@@ -1,5 +1,3 @@
-! Boot image
-boot nxos bootflash:nxos.7.0.3.I7.1.bin
 ! Switchname
 switchname {{ inventory_hostname }}
 ! Vagrant Credentials
@@ -7,11 +5,10 @@ username vagrant password 0 vagrant role network-admin
 username vagrant shelltype vsh
 username vagrant sshkey ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
 ! Management Inband Configuration
-no interface vlan {{ inbound_mgmt_vlan }}
-interface {{ inbound_mgmt_port }}
+interface {{ inbound_mgmt_interface }}
   no switchport
   no ip redirects
-  ip address {{ inbound_mgmt_ip }}
+  ip address {{ inbound_mgmt_ip }}/{{ inbound_mgmt_netmask }}
   no shutdown
   exit
 end

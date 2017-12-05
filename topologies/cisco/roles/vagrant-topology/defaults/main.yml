@@ -1,4 +1,5 @@
 provider: virtualbox
+image: "{{ hostvars[inventory_hostname].image }}"
 mgmt01: "{{ hostvars['mgmt01'].ansible_host }}"
 tower01: "{{ hostvars['tower01'].ansible_host }}"
 server01: "{{ hostvars['server01'].ansible_host }}"

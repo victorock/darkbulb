@@ -1,0 +1,8 @@
+! Switchname
+hostname {{ inventory_hostname }}
+interface {{ inbound_mgmt_interface }}
+  no ip redirects
+  ip address {{ inbound_mgmt_ip }} {{ inbound_mgmt_netmask }}
+  no shutdown
+  exit
+end

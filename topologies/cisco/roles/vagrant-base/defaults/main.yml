@@ -1,3 +1,4 @@
 ---
-mgmt_ip: 10.42.0.10/24
+ansible_network_os: nxos
+inbound_mgmt_interface: 10.42.0.10/24
 mgmt_vlan: 10

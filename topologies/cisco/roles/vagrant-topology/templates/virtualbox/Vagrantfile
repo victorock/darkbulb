@@ -12,16 +12,16 @@ nodes.each do |node|
   load File.expand_path(vagrantfile) if File.exists?(vagrantfile)
 end
 
-Vagrant.configure("2") do |config|
-  config.vm.provision "ansible" do |ansible|
-
-    ansible.groups = {
-      "cisco"      => ["spine01", "spine02", "leaf01", "leaf02", "leaf03", "leaf04" ],
-      "spine"        => ["spine01", "spine02"],
-      "leaf"         => ["leaf01", "leaf02", "leaf03", "leaf04" ]
-    }
-
-    ansible.playbook = "../deploy.yml"
-    ansible.inventory_path = "../hosts"
-  end
-end
+#Vagrant.configure("2") do |config|
+#  config.vm.provision "ansible" do |ansible|
+#
+#    ansible.groups = {
+#      "cisco"      => ["spine01", "spine02", "leaf01", "leaf02", "leaf03", "leaf04" ],
+#      "spine"        => ["spine01", "spine02"],
+#      "leaf"         => ["leaf01", "leaf02", "leaf03", "leaf04" ]
+#    }
+#
+#    ansible.playbook = "../run.yml"
+#    ansible.inventory = "../hosts"
+#  end
+#end

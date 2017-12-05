@@ -1,6 +1,6 @@
 ---
-- name: "Push Config"
-  nxos_config:
-    src: "main.conf.j2"
-    backup: no
-    save_when: always
+- name: run device specific tasks
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - files: "{{ ansible_network_os }}.yml"
+      skip: true

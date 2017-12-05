@@ -6,7 +6,7 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = false
 
   config.vm.define "leaf04" do |device|
-    device.vm.box = "nxosv-final"
+    device.vm.box = "{{ image }}"
     device.vm.boot_timeout = 600
 
     device.vm.provider :virtualbox do |v|
@@ -16,7 +16,7 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--uartmode1", "server", "/tmp/leaf04-tty"]
 
       # Cdrom with default nxosv config
-      v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
+#      v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
 
       # regen mac for mgmt0
       v.customize ["modifyvm", :id, "--macaddress1", "auto"]

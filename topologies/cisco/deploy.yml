@@ -1,3 +1,12 @@
+#!/usr/bin/env ansible-playbook
 ---
-- import_playbook: spine.yml
-- import_playbook: leaf.yml
+- name: "Configuration Deployer"
+  hosts: spine,leaf
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+    - name: "Role vagrant-base"
+      include_role:
+        name: vagrant-base
