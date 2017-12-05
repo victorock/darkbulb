@@ -6,7 +6,7 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = false
 
   config.vm.define "spine02" do |device|
-    device.vm.box = "nxosv-final"
+    device.vm.box = "cisco/nxosv"
     device.vm.boot_timeout = 600
 
     device.vm.provider :virtualbox do |v|
@@ -16,35 +16,51 @@ Vagrant.configure('2') do |config|
       v.customize ["modifyvm", :id, "--uartmode1", "server", "/tmp/spine02-tty"]
 
       # Cdrom with default nxosv config
-      v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
+#      v.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'dvddrive', '--medium', 'nxosv_config.iso']
 
-      # SPINE02,E1 (10201) -> LEAF01,E2 (20102)
+      # regen mac for mgmt0
+      v.customize ["modifyvm", :id, "--macaddress1", "auto"]
+
+      # SPINE02,E1 (10200) -> MGMT01,E2 (9103)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dest=127.0.0.1"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "sport=10201"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dport=20102"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=10200"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=9103"]
+      v.customize ["modifyvm", :id, "--macaddress2", "auto"]
 
-      # SPINE02,E2 (10202) -> LEAF02,E2 (20202)
+      # SPINE02,E2 (10201) -> LEAF01,E2 (20102)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty3", "dest=127.0.0.1"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "sport=10202"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20202"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=10201"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20102"]
+      v.customize ["modifyvm", :id, "--macaddress3", "auto"]
 
-      # SPINE02,E3 (10203) -> LEAF03,E2 (20302)
+      # SPINE02,E3 (10202) -> LEAF02,E2 (20202)
       v.customize ["modifyvm", :id, "--nic4", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty4", "dest=127.0.0.1"]
-      v.customize ["modifyvm", :id, "--nicproperty4", "sport=10203"]
-      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20302"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "sport=10202"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20202"]
+      v.customize ["modifyvm", :id, "--macaddress4", "auto"]
 
-      # SPINE02,E4 (10204) -> LEAF04,E2 (20402)
+      # SPINE02,E4 (10203) -> LEAF03,E2 (20302)
       v.customize ["modifyvm", :id, "--nic5", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv5", "UDPTunnel"]
       v.customize ["modifyvm", :id, "--nicproperty5", "dest=127.0.0.1"]
-      v.customize ["modifyvm", :id, "--nicproperty5", "sport=10204"]
-      v.customize ["modifyvm", :id, "--nicproperty5", "dport=20402"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "sport=10203"]
+      v.customize ["modifyvm", :id, "--nicproperty5", "dport=20302"]
+      v.customize ["modifyvm", :id, "--macaddress5", "auto"]
+
+      # SPINE02,E5 (10204) -> LEAF04,E2 (20402)
+      v.customize ["modifyvm", :id, "--nic6", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv6", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "dest=127.0.0.1"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "sport=10204"]
+      v.customize ["modifyvm", :id, "--nicproperty6", "dport=20402"]
+      v.customize ["modifyvm", :id, "--macaddress6", "auto"]
+
     end
 
     # Port mapping
