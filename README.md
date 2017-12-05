@@ -33,12 +33,20 @@ It will provision everything that you need to run your personal lab environment 
 Howto (GCE):
 
 * Setup your cloud account.
-* Copy GCE service account generated file to keychain folder.
-* Register your ssh public key in GCE associated as "instructor" user.
-* Add your ssh-keys to your local keychain (ssh-add <file>).
-* Create image with nested virtualisation.
-* Edit the configuration file: group_vars/all/darkbulb.yml
-* Play ansible-playbook deploy_gce_darkbulb.yml
+* Copy your Service Account JSON locally to files/keychain.
+* Copy any non-public available vagrant boxes locally to files/images/boxes. Darkbulb will copy them to instances as part of setup.
+  * Ex: Arista and Cisco
+* Register your ssh public key and associate it to "instructor" user.
+  * https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys
+* Add your ssh-keys to your local machine keychain (ssh-add <file>).
+* Create image with nested virtualisation:
+  * https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances.
+* Edit *Darkbulb* to define the environments to create :
+  * group_vars/all/darkbulb.yml
+* Edit *Google Cloud* :
+  * group_vars/all/google-cloud.yml
+* Spawn instances in Google and deploy Darkbulb on it:
+  * ansible-playbook google-cloud_darkbulb.yml
 
 ### Requirements
 
@@ -53,7 +61,7 @@ Howto (GCE):
 
 For hands-on or self-paced training, students should have working knowledge of using SSH and command line shell (BASH). The ability to SSH from their personal laptop to a lab environment hosted in a public cloud can also be required based on the format and presentation of the context.
 
-For demos and instrcutor-led exercises, conceptual understanding of linux system admin, DevOps and distributed application architecture is all that is required.
+For demos and instructor-led exercises, conceptual understanding of linux system admin, DevOps and distributed application architecture is all that is required.
 
 ### Reference
 
