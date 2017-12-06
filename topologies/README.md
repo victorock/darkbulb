@@ -6,16 +6,18 @@ This is an automated lab setup for Ansible training. It creates a standard topol
 The functional environment will have:
 
 * One Tower node from which Ansible will be executed and where Ansible Tower is installed.
+* One Management switch for network OOB.
 * Two Spine switches with four network interfaces each one.
 * Four Leaf switches with four network interfaces each one.
 * Two Linux Servers with two network interfaces each one.
 
 ```
-[MGMT]
+[CONTROL]
 TOWER:
   E0: VAGRANT-MGMT
 
-[CORE]
+
+[SPINE]
 SPINE01:
   E0: VAGRANT-MGMT
   E1: LEAF01-E1
@@ -30,7 +32,7 @@ SPINE02:
   E3: LEAF03-E2
   E4: LEAF04-E2
 
-[POD1]
+[POD01]
 LEAF01:
   E0: VAGRANT-MGMT
   E1: SPINE01-E1
@@ -78,6 +80,7 @@ The topologies are created adopting Virtualbox tunnels to provide the interfaces
 The goals is to make it easier to expand to multiple notebooks or allow the "Data Centers Interconnection" (Notebook <-> Notebook).
 
 * Ansible
+* Cisco
 * Cumulus
 * Juniper
 
@@ -92,24 +95,37 @@ This will spawn the servers connected to Leaf switches and Ansible server connec
 cd <darkbulb>/topologies/Ansible
 ```
 
-*Launch the Lab Environment*
+*Build the Lab Environment*
+
+```
+ansible-playbook build.yml
+```
+
+*Run the Lab Environment*
 
 >1 Tower and 0 Server
 ```
-ansible-playbook build.yml -e topology=1t0s
+ansible-playbook run.yml -e topology=1t0s
 ```
 >1 Tower and 1 Server
 ```
-ansible-playbook build.yml -e topology=1t1s
+ansible-playbook run.yml -e topology=1t1s
 ```
 >1 Tower and 2 Server
 ```
-ansible-playbook build.yml -e topology=1t2s
+ansible-playbook run.yml -e topology=1t2s
 ```
 >0 Tower and 0 Server
 ```
-ansible-playbook build.yml -e topology=0t0s
+ansible-playbook run.yml -e topology=0t0s
 ```
+
+*Deploy Default Configuration of Lab Environment*
+
+```
+ansible-playbook deploy.yml
+```
+
 
 ### Cumulus
 

@@ -8,7 +8,7 @@ username vagrant sshkey ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTky
 interface {{ inbound_mgmt_interface }}
   no switchport
   no ip redirects
-  ip address {{ inbound_mgmt_ip }}/{{ inbound_mgmt_netmask }}
+  ip address {{ inbound_mgmt_ip }} {{ inbound_mgmt_netmask }}
   no shutdown
   exit
 end
