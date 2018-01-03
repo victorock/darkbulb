@@ -39,22 +39,22 @@ All provisioners require Ansible to run.
 * Setup your GCE account.
   1. [Installation and Setup Directions](https://cloud.google.com/deployment-manager/docs/step-by-step-guide/installation-and-setup)
     Follow just these parts:
-    * **Create a project**
-    * **Enable APIs for which you want to use Deployment Manager**
+      * **Create a project**
+      * **Enable APIs for which you want to use Deployment Manager**
   2. [Ansible Google Cloud Platform Guide](http://docs.ansible.com/ansible/latest/guide_gce.html)
     Follow just these parts:
-    * **Introduction**
-    * **Credentials**  
+      * **Introduction**
+      * **Credentials**  
 * Copy GCE service account generated file to keychain folder in darkbulb project:
-  e.g. `cp ~/Downloads/MyKeyName.json darkbulb/provisionner/keychain/MyKeyName.json`
+  * e.g. `cp ~/Downloads/MyKeyName.json darkbulb/provisionner/keychain/MyKeyName.json`
 * Install PyCrypto: `pip install PyCrypto`
 * Register your ssh public key in GCE associated as "instructor" user.
   * [Adding or removing project-wide public SSH keys](https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys#project-wide)
 * Add your private ssh-key to your local keychain (if not already done)
-  e.g. `ssh-add <filename>`
+  * e.g. `ssh-add <filename>`
 * Create image with nested virtualization.
   * [Enabling Nested Virtualization for VM Instances](https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances)
-* Edit the configuration file: darkbulb/provisionner/vars/main.yml
+* Edit the configuration file: darkbulb/provisionner/vars/main.yml with your credentials and information.
 * Run the playbook: `ansible-playbook deploy_gce_darkbulb.yml`
 
 ### How-to local machine w/ Vagrant)
