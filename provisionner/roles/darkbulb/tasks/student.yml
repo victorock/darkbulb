@@ -4,7 +4,7 @@
     version: master
     clone: yes
     dest: "/home/{{ student }}/darkbulb"
-    force: no
+    force: yes
   tags:
     - install
 

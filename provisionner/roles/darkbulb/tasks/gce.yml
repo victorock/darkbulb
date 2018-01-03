@@ -17,13 +17,24 @@
     credentials_file: "{{ gce_cloud_instance_credentials_file }}"
     project_id: "{{ gce_cloud_instance_project_id }}"
     tags: "{{ gce_cloud_instance_tags }}"
+    state: started
+  tags:
+    - create
+
+- name: "grab student instance public ip address"
+  gce:
+    instance_names: "{{ student }}"
+    zone: "{{ gce_cloud_instance_zone }}"
+    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+    project_id: "{{ gce_cloud_instance_project_id }}"
     state: present
   register: return_gce_cloud_instance
   tags:
     - create
 
 - debug: var=return_gce_cloud_instance
-  when: gce_cloud_instance_debug
+  # when: gce_cloud_instance_debug
   tags:
     - create
 
