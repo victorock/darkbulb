@@ -4,7 +4,7 @@
 ##### DEFINE VM for tower #####
 Vagrant.configure('2') do |config|
   config.vm.define "tower01" do |node|
-    node.vm.box = "ansible/tower"
+    node.vm.box = "{{ hostvars['tower01'].image }}"
 
     node.vm.provider :virtualbox do |v|
       v.memory = 2048
@@ -13,7 +13,7 @@ Vagrant.configure('2') do |config|
       # SRV01,E1 (9000) -> MGMT01,E1 (9101)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ mgmt01 }}"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ hostvars['mgmt01'].ansible_host }}"]
       v.customize ["modifyvm", :id, "--nicproperty2", "sport=9000"]
       v.customize ["modifyvm", :id, "--nicproperty2", "dport=9101"]
 

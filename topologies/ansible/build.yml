@@ -1,11 +1,13 @@
+#!/usr/bin/env ansible-playbook
 ---
-- hosts: localhost
+- name: "Topology Preparation"
+  hosts: localhost
   connection: local
   gather_facts: no
   become: no
 
   tasks:
-    - name: "Topology Builder"
+    - name: "Build Topology"
       include_role:
         name: vagrant-topology
         tasks_from: build

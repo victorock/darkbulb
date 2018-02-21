@@ -1,12 +1,9 @@
 #!/usr/bin/env ansible-playbook
----
-- name: "Configuration Deployer"
+- name: "Topology Configuration"
   hosts: spine,leaf
-  connection: local
-  gather_facts: no
-  become: no
+  connection: network_cli
 
   tasks:
-    - name: "Role vagrant-base"
+    - name: "Configure Topology"
       include_role:
         name: vagrant-base

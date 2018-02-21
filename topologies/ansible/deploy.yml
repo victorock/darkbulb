@@ -1,4 +1,11 @@
+#!/usr/bin/env ansible-playbook
 ---
-- import_playbook: management.yml
-- import_playbook: control.yml
-- import_playbook: server.yml
+- name: "Topology Configuration"
+  hosts: control,server
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name: "Configure Topology"
+      include_role:
+        name: vagrant-base

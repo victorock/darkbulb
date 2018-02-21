@@ -4,24 +4,31 @@
 ##### DEFINE VM for tower #####
 Vagrant.configure('2') do |config|
   config.vm.define "server01" do |node|
-    node.vm.box = "centos/7"
+    node.vm.box = "{{ hostvars['server01'].image }}"
 
     node.vm.provider :virtualbox do |v|
       v.memory = 512
 
-      # SRV01,E1 (30101) -> LEAF01,E3 (20103)
+      # SRV01,E1 (30100) -> MGMT01,E7 (9108)
       v.customize ["modifyvm", :id, "--nic2", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv2", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ leaf01 }}"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "sport=30101"]
-      v.customize ["modifyvm", :id, "--nicproperty2", "dport=20103"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dest={{ hostvars['mgmt01'].ansible_host }}"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "sport=30100"]
+      v.customize ["modifyvm", :id, "--nicproperty2", "dport=9108"]
 
-      # SRV01,E2 (30102) -> LEAF02,E3 (20203)
+      # SRV01,E2 (30101) -> LEAF01,E3 (20103)
       v.customize ["modifyvm", :id, "--nic3", "generic"]
       v.customize ["modifyvm", :id, "--nicgenericdrv3", "UDPTunnel"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ leaf02 }}"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "sport=30102"]
-      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20203"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dest={{ hostvars['leaf01'].ansible_host }}"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "sport=30101"]
+      v.customize ["modifyvm", :id, "--nicproperty3", "dport=20103"]
+
+      # SRV01,E3 (30102) -> LEAF02,E3 (20203)
+      v.customize ["modifyvm", :id, "--nic4", "generic"]
+      v.customize ["modifyvm", :id, "--nicgenericdrv4", "UDPTunnel"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dest={{ hostvars['leaf02'].ansible_host }}"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "sport=30102"]
+      v.customize ["modifyvm", :id, "--nicproperty4", "dport=20203"]
 
     end
 
