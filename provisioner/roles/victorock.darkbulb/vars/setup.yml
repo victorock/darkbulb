@@ -1,0 +1,71 @@
+setup_repos:
+  - name: ansible_release
+    description: "CentOS-$releasever / $basearch - Ansible Release"
+    baseurl: "http://releases.ansible.com/ansible/rpm/release/epel-$releasever-$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: no
+
+  - name: ansible_preview
+    description: "CentOS-$releasever / $basearch - Ansible Preview"
+    baseurl: "http://releases.ansible.com/ansible/rpm/preview/epel-$releasever-$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: no
+
+setup_packages:
+  - name: epel-release
+    update_cache: yes
+    state: latest
+
+  - name: kernel-devel
+    update_cache: yes
+    state: latest
+
+  - name: python-ncclient
+    update_cache: yes
+    state: latest
+
+  - name: git
+    update_cache: yes
+    state: latest
+
+  - name: ruby
+    update_cache: yes
+    state: latest
+
+  - name: rubygems
+    update_cache: yes
+    state: latest
+
+  - name: wget
+    update_cache: yes
+    state: latest
+
+  - name: net-tools
+    update_cache: yes
+    state: latest
+
+  - name: htop
+    update_cache: yes
+    state: latest
+
+  - name: ansible
+    update_cache: yes
+    state: latest
+
+  - name: dkms
+    update_cache: yes
+    state: latest
+
+  - name: telnet
+    update_cache: yes
+    state: latest
+
+  - name: socat
+    update_cache: yes
+    state: latest
+
+  - name: "@Development Tools"
+    update_cache: yes
+    state: latest

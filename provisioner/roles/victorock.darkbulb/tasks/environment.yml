@@ -1,0 +1,105 @@
+- name: "environment: Load variables"
+  include_vars:
+    file: "environment.yml"
+
+- name: "environment: Ensure state of user account"
+  become: true
+  user:
+    name: "{{ environment_instance.user }}"
+    home: "{{ environment_instance.homedir }}"
+    createhome: yes
+    append: yes
+  tags:
+    - configure
+
+- name: "environment: Ensure state of keychain ssh source folder"
+  delegate_to: localhost
+  run_once: true
+  become: false
+  file:
+    path: "{{ environment_keychain_paths.ssh.src }}"
+    state: directory
+    mode: 0755
+  tags:
+    - config
+
+- name: "environment: Ensure state of keychain ssh destination folder"
+  become: true
+  file:
+    path: "{{ environment_keychain_paths.ssh.dest }}"
+    owner: "{{ environment_instance.user }}"
+    group: "{{ environment_instance.user }}"
+    mode: 0755
+    recurse: yes
+    state: directory
+  tags:
+    - config
+
+- name: "environment: Ensure state of git repositories"
+  become: true
+  git:
+    repo: "{{ environment_git.src }}"
+    version: "{{ environment_git.version }}"
+    clone: "{{ environment_git.clone }}"
+    dest: "{{ environment_git.dest }}"
+    force: "{{ environment_git.force }}"
+  loop: "{{ environment_gits | default([]) }}"
+  loop_control:
+    loop_var: environment_git
+  tags:
+    - install
+
+- name: "environment: Ensure state of keys in keychains for ssh"
+  delegate_to: localhost
+  run_once: true
+  become: false
+  shell:
+    ssh-keygen -b 2048 -t rsa -f {{ environment_keychain_files.ssh.private_key.src }} -N '' -C ''
+  args:
+    creates: "{{ environment_keychain_files.ssh.private_key.src }}"
+  tags:
+    - config
+
+- name: "environment: Ensure state of authorized_keys"
+  become: true
+  authorized_key:
+    user: "{{ environment_instance.user }}"
+    key: "{{ lookup('file', environment_keychain_files.ssh.public_key.src) }}"
+    state: present
+  tags:
+    - configure
+
+- name: "environment: Ensure state of ssh public keys"
+  become: true
+  copy:
+    src: "{{ environment_keychain_files.ssh.public_key.src }}"
+    dest: "{{ environment_keychain_files.ssh.public_key.dest }}"
+    force: yes
+    owner: "{{ environment_instance.user }}"
+    group: "{{ environment_instance.user }}"
+    mode: 0644
+  tags:
+    - configure
+
+- name: "environment: Ensure state of ssh private keys"
+  become: true
+  copy:
+    src: "{{ environment_keychain_files.ssh.private_key.src }}"
+    dest: "{{ environment_keychain_files.ssh.private_key.dest }}"
+    force: yes
+    owner: "{{ environment_instance.user }}"
+    group: "{{ environment_instance.user }}"
+    mode: 0600
+  tags:
+    - configure
+
+- name: "environment: Ensure state of permissions in homedir folder"
+  become: true
+  file:
+    path: "{{ environment_instance.homedir }}"
+    owner: "{{ environment_instance.user }}"
+    group: "{{ environment_instance.user }}"
+    recurse: yes
+    state: directory
+  tags:
+    - config

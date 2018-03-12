@@ -1,0 +1,24 @@
+environment_instance:
+  user: "{{ darkbulb_user }}"
+  homedir: "{{ darkbulb_homedir }}"
+
+environment_gits:
+  - src: "https://github.com/victorock/darkbulb.git"
+    dest: "{{ environment_instance.homedir }}/darkbulb"
+    version: dev
+    clone: yes
+    force: no
+
+environment_keychain_paths:
+  ssh:
+    src: "files/keychain/ssh"
+    dest: "{{ environment_instance.homedir }}/.ssh"
+
+environment_keychain_files:
+  ssh:
+    public_key:
+      src: "{{ environment_keychain_paths.ssh.src }}/id_rsa.pub"
+      dest: "{{ environment_keychain_paths.ssh.dest }}/id_rsa.pub"
+    private_key:
+      src: "{{ environment_keychain_paths.ssh.src }}/id_rsa"
+      dest: "{{ environment_keychain_paths.ssh.dest }}/id_rsa"

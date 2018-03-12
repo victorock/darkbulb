@@ -1,0 +1,6 @@
+instances:
+  - name: lab01
+    email: lab01@acme.com
+    tags:
+      - darkbulb
+      - lab

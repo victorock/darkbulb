@@ -1,0 +1,36 @@
+libvirt_instance:
+  user: "{{ darkbulb_user }}"
+  homedir: "{{ darkbulb_homedir }}"
+
+libvirt_packages:
+  - name: epel-release
+    update_cache: yes
+    state: latest
+  - name: qemu-kvm
+    update_cache: yes
+    state: latest
+  - name: qemu-img
+    update_cache: yes
+    state: latest
+  - name: qemu-kvm-tools
+    update_cache: yes
+    state: latest
+  - name: virt-top
+    update_cache: yes
+    state: latest
+  - name: virt-install
+    update_cache: yes
+    state: latest
+  - name: libvirt
+    update_cache: yes
+    state: latest
+  - name: libvirt-python
+    update_cache: yes
+    state: latest
+  - name: libvirt-client
+    update_cache: yes
+    state: latest
+
+libvirt_images_path:
+  local: "files/images/qcow2/"
+  remote: "{{ libvirt_instance.homedir }}/images/qcow2/"

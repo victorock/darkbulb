@@ -1,0 +1,38 @@
+---
+- name: "libvirt: Load variables"
+  include_vars:
+    file: "libvirt.yml"
+
+- name: "libvirt: Ensure state of packages"
+  become: true
+  yum:
+    name: "{{ libvirt_package.name }}"
+    state: "{{ libvirt_package.state }}"
+    update_cache: "{{ libvirt_package.update_cache }}"
+  loop: "{{ libvirt_packages | default([]) }}"
+  loop_control:
+    loop_var: libvirt_package
+  tags:
+    - install
+
+- name: "libvirt: Ensure state of image files"
+  become: true
+  copy:
+    src: "{{ libvirt_images_path.local }}"
+    dest: "{{ libvirt_images_path.remote }}"
+    owner: "{{ libvirt_instance.user }}"
+    group: "{{ libvirt_instance.user }}"
+    force: yes
+  tags:
+    - install
+
+- name: "libvirt: Ensure state of permissions in images folder"
+  become: true
+  file:
+    path: "{{ libvirt_images_path.remote }}"
+    owner: "{{ libvirt_instance.user }}"
+    group: "{{ libvirt_instance.user }}"
+    recurse: yes
+    state: directory
+  tags:
+    - config

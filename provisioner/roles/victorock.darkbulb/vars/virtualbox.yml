@@ -1,0 +1,18 @@
+virtualbox_instance:
+  user: "{{ darkbulb_user }}"
+  homedir: "{{ darkbulb_homedir }}"
+  groups: vboxusers
+
+virtualbox_repos:
+  - name: virtualbox_release
+    description: "EL-$releasever / $basearch - VirtualBox"
+    baseurl: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
+    gpgcheck: no
+    enabled: yes
+    repo_gpgcheck: yes
+    gpgkey: "https://www.virtualbox.org/download/oracle_vbox.asc"
+
+virtualbox_packages:
+  - name: VirtualBox-5.2
+    update_cache: yes
+    state: latest

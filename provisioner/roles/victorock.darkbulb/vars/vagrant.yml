@@ -1,0 +1,23 @@
+vagrant_instance:
+  user: "{{ darkbulb_user }}"
+  homedir: "{{ darkbulb_homedir }}"
+
+vagrant_packages:
+  - name: https://releases.hashicorp.com/vagrant/2.0.2/vagrant_2.0.2_x86_64.rpm
+    update_cache: yes
+    state: latest
+
+vagrant_plugins:
+  - hostmanager
+  - vagrant-host-shell
+  - vagrant-junos
+
+vagrant_public_boxes:
+  - ansible/tower
+  - centos/7
+  - juniper/vqfx10k-re
+  - CumulusCommunity/cumulus-vx
+
+vagrant_images_path:
+  local: "files/images/box/"
+  remote: "{{ vagrant_instance.homedir }}/images/box/"

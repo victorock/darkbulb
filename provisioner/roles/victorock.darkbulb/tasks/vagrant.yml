@@ -1,0 +1,109 @@
+---
+- name: "vagrant: Load variables"
+  include_vars:
+    file: "vagrant.yml"
+
+- name: "vagrant: Ensure state of packages"
+  become: true
+  yum:
+    name: "{{ vagrant_package.name }}"
+    state: "{{ vagrant_package.state }}"
+    update_cache: "{{ vagrant_package.update_cache }}"
+  loop: "{{ vagrant_packages | default([]) }}"
+  loop_control:
+    loop_var: vagrant_package
+  tags:
+    - install
+
+- name: "vagrant: Update plugins"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant plugin update
+  register: return_vagrant_plugin_update
+  tags:
+    - plugin
+    - plugin_update
+
+- name: "vagrant: Gather installed plugins in user context"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant plugin list
+  register: return_vagrant_plugin_list
+  changed_when: false
+  tags:
+    - plugin
+    - plugin_add
+
+- name: "vagrant: Add missing plugins in user context"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant plugin install {{ vagrant_plugin|quote }}
+  when: vagrant_plugin not in return_vagrant_plugin_list.stdout
+  loop: "{{ vagrant_plugins | default([]) }}"
+  loop_control:
+    loop_var: vagrant_plugin
+  tags:
+    - plugin
+    - plugin_add
+
+- name: "vagrant: Gather installed boxes in user context"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant box list
+  register: return_vagrant_box_list
+  changed_when: false
+  tags:
+    - box
+    - box_add
+
+- name: "vagrant: Add missing publicly available boxes in user context"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant box add {{ vagrant_box|quote }} --provider virtualbox
+  when:
+    - vagrant_box not in return_vagrant_box_list.stdout
+  loop: "{{ vagrant_public_boxes | default([]) }}"
+  loop_control:
+    loop_var: vagrant_box
+  tags:
+    - box
+    - box_add
+
+- name: "vagrant: Ensure state of private boxes files"
+  become: true
+  copy:
+    src: "{{ vagrant_images_path.local }}"
+    dest: "{{ vagrant_images_path.remote }}"
+    owner: "{{ vagrant_instance.user }}"
+    group: "{{ vagrant_instance.user }}"
+    force: yes
+  tags:
+    - install
+
+- name: "vagrant: Add missing private images in inventory"
+  become: true
+  become_user: "{{ vagrant_instance.user }}"
+  shell:
+    vagrant box add {{ vagrant_image_file_inventory.src }} --name {{ vagrant_image_file_inventory.path|splitext|first|quote }}
+  with_filetree: "{{ vagrant_images_path.remote }}"
+  when: "vagrant_image_file_inventory.state == 'file'"
+  loop_control:
+    loop_var: vagrant_image_file_inventory
+  tags:
+    - install
+
+- name: "vagrant: Ensure state of permissions in images folder"
+  become: true
+  file:
+    path: "{{ vagrant_images_path.remote }}"
+    owner: "{{ vagrant_instance.user }}"
+    group: "{{ vagrant_instance.user }}"
+    recurse: yes
+    state: directory
+  tags:
+    - config

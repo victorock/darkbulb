@@ -1,0 +1,36 @@
+---
+- name: "setup: Load variables"
+  include_vars:
+    file: "setup.yml"
+
+- name: "setup: Ensure state of Ansible Repo"
+  become: true
+  yum_repository:
+    name: "{{ setup_repo.name }}"
+    description: "{{ setup_repo.description }}"
+    baseurl: "{{ setup_repo.baseurl }}"
+    gpgcheck: "{{ setup_repo.gpgcheck }}"
+    enabled: "{{ setup_repo.enabled }}"
+    repo_gpgcheck: "{{ setup_repo.repo_gpgcheck }}"
+  loop: "{{ setup_repos | default([]) }}"
+  loop_control:
+    loop_var: setup_repo
+  tags:
+    - configure
+
+- name: "setup: Ensure state of packages"
+  become: true
+  yum:
+    name: "{{ setup_package.name }}"
+    state: "{{ setup_package.state }}"
+    update_cache: "{{ setup_package.update_cache }}"
+  loop: "{{ setup_packages | default([]) }}"
+  loop_control:
+    loop_var: setup_package
+  tags:
+    - install
+
+- name: "Group hosts by owner"
+  become: false
+  group_by:
+    key: "{{ darkbulb_user }}"

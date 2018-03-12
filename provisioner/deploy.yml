@@ -5,4 +5,5 @@
   tasks:
     - name: "Setup Darkbulb Environment"
       include_role:
-        name: darkbulb
+        name: victorock.darkbulb
+        tasks_from: run

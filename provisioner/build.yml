@@ -5,15 +5,12 @@
   tasks:
     - name: "Create Topology in Google Cloud"
       include_role:
-        name: google-cloud
+        name: victorock.google-cloud
+        tasks_from: run
+        vars_from: run
       vars:
         gce_cloud_instance_name: "{{ go_gce.name }}"
-        gce_cloud_instance_tags:
-          - darkbulb
-          - "{{ go_gce.name }}"
-        owner: "{{ go_gce.name }}"
-      with_items:
-        - "{{ environments }}"
+        gce_cloud_instance_tags: "{{ go_gce.tags }}"
+      with_items: "{{ instances }}"
       loop_control:
         loop_var: go_gce
-        label: "{{ go_gce.name }}"

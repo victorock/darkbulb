@@ -1,0 +1,41 @@
+---
+- name: "virtualbox: Load variables"
+  include_vars:
+    file: "virtualbox.yml"
+
+- name: "virtualbox: Ensure state of repository"
+  become: true
+  yum_repository:
+    name: "{{ virtualbox_repo.name }}"
+    description: "{{ virtualbox_repo.description }}"
+    baseurl: "{{ virtualbox_repo.baseurl }}"
+    gpgcheck: "{{ virtualbox_repo.gpgcheck }}"
+    enabled: "{{ virtualbox_repo.enabled }}"
+    repo_gpgcheck: "{{ virtualbox_repo.repo_gpgcheck }}"
+    gpgkey: "{{ virtualbox_repo.gpgkey }}"
+  loop: "{{ virtualbox_repos | default([]) }}"
+  loop_control:
+    loop_var: virtualbox_repo
+  tags:
+    - configure
+
+- name: "virtualbox: Ensure state of packages"
+  become: true
+  yum:
+    name: "{{ virtualbox_package.name }}"
+    state: "{{ virtualbox_package.state }}"
+    update_cache: "{{ virtualbox_package.update_cache }}"
+  loop: "{{ virtualbox_packages | default([]) }}"
+  loop_control:
+    loop_var: virtualbox_package
+  tags:
+    - install
+
+- name: "virtualbox: Ensure state of user as member of vboxusers"
+  become: true
+  user:
+    name: "{{ virtualbox_instance.user }}"
+    groups: "{{ virtualbox_instance.groups }}"
+    append: yes
+  tags:
+    - configure
