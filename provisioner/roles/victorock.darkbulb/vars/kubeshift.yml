@@ -1,0 +1,35 @@
+kubeshift_instance_dict:
+  user: "{{ darkbulb_user }}"
+  homedir: "{{ darkbulb_homedir }}"
+
+kubeshift_git_dict:
+  openshift_ansible:
+    src: "https://github.com/openshift/openshift-ansible.git"
+    dest: "{{ kubeshift_instance.homedir }}/kubeshift/openshift-ansible"
+    version: dev
+    clone: yes
+    force: no
+
+  openshift_ansible_contrib:
+    src: "https://github.com/openshift/openshift-ansible-contrib.git"
+    dest: "{{ kubeshift_instance.homedir }}/kubeshift/openshift-ansible-contrib"
+    version: dev
+    clone: yes
+    force: no
+
+  kubevirt_ansible:
+    src: "https://github.com/kubevirt/kubevirt-ansible.git"
+    dest: "{{ kubeshift_instance.homedir }}/kubeshift/kubevirt-ansible"
+    version: dev
+    clone: yes
+    force: no
+
+kubeshift_playbook_path_dict:
+  openshift:
+    root: "{{ kubeshift_git.openshift_ansible.dest }}"
+    playbook: "{{ kubeshift_git.openshift_ansible.dest }}/playbooks"
+    inventory: "{{ kubeshift_git.openshift_ansible.dest }}/inventory"
+  kubevirt:
+    root_path: "{{ kubeshift_git.kubevirt_ansible.dest }}"
+    playbook_path: "{{ kubeshift_git.kubevirt_ansible.dest }}/playbooks"
+    inventory: "{{ kubeshift_git.kubevirt_ansible.dest }}/inventory"

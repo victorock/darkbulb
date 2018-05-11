@@ -1,0 +1,4 @@
+---
+gce_assert_states:
+  create: present
+  delete: absent

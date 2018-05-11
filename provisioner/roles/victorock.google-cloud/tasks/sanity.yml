@@ -1,0 +1,5 @@
+---
+- include_tasks: sanity/role.yml
+- include_tasks: sanity/network.yml
+- include_tasks: sanity/storage.yml
+- include_tasks: sanity/compute.yml

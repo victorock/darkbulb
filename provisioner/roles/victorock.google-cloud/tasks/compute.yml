@@ -1,0 +1,3 @@
+---
+- include_vars: vars/compute.yml
+- include_tasks: compute/instance.yml

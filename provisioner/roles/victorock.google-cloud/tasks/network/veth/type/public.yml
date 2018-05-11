@@ -1,0 +1,22 @@
+- block:
+    - name: "network/veth/type/public: Ensure state of type public"
+      gce_eip:
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+        region: "{{ region }}"
+        name: "{{ name }}"
+        state: "{{ state }}"
+      register: r_gce_network_veth_type_public
+
+  rescue:
+    - set_fact:
+        r_gce_network_veth_type_public: { 'results' : [] }
+
+    - debug:
+        msg: |
+          Buggy non idempotent module
+
+- debug:
+    var: r_gce_network_veth_type_public
+    verbosity: 2

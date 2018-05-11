@@ -7,10 +7,6 @@
       include_role:
         name: victorock.google-cloud
         tasks_from: run
-        vars_from: run
-      vars:
-        gce_cloud_instance_name: "{{ go_gce.name }}"
-        gce_cloud_instance_tags: "{{ go_gce.tags }}"
-      with_items: "{{ instances }}"
+      loop: "{{ instances }}"
       loop_control:
-        loop_var: go_gce
+        loop_var: gce_instance

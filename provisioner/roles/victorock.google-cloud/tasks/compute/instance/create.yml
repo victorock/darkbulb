@@ -1,0 +1,21 @@
+- name: "compute/instance/create: ensure state of instance"
+  gce:
+    service_account_email: "{{ gce.client_email }}"
+    credentials_file: "{{ gce.credentials_file }}"
+    project_id: "{{ gce.project_id }}"
+    zone: "{{ gce.zone }}"
+    name: "{{ gce.compute.instance.name }}"
+    image: "{{ gce.compute.instance.image }}"
+    machine_type: "{{ gce.compute.instance.hardware.type }}"
+    external_ip: "{{ gce.compute.instance.hardware.interfaces[0].public | default(omit) }}"
+    network: "{{ gce.compute.instance.hardware.interfaces[0].network | default(omit) }}"
+    disks: "{{ gce.compute.instance.hardware.disks }}"
+    disk_size: "{{ gce.compute.instance.hardware.disks[0].size }}"
+    tags: "{{ gce.compute.instance.tags }}"
+    metadata: "{{ gce.compute.instance.metadata | default(omit) }}"
+    state: "{{ gce_compute_instance_state }}"
+  register: r_gce_compute_instance
+
+- debug:
+    var: r_gce_compute_instance
+    verbosity: 2

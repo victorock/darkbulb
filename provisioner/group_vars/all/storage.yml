@@ -1,0 +1,17 @@
+storage:
+  target:
+    volumes:
+      - name: "darkbulb-boot"
+        mode: READ_WRITE
+        type: ssd
+        # Deletes on terminate
+        ephemeral: yes
+        size: 30
+      - name: "darkbulb-data1"
+        type: "standard"
+        # Deletes on terminate
+        ephemeral: no
+        # Persist when machine is destroyed
+        persistent: yes
+        mode: READ_WRITE
+        size: 30

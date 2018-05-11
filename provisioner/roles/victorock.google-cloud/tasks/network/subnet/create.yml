@@ -1,0 +1,19 @@
+- name: "network/subnet/create: Ensure state of network subnet"
+  gce_net:
+    service_account_email: "{{ gce.client_email }}"
+    credentials_file: "{{ gce.credentials_file }}"
+    project_id: "{{ gce.project_id }}"
+    name: "{{ gce.network.name }}"
+    mode: "{{ gce_network_subnet_entry.type }}"
+    subnet_name: "{{ gce_network_subnet_entry.name | default(omit) }}"
+    subnet_region: "{{ gce_network_subnet_entry.region | default(omit) }}"
+    ipv4_range: "{{ gce_network_subnet_entry.cidr | default(omit) }}"
+    state: "{{ gce_network_subnet_states[gce_action] }}"
+  register: r_gce_network_subnet
+  loop: "{{ gce.network.subnets | default([]) }}"
+  loop_control:
+    loop_var: gce_network_subnet_entry
+
+- debug:
+    var: r_gce_network_subnet
+    verbosity: 2

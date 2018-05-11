@@ -6,7 +6,7 @@ Vagrant.configure('2') do |config|
   config.ssh.insert_key = false
 
   config.vm.define "spine01" do |device|
-    device.vm.box = "cisco/nxosv"
+    device.vm.box = "cisco/csr1000v"
     device.vm.boot_timeout = 600
 
     device.vm.provider :virtualbox do |v|

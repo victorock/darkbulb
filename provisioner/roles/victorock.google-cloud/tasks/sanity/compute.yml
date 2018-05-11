@@ -1,0 +1,7 @@
+- name: "sanity/compute: image with nested virtualization is required"
+  fail:
+    msg: |
+      1- Follow the steps https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances.
+      2- Create new image named nested-centos-7.
+      3- When done uncomment nested_virtualization_configured variable from group_vars/all/darkbulb.yml
+  when: nested_virtualization_configured is not defined

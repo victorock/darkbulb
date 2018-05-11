@@ -1,0 +1,6 @@
+---
+- include_vars: vars/assert.yml
+- include_tasks: assert/main.yml
+- include_tasks: assert/network.yml
+- include_tasks: assert/compute.yml
+- include_tasks: assert/storage.yml

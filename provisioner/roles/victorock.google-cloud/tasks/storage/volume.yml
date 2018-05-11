@@ -1,0 +1,5 @@
+---
+- gce_pd:
+    instance_name: notlocalhost
+    size_gb: 5
+    name: pd

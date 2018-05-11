@@ -1,0 +1,12 @@
+---
+gce_network_veth_states:
+  create: present
+  delete: absent
+
+gce_network_subnet_states:
+  create: present
+  delete: absent
+
+gce_network_security_states:
+  create: present
+  delete: absent

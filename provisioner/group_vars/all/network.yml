@@ -1,0 +1,21 @@
+network:
+  name: default
+  subnets:
+    - name: customnet
+      type: custom
+      cidr: "10.42.0.0/24"
+      region: "{{ gce_region }}"
+
+  veth:
+    ports:
+      - name: veth0
+        type: public
+
+  security:
+    policies:
+      - name: cockpit-https-all
+        destination:
+          port: 9090
+          protocol: tcp
+        source:
+          cidr: 0.0.0.0/0

@@ -1,0 +1,9 @@
+---
+gce_compute_instance_states:
+  create:
+    - present
+    - started
+  delete:
+    - stopped
+    - deleted
+    - absent

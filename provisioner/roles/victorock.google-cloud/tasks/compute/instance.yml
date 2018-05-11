@@ -1,0 +1,4 @@
+- include_tasks: "compute/instance/{{ gce_action }}.yml"
+  loop: "{{ gce_compute_instance_states[gce_action] }}"
+  loop_control:
+    loop_var: gce_compute_instance_state

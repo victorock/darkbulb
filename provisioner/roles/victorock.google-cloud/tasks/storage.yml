@@ -1,0 +1,3 @@
+---
+  - include_vars: vars/storage.yml
+- include_tasks: storage/volume.yml

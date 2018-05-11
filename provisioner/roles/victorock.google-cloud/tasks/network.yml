@@ -1,0 +1,4 @@
+- include_vars: vars/network.yml
+- include_tasks: network/subnet.yml
+- include_tasks: network/veth.yml
+- include_tasks: network/security.yml
