@@ -1,7 +1,0 @@
-- name: "inventory/host: instance to inventory groups"
-  add_host:
-    name: "{{ gce.compute.instance.name }}"
-    ansible_host: "{{ return_gce_network_public_ip.results[0].address }}"
-    groupname: "{{ gce.compute.instance.tags | join(',') }}"
-  changed_when: no
-  when: "gce_action == 'create'"

@@ -1,4 +1,0 @@
----
-gce_storage_states:
-  create: present
-  delete: absent

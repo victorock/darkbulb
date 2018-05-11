@@ -1,9 +1,0 @@
----
-- name: "sanity/role: gce_action"
-  fail:
-    msg: |
-      You must define either: create or delete
-      You entered: "{{ gce_cloud_action }}"
-  when:
-    - "'create' not in gce_action"
-    - "'delete' not in gce_action"

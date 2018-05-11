@@ -1,3 +1,0 @@
----
-- include_vars: vars/inventory.yml
-- include_tasks: inventory/host.yml

@@ -7,6 +7,10 @@
 # Currently it is under Beta, therefore some additional steps are required to active it
 gce_region: europe-west1
 gce_zone: "{{ gce_region }}-d"
-gce_project_id: "darkbulb-lab"
+gce_project_id: "PROJECT_ID"
+gce_service_account_email: "USERNAME@{{ gce_project_id }}.iam.gserviceaccount.com"
 gce_credentials_file: "files/keychain/{{ gce_project_id }}.json"
-gce_client_email: "{{ lookup('file', gce_credentials_file ).client_email }}"
+
+# Google Computing Engine
+gce_cloud_instance_image: nested-image-centos-7
+gce_cloud_instance_machine_type: n1-standard-16

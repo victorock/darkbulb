@@ -1,8 +1,71 @@
 ---
-- include_vars: vars/run.yml
+- name: "Image with nested virtualization is required"
+  fail:
+    msg: |
+      1- Follow the steps https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances.
+      2- Create new image named nested-centos-7.
+      3- When done uncomment nested_virtualization_configured variable from group_vars/all/darkbulb.yml
+  when: nested_virtualization_configured is not defined
 
-- include_tasks: create.yml
-  when: "gce_action == 'create'"
+####### Free tier is limited to 1 external IP
+#- name: "Ensure {{ gce_cloud_instance_name }} external ip is present"
+#  gce_eip:
+#    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+#    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+#    project_id: "{{ gce_cloud_instance_project_id }}"
+#    name: "{{ gce_cloud_instance_name }}"
+#    region: "{{ gce_cloud_instance_region }}"
+#    state: present
+#  register: return_gce_eip
+#
+#- debug: var=return_gce_eip
+#  when: gce_cloud_instance_debug
+#
+#- name: "Add instance to inventory groups"
+#  add_host:
+#    name: "{{ return_gce_eip.name }}"
+#    ansible_host: "{{ return_gce_eip.address }}"
+#    groupname: "{{ gce_cloud_instance_tags | join(',') }}"
+#    student: "{{ student }}"
+#  changed_when: no
+#  when: return_gce_eip.address is defined
 
-- include_tasks: delete.yml
-  when: "gce_action == 'create'"
+
+- name: "Ensure {{ gce_cloud_instance_name }} state"
+  gce:
+    service_account_email: "{{ gce_cloud_instance_service_account_email }}"
+    credentials_file: "{{ gce_cloud_instance_credentials_file }}"
+    project_id: "{{ gce_cloud_instance_project_id }}"
+    instance_names: "{{ gce_cloud_instance_name }}"
+#    external_ip: "{{ gce_cloud_instance_name }}"
+    zone: "{{ gce_cloud_instance_zone }}"
+    machine_type: "{{ gce_cloud_instance_machine_type }}"
+    image: "{{ gce_cloud_instance_image }}"
+    disk_size: "{{ gce_cloud_boot_disk_size }}"
+    tags: "{{ gce_cloud_instance_tags }}"
+    state: "{{ state }}"
+  register: return_gce_cloud_instance
+  notify:
+    - check instance availability
+  with_items:
+    - present
+    - started
+## Always getpublic_ip with this second present, even if instace was stopped
+    - present
+  loop_control:
+    loop_var: state
+    label: "{{ state }}"
+
+- debug: var=return_gce_cloud_instance
+  when: gce_cloud_instance_debug
+
+- name: "Add instance to inventory groups"
+  add_host:
+    name: "{{ add_instance.name }}"
+    ansible_host: "{{ add_instance.public_ip }}"
+    groupname: "{{ gce_cloud_instance_tags | join(',') }}"
+  changed_when: no
+  with_items: "{{ return_gce_cloud_instance.results[2].instance_data }}"
+  loop_control:
+    loop_var: add_instance
+    label: "{{ add_instance.name }}"

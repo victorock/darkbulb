@@ -1,10 +1,1 @@
-gce:
-  region: "{{ gce_region }}"
-  zone: "{{ gce_zone }}"
-  project_id: "{{ gce_project_id }}"
-  client_email: "{{ gce_client_email }}"
-  credentials_file: "{{ gce_credentials_file }}"
-  action: "{{ gce_action }}"
-  network: "{{ gce_network }}"
-  compute: "{{ gce_compute }}"
-  storage: "{{ gce_storage }}"
+---
